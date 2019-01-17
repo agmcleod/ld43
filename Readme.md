@@ -1,0 +1,1 @@
+A game prototype I started for ludum dare 43. Didn't finish as the scope was too big, but I'm working on it for another jam for January. Let's see how far I get.
