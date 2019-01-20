@@ -1,7 +1,7 @@
 extends Area2D
 
-onready var constants = get_tree().get_root().get_node("Constants")
-export (int) var status = constants.SPELL_STATUS_TYPE.BURNING
+# Based on Constants.gd. Setting a 1 here manually
+export (int) var status = 1
 # How long the status effect should last
 export (int) var status_duration = 0
 export (int) var status_damage = 0

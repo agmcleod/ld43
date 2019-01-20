@@ -12,7 +12,18 @@ var ingredients = {
   cow = false
 }
 
+var resource_storage = {
+  blue_bird = 0,
+  red_bird = 0,
+  chicken = 0,
+  cow = 0,
+  pig = 0
+}
+
 var active_count = 0
+
+func _ready():
+  pass
 
 func get_selected_ingredients():
   return ingredients
@@ -20,31 +31,33 @@ func get_selected_ingredients():
 func get_active_count():
   return active_count
 
+func get_resource_storage():
+  resource_storage
+
 func reset_active_count():
   active_count = 0
-  for name in ["blue_bird", "red_bird", "chicken", "pig", "cow"]:
-    _mark_ingredient_as_inactive(name)
-
-func _mark_ingredient_as_inactive(name):
   for child in get_children():
-    if child.get_name() == name:
-      ingredients[name] = false
+    if ingredients.has(child.get_name()) && ingredients[child.get_name()]:
+      ingredients[child.get_name()] = false
       child.position.y += 30
 
-func _ready():
-  pass
+func add_resource(amount, type_name):
+  resource_storage[type_name] += amount
+  get_node("%s/text" % type_name).text = "%d" % resource_storage[type_name]
+
 
 func _toggle_ingredient(name):
   for child in get_children():
     if child.get_name() == name:
-      if ingredients[name]:
-        child.position.y += 30
-        active_count -= 1
-        ingredients[name] = false
-      elif !ingredients[name] && active_count < 3:
-        active_count += 1
-        child.position.y -= 30
-        ingredients[name] = true
+      if resource_storage[name] > 0:
+        if ingredients[name]:
+          child.position.y += 30
+          active_count -= 1
+          ingredients[name] = false
+        elif !ingredients[name] && active_count < 3:
+          active_count += 1
+          child.position.y -= 30
+          ingredients[name] = true
 
   if active_count <= 1:
     get_node("cast").hide()

@@ -6,6 +6,7 @@ extends Area2D
 
 export var amount = 1
 export var type_name = ""
+onready var resources_ui = get_tree().get_root().get_node("game/UI/Resources")
 
 func _ready():
   self.connect("body_entered", self, "_on_body_entered")
@@ -18,5 +19,5 @@ func _process(delta):
 
 func _on_body_entered(body):
   if body.name == "Player":
-    body.call("add_resource", amount, type_name)
+    resources_ui.add_resource(amount, type_name)
     self.get_parent().queue_free()

@@ -9,13 +9,7 @@ onready var resources_ui = get_tree().get_root().get_node("game/UI/Resources")
 var velocity = Vector2()
 var direction = Vector2(1, 0)
 
-var resources = {
-  blue_bird = 0,
-  red_bird = 0,
-  chicken = 0,
-  cow = 0,
-  pig = 0
-}
+var fireball_scene = load("res://spells/FireBall.tscn")
 
 func _ready():
   health = 500
@@ -52,12 +46,12 @@ func _get_spell():
   var ingredients = resources_ui.get_selected_ingredients()
   var active_count = resources_ui.get_active_count()
   if ingredients.red_bird:
-    add_resource(-1, "red_bird")
+    resources_ui.add_resource(-1, "red_bird")
     if active_count == 2:
       if ingredients.chicken:
-        add_resource(-1, "chicken")
-        return load("res://spells/FireBall.tscn")
-  elif ingredients.blue:
+        resources_ui.add_resource(-1, "chicken")
+        return fireball_scene.instance()
+  elif ingredients.blue_bird:
     pass
   else:
     pass
@@ -73,7 +67,3 @@ func _on_cast_pressed():
     spell.set_direction(direction.x, direction.y)
 
   resources_ui.reset_active_count()
-
-func add_resource(amount, type_name):
-  resources[type_name] += amount
-  get_tree().get_root().get_node("game/UI/Resources/%s/text" % type_name).text = "%d" % resources[type_name]
