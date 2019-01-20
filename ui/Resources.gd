@@ -14,13 +14,27 @@ var ingredients = {
 
 var active_count = 0
 
-func get_ingredients():
+func get_selected_ingredients():
   return ingredients
+
+func get_active_count():
+  return active_count
+
+func reset_active_count():
+  active_count = 0
+  for name in ["blue_bird", "red_bird", "chicken", "pig", "cow"]:
+    _mark_ingredient_as_inactive(name)
+
+func _mark_ingredient_as_inactive(name):
+  for child in get_children():
+    if child.get_name() == name:
+      ingredients[name] = false
+      child.position.y += 30
 
 func _ready():
   pass
 
-func _mark_ingredient_as_active(name):
+func _toggle_ingredient(name):
   for child in get_children():
     if child.get_name() == name:
       if ingredients[name]:
@@ -39,13 +53,13 @@ func _mark_ingredient_as_active(name):
 
 func _process(delta):
   if Input.is_action_just_pressed("ingredient_1"):
-    self._mark_ingredient_as_active("blue_bird")
+    self._toggle_ingredient("blue_bird")
   if Input.is_action_just_pressed("ingredient_2"):
-    self._mark_ingredient_as_active("red_bird")
+    self._toggle_ingredient("red_bird")
   if Input.is_action_just_pressed("ingredient_3"):
-    self._mark_ingredient_as_active("chicken")
+    self._toggle_ingredient("chicken")
   if Input.is_action_just_pressed("ingredient_4"):
-    self._mark_ingredient_as_active("pig")
+    self._toggle_ingredient("pig")
   if Input.is_action_just_pressed("ingredient_5"):
-    self._mark_ingredient_as_active("cow")
+    self._toggle_ingredient("cow")
   pass

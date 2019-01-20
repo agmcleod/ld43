@@ -3,9 +3,11 @@ extends "res://units/SpellReceiver.gd"
 
 export (int) var speed = 200
 
-onready var constants = get_node("/root/Constants")
+onready var constants = get_tree().get_root().get_node("Constants")
+onready var resources_ui = get_tree().get_root().get_node("game/UI/Resources")
 
 var velocity = Vector2()
+var direction = Vector2(1, 0)
 
 var resources = {
   blue_bird = 0,
@@ -34,6 +36,10 @@ func _physics_process(delta):
     if Input.is_action_pressed('up'):
       velocity.y -= 1
 
+  if velocity.x != 0 && velocity.y != 0:
+    direction.x = velocity.x
+    direction.y = velocity.y
+
   var resulting_speed = speed
   if status == constants.SPELL_STATUS_TYPE.SLOWED:
     resulting_speed /= 2
@@ -42,12 +48,32 @@ func _physics_process(delta):
 
   pass
 
+func _get_spell():
+  var ingredients = resources_ui.get_selected_ingredients()
+  var active_count = resources_ui.get_active_count()
+  if ingredients.red_bird:
+    add_resource(-1, "red_bird")
+    if active_count == 2:
+      if ingredients.chicken:
+        add_resource(-1, "chicken")
+        return load("res://spells/FireBall.tscn")
+  elif ingredients.blue:
+    pass
+  else:
+    pass
+
 func _on_cast_pressed():
   if status == constants.SPELL_STATUS_TYPE.FROZEN:
     return
-  print("cast")
 
+  var spell = _get_spell()
+  # this shouldnt be needed when all spells are implemented
+  if spell:
+    get_tree().get_root().add_child(spell)
+    spell.set_direction(direction.x, direction.y)
+
+  resources_ui.reset_active_count()
 
 func add_resource(amount, type_name):
   resources[type_name] += amount
-  get_tree().get_root().get_node("root/UI/Resources/%s/text" % type_name).text = "%d" % resources[type_name]
+  get_tree().get_root().get_node("game/UI/Resources/%s/text" % type_name).text = "%d" % resources[type_name]

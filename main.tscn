@@ -39,7 +39,7 @@ shortcut = SubResource( 1 )
 custom_solver_bias = 0.0
 extents = Vector2( 15.9443, 31.8648 )
 
-[node name="root" type="Node" index="0"]
+[node name="game" type="Node" index="0"]
 
 [node name="TileMap" type="TileMap" parent="." index="0"]
 
@@ -138,6 +138,7 @@ amount = 2
 
 [node name="UI" type="CanvasLayer" parent="." index="13"]
 
+editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -488,6 +489,7 @@ _sections_unfolded = [ "Visibility" ]
 "player",
 ]]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
