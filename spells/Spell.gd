@@ -13,17 +13,21 @@ export (float) var duration = 0
 var time_alive = 0
 export (bool) var dies_on_collision = false
 
-func _on_area_entered(other):
-  if (self.group_name == "player" && other.group_name == "enemy") || (self.group_name == "enemy" && other.group_name == "player"):
-    other.take_damage(damage)
-    other.handle_spell(status, status_duration, status_damage)
+var caster_id = -1
 
-  if other.group_name != "spell" && dies_on_collision:
-    queue_free()
+func _on_body_entered(other):
+  if self.caster_id != other.get_instance_id():
+    if (other.is_in_group("player") || other.is_in_group("enemy")):
+      other.take_damage(damage)
+      other.handle_spell(status, status_duration, status_damage)
+      if dies_on_collision:
+        queue_free()
+    elif !other.is_in_group("spell") && dies_on_collision:
+      queue_free()
 
 
 func _ready():
-  self.connect('area_entered', self, '_on_area_entered')
+  self.connect('body_entered', self, '_on_body_entered')
   self.add_to_group("spell")
 
 func _process(delta):
@@ -38,3 +42,6 @@ func _process(delta):
 func set_direction(x, y):
   direction.x = x
   direction.y = y
+
+func set_caster_id(id):
+  caster_id = id

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://new_tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://Block.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://images/cow@2x.png" type="Texture" id=14]
 [ext_resource path="res://units/Player.gd" type="Script" id=15]
 [ext_resource path="res://images/player.png" type="Texture" id=16]
+[ext_resource path="res://units/Enemy.tscn" type="PackedScene" id=17]
 
 [sub_resource type="InputEventKey" id=1]
 
@@ -496,6 +497,7 @@ collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 15 )
 _sections_unfolded = [ "collision" ]
+health = 400
 speed = 200
 
 [node name="Camera2D" type="Camera2D" parent="Player" index="0"]
@@ -530,6 +532,14 @@ texture = ExtResource( 16 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" index="2"]
 
 shape = SubResource( 3 )
+
+[node name="Enemy" parent="." index="15" instance=ExtResource( 17 )]
+
+position = Vector2( 1780, -140 )
+
+[node name="Enemy2" parent="." index="16" instance=ExtResource( 17 )]
+
+position = Vector2( 1780, 60 )
 
 [connection signal="pressed" from="UI/Resources/cast" to="Player" method="_on_cast_pressed"]
 

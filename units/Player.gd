@@ -12,7 +12,6 @@ var direction = Vector2(1, 0)
 var fireball_scene = load("res://spells/FireBall.tscn")
 
 func _ready():
-  health = 500
   # Called when the node is added to the scene for the first time.
   # Initialization here
   pass
@@ -30,7 +29,7 @@ func _physics_process(delta):
     if Input.is_action_pressed('up'):
       velocity.y -= 1
 
-  if velocity.x != 0 && velocity.y != 0:
+  if velocity.x != 0 || velocity.y != 0:
     direction.x = velocity.x
     direction.y = velocity.y
 
@@ -60,9 +59,13 @@ func _on_cast_pressed():
   if status == constants.SPELL_STATUS_TYPE.FROZEN:
     return
 
+  resources_ui.get_node("cast").hide()
   var spell = _get_spell()
   # this shouldnt be needed when all spells are implemented
   if spell:
+    spell.set_caster_id(self.get_instance_id())
+    spell.position.x = self.position.x
+    spell.position.y = self.position.y
     get_tree().get_root().add_child(spell)
     spell.set_direction(direction.x, direction.y)
 

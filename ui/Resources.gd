@@ -13,16 +13,21 @@ var ingredients = {
 }
 
 var resource_storage = {
-  blue_bird = 0,
-  red_bird = 0,
-  chicken = 0,
-  cow = 0,
-  pig = 0
+  blue_bird = 2,
+  red_bird = 2,
+  chicken = 2,
+  cow = 2,
+  pig = 2
 }
 
 var active_count = 0
 
 func _ready():
+  get_node("blue_bird/text").text = "%d" % resource_storage.blue_bird
+  get_node("red_bird/text").text = "%d" % resource_storage.red_bird
+  get_node("chicken/text").text = "%d" % resource_storage.chicken
+  get_node("cow/text").text = "%d" % resource_storage.cow
+  get_node("pig/text").text = "%d" % resource_storage.pig
   pass
 
 func get_selected_ingredients():

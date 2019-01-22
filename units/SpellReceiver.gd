@@ -1,12 +1,13 @@
 extends KinematicBody2D
 
-var health = 0
+export var health = 0
 var status = 0
 var effect_timer = 0
 var damage_per_tick = 0
 var tick_rate = 1.0
 
 func take_damage(amount):
+  print(self.get_instance_id(), amount)
   health -= amount
   if health <= 0:
     queue_free()
@@ -21,7 +22,7 @@ func _handle_damage_per_tick(delta):
   tick_rate -= delta
   if tick_rate <= 0:
     tick_rate = 1.0
-    health -= damage_per_tick
+    take_damage(damage_per_tick)
 
 func _process(delta):
   if effect_timer > 0:
