@@ -1,7 +1,7 @@
 extends Area2D
 
-# Based on Constants.gd. Setting a 1 here manually
-export (int) var status = 1
+export (Constants.SPELL_STATUS_TYPE) var status = Constants.SPELL_STATUS_TYPE.BURNING
+
 # How long the status effect should last
 export (int) var status_duration = 0
 export (int) var status_damage = 0
@@ -30,6 +30,7 @@ func _ready():
   self.connect('body_entered', self, '_on_body_entered')
   self.add_to_group("spell")
 
+
 func _process(delta):
   time_alive += delta
   if duration != 0 && time_alive > duration:
@@ -39,9 +40,11 @@ func _process(delta):
     self.position.x += velocity * direction.x * delta
     self.position.y += velocity * direction.y * delta
 
+
 func set_direction(x, y):
   direction.x = x
   direction.y = y
+
 
 func set_caster_id(id):
   caster_id = id

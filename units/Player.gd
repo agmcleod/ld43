@@ -3,13 +3,13 @@ extends "res://units/SpellReceiver.gd"
 
 export (int) var speed = 200
 
-onready var constants = get_tree().get_root().get_node("Constants")
 onready var resources_ui = get_tree().get_root().get_node("game/UI/Resources")
 
 var velocity = Vector2()
 var direction = Vector2(1, 0)
 
 var fireball_scene = load("res://spells/FireBall.tscn")
+var frostball_scene = load("res://spells/FrostBall.tscn")
 
 func _ready():
   # Called when the node is added to the scene for the first time.
@@ -19,7 +19,7 @@ func _ready():
 func _physics_process(delta):
   velocity.x = 0
   velocity.y = 0
-  if status != constants.SPELL_STATUS_TYPE.FROZEN:
+  if status != Constants.SPELL_STATUS_TYPE.FROZEN:
     if Input.is_action_pressed('right'):
       velocity.x += 1
     if Input.is_action_pressed('left'):
@@ -34,7 +34,7 @@ func _physics_process(delta):
     direction.y = velocity.y
 
   var resulting_speed = speed
-  if status == constants.SPELL_STATUS_TYPE.SLOWED:
+  if status == Constants.SPELL_STATUS_TYPE.SLOWED:
     resulting_speed /= 2
 
   move_and_slide(velocity.normalized() * resulting_speed)
@@ -51,12 +51,16 @@ func _get_spell():
         resources_ui.add_resource(-1, "chicken")
         return fireball_scene.instance()
   elif ingredients.blue_bird:
+    resources_ui.add_resource(-1, "blue_bird")
+    if ingredients.chicken:
+      resources_ui.add_resource(-1, "chicken")
+      return frostball_scene.instance()
     pass
   else:
     pass
 
 func _on_cast_pressed():
-  if status == constants.SPELL_STATUS_TYPE.FROZEN:
+  if status == Constants.SPELL_STATUS_TYPE.FROZEN:
     return
 
   resources_ui.get_node("cast").hide()

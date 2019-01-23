@@ -7,10 +7,10 @@ var damage_per_tick = 0
 var tick_rate = 1.0
 
 func take_damage(amount):
-  print(self.get_instance_id(), amount)
   health -= amount
   if health <= 0:
     queue_free()
+
 
 func handle_spell(status_effect, status_duration, status_damage):
   status = status_effect
@@ -18,11 +18,13 @@ func handle_spell(status_effect, status_duration, status_damage):
   damage_per_tick = status_damage / status_duration
   pass
 
+
 func _handle_damage_per_tick(delta):
   tick_rate -= delta
   if tick_rate <= 0:
     tick_rate = 1.0
     take_damage(damage_per_tick)
+
 
 func _process(delta):
   if effect_timer > 0:

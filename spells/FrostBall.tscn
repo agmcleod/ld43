@@ -7,7 +7,7 @@
 custom_solver_bias = 0.0
 radius = 10.0
 
-[node name="FireBall" type="Area2D"]
+[node name="FrostBall" type="Area2D" index="0"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -17,9 +17,9 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
-status = null
+status = 2
 status_duration = 5
-status_damage = 15
+status_damage = 0
 damage = 20
 velocity = 500
 duration = 0.5
@@ -41,7 +41,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-color = Color( 0.574219, 0.0910723, 0.0910723, 1 )
+color = Color( 0.0910723, 0.574219, 0.574219, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
