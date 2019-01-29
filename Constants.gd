@@ -1,7 +1,7 @@
 extends Node
 
 enum SPELL_STATUS_TYPE {
-  BURNING,
-  FROZEN,
-  SLOWED,
+  BURNING = 1,
+  FROZEN = 2,
+  SLOWED = 3,
 }

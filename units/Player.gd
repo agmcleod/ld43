@@ -9,6 +9,8 @@ var velocity = Vector2()
 var direction = Vector2(1, 0)
 
 var fireball_scene = load("res://spells/FireBall.tscn")
+var fire_shotgun_scene = load("res://spells/FireShotgun.tscn")
+var frost_shotgun_scene = load("res://spells/FrostShotgun.tscn")
 var frostball_scene = load("res://spells/FrostBall.tscn")
 
 func _ready():
@@ -50,11 +52,17 @@ func _get_spell():
       if ingredients.chicken:
         resources_ui.add_resource(-1, "chicken")
         return fireball_scene.instance()
+      elif ingredients.cow:
+        resources_ui.add_resource(-1, "cow")
+        return fire_shotgun_scene.instance()
   elif ingredients.blue_bird:
     resources_ui.add_resource(-1, "blue_bird")
     if ingredients.chicken:
       resources_ui.add_resource(-1, "chicken")
       return frostball_scene.instance()
+    elif ingredients.cow:
+      resources_ui.add_resource(-1, "cow")
+      return frost_shotgun_scene.instance()
     pass
   else:
     pass

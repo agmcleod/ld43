@@ -1,6 +1,12 @@
 extends Area2D
 
-export (Constants.SPELL_STATUS_TYPE) var status = Constants.SPELL_STATUS_TYPE.BURNING
+enum SPELL_STATUS_TYPE {
+  BURNING = 1,
+  FROZEN = 2,
+  SLOWED = 3,
+}
+
+export (SPELL_STATUS_TYPE) var status = SPELL_STATUS_TYPE.BURNING
 
 # How long the status effect should last
 export (int) var status_duration = 0
