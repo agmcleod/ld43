@@ -8,8 +8,8 @@
 
 script = ExtResource( 2 )
 status = null
-status_duration = 15
-status_damage = 5
+status_duration = 5
+status_damage = 15
 damage = 45
 velocity = 0
 duration = 0.5
