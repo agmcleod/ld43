@@ -94,12 +94,11 @@ position = Vector2( 1618.76, 2489.23 )
 
 [node name="BlueBird" parent="." index="8" instance=ExtResource( 3 )]
 
-editor/display_folded = true
 position = Vector2( 924.809, -363.753 )
 
 [node name="Area2D" parent="BlueBird" index="1"]
 
-amount = 2
+amount = 3
 
 [node name="Chicken" parent="." index="9" instance=ExtResource( 4 )]
 
@@ -108,7 +107,7 @@ position = Vector2( 923.558, -328.959 )
 
 [node name="Area2D" parent="Chicken" index="1"]
 
-amount = 2
+amount = 3
 
 [node name="Cow" parent="." index="10" instance=ExtResource( 5 )]
 
@@ -117,7 +116,7 @@ position = Vector2( 982.052, -360.811 )
 
 [node name="Area2D" parent="Cow" index="0"]
 
-amount = 2
+amount = 3
 
 [node name="Pig" parent="." index="11" instance=ExtResource( 6 )]
 
@@ -126,7 +125,7 @@ position = Vector2( 970.747, -311.272 )
 
 [node name="Area2D" parent="Pig" index="0"]
 
-amount = 2
+amount = 3
 
 [node name="RedBird" parent="." index="12" instance=ExtResource( 7 )]
 
@@ -490,7 +489,6 @@ _sections_unfolded = [ "Visibility" ]
 "player",
 ]]
 
-editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1

@@ -15,7 +15,8 @@ func take_damage(amount):
 func handle_spell(status_effect, status_duration, status_damage):
   status = status_effect
   effect_timer = status_duration
-  damage_per_tick = status_damage / status_duration
+  if status_duration > 0 && status_damage > 0:
+    damage_per_tick = status_damage / status_duration
   pass
 
 

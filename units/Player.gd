@@ -14,6 +14,8 @@ var fire_snipe_scene = load("res://spells/FireSnipe.tscn")
 var frost_shotgun_scene = load("res://spells/FrostShotgun.tscn")
 var frostball_scene = load("res://spells/FrostBall.tscn")
 var frost_snipe_scene = load("res://spells/FrostSnipe.tscn")
+var arcane_ball_scene = load("res://spells/ArcaneBall.tscn")
+var arcane_short_ball_scene = load("res://spells/ArcaneShortBall.tscn")
 
 func _ready():
   # Called when the node is added to the scene for the first time.
@@ -72,6 +74,15 @@ func _get_spell():
       resources_ui.add_resource(-1, "pig")
       return frost_snipe_scene.instance()
     pass
+  elif active_count == 2:
+    if ingredients.cow && ingredients.pig:
+      resources_ui.add_resource(-1, "cow")
+      resources_ui.add_resource(-1, "pig")
+      return arcane_ball_scene.instance()
+    if ingredients.cow && ingredients.chicken:
+      resources_ui.add_resource(-1, "cow")
+      resources_ui.add_resource(-1, "chicken")
+      return arcane_short_ball_scene.instance()
   else:
     pass
 

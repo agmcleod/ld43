@@ -1,6 +1,7 @@
 extends Area2D
 
 enum SPELL_STATUS_TYPE {
+  NONE = 0,
   BURNING = 1,
   FROZEN = 2,
   SLOWED = 3,
@@ -22,14 +23,19 @@ export (bool) var dies_on_collision = false
 var caster_id = -1
 
 func _on_body_entered(other):
-  if self.caster_id != other.get_instance_id():
+  var other_id = other.get_instance_id()
+  if self.caster_id != other_id:
     if (other.is_in_group("player") || other.is_in_group("enemy")):
       other.take_damage(damage)
       other.handle_spell(status, status_duration, status_damage)
       if dies_on_collision:
         queue_free()
+      return true
     elif !other.is_in_group("spell") && dies_on_collision:
       queue_free()
+      return true
+
+  return false
 
 
 func _ready():
