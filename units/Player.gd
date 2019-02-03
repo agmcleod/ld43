@@ -16,6 +16,7 @@ var frostball_scene = load("res://spells/FrostBall.tscn")
 var frost_snipe_scene = load("res://spells/FrostSnipe.tscn")
 var arcane_ball_scene = load("res://spells/ArcaneBall.tscn")
 var arcane_short_ball_scene = load("res://spells/ArcaneShortBall.tscn")
+var confused_scene = load("res://spells/ConfusedSpell.tscn")
 
 func _ready():
   # Called when the node is added to the scene for the first time.
@@ -83,6 +84,10 @@ func _get_spell():
       resources_ui.add_resource(-1, "cow")
       resources_ui.add_resource(-1, "chicken")
       return arcane_short_ball_scene.instance()
+    if ingredients.chicken && ingredients.pig:
+      resources_ui.add_resource(-1, "pig")
+      resources_ui.add_resource(-1, "chicken")
+      return confused_scene.instance()
   else:
     pass
 
