@@ -16,6 +16,7 @@ var frostball_scene = load("res://spells/FrostBall.tscn")
 var frost_snipe_scene = load("res://spells/FrostSnipe.tscn")
 var arcane_ball_scene = load("res://spells/ArcaneBall.tscn")
 var arcane_short_ball_scene = load("res://spells/ArcaneShortBall.tscn")
+var arcane_short_explosion_scene = load("res://spells/ArcaneShortExplosion.tscn")
 var confused_scene = load("res://spells/ConfusedSpell.tscn")
 
 func _ready():
@@ -88,6 +89,12 @@ func _get_spell():
       resources_ui.add_resource(-1, "pig")
       resources_ui.add_resource(-1, "chicken")
       return confused_scene.instance()
+  elif active_count == 3:
+    resources_ui.add_resource(-1, "cow")
+    resources_ui.add_resource(-1, "pig")
+    resources_ui.add_resource(-1, "chicken")
+    return arcane_short_explosion_scene.instance()
+
   else:
     pass
 

@@ -40,7 +40,7 @@ shortcut = SubResource( 1 )
 custom_solver_bias = 0.0
 extents = Vector2( 15.9443, 31.8648 )
 
-[node name="game" type="Node" index="0"]
+[node name="game" type="Node"]
 
 [node name="TileMap" type="TileMap" parent="." index="0"]
 
