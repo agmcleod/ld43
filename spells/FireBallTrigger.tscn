@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://spells/Spell.gd" type="Script" id=1]
+[ext_resource path="res://spells/FireBallTrigger.gd" type="Script" id=1]
 
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
 radius = 10.0
 
-[node name="FireBall" type="Area2D" index="0"]
+[node name="FireBallTrigger" type="Area2D"]
 
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -18,11 +18,11 @@ audio_bus_override = false
 audio_bus_name = "Master"
 script = ExtResource( 1 )
 status = null
-status_duration = 5
-status_damage = 15
-damage = 20
+status_duration = 0
+status_damage = 0
+damage = 0
 velocity = 500
-duration = 0.5
+duration = 0
 dies_on_collision = true
 
 [node name="ColorRect" type="ColorRect" parent="." index="0"]

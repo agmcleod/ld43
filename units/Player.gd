@@ -11,12 +11,14 @@ var direction = Vector2(1, 0)
 var fireball_scene = load("res://spells/FireBall.tscn")
 var fire_shotgun_scene = load("res://spells/FireShotgun.tscn")
 var fire_snipe_scene = load("res://spells/FireSnipe.tscn")
+var fire_ball_trigger_scene = load("res://spells/FireBallTrigger.tscn")
+var fire_ball_short_trigger_scene = load("res://spells/FireBallShortTrigger.tscn")
 var frost_shotgun_scene = load("res://spells/FrostShotgun.tscn")
 var frostball_scene = load("res://spells/FrostBall.tscn")
 var frost_snipe_scene = load("res://spells/FrostSnipe.tscn")
 var arcane_ball_scene = load("res://spells/ArcaneBall.tscn")
 var arcane_short_ball_scene = load("res://spells/ArcaneShortBall.tscn")
-var arcane_short_explosion_scene = load("res://spells/ArcaneShortExplosion.tscn")
+var arcane_self_explosion_scene = load("res://spells/ArcaneSelfExplosion.tscn")
 var confused_scene = load("res://spells/ConfusedSpell.tscn")
 
 func _ready():
@@ -64,18 +66,36 @@ func _get_spell():
       elif ingredients.pig:
         resources_ui.add_resource(-1, "pig")
         return fire_snipe_scene.instance()
+    elif active_count == 3:
+      if ingredients.chicken && ingredients.pig:
+        resources_ui.add_resource(-1, "pig")
+        resources_ui.add_resource(-1, "chicken")
+        return confused_scene.instance()
+      elif ingredients.cow && ingredients.pig:
+        resources_ui.add_resource(-1, "pig")
+        resources_ui.add_resource(-1, "cow")
+        return fire_ball_trigger_scene.instance()
+      elif ingredients.cow && ingredients.chicken:
+        resources_ui.add_resource(-1, "pig")
+        resources_ui.add_resource(-1, "cow")
+        return fire_ball_short_trigger_scene.instance()
   elif ingredients.blue_bird:
     resources_ui.add_resource(-1, "blue_bird")
-    if ingredients.chicken:
-      resources_ui.add_resource(-1, "chicken")
-      return frostball_scene.instance()
-    elif ingredients.cow:
-      resources_ui.add_resource(-1, "cow")
-      return frost_shotgun_scene.instance()
-    elif ingredients.pig:
-      resources_ui.add_resource(-1, "pig")
-      return frost_snipe_scene.instance()
-    pass
+    if active_count == 2:
+      if ingredients.chicken:
+        resources_ui.add_resource(-1, "chicken")
+        return frostball_scene.instance()
+      elif ingredients.cow:
+        resources_ui.add_resource(-1, "cow")
+        return frost_shotgun_scene.instance()
+      elif ingredients.pig:
+        resources_ui.add_resource(-1, "pig")
+        return frost_snipe_scene.instance()
+    elif active_count == 3:
+      if ingredients.chicken && ingredients.pig:
+        resources_ui.add_resource(-1, "pig")
+        resources_ui.add_resource(-1, "chicken")
+        return confused_scene.instance()
   elif active_count == 2:
     if ingredients.cow && ingredients.pig:
       resources_ui.add_resource(-1, "cow")
@@ -93,7 +113,7 @@ func _get_spell():
     resources_ui.add_resource(-1, "cow")
     resources_ui.add_resource(-1, "pig")
     resources_ui.add_resource(-1, "chicken")
-    return arcane_short_explosion_scene.instance()
+    return arcane_self_explosion_scene.instance()
 
   else:
     pass
