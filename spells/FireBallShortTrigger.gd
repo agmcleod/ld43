@@ -14,13 +14,6 @@ func _on_body_entered(other):
     _create_explosion()
 
 
-func _process(delta):
-  time_alive += delta
-  if duration != 0 && time_alive > duration:
-    _create_explosion()
-    queue_free()
-
-  if velocity > 0:
-    self.position.x += velocity * direction.x * delta
-    self.position.y += velocity * direction.y * delta
-
+func on_end():
+  _create_explosion()
+  queue_free()

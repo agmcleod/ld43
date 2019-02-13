@@ -15,6 +15,8 @@ var fire_ball_trigger_scene = load("res://spells/FireBallTrigger.tscn")
 var fire_ball_short_trigger_scene = load("res://spells/FireBallShortTrigger.tscn")
 var frost_shotgun_scene = load("res://spells/FrostShotgun.tscn")
 var frostball_scene = load("res://spells/FrostBall.tscn")
+var cold_ball_trigger_scene = load("res://spells/ColdBallTrigger.tscn")
+var cold_ball_short_trigger_scene = load("res://spells/ColdBallShortTrigger.tscn")
 var frost_snipe_scene = load("res://spells/FrostSnipe.tscn")
 var arcane_ball_scene = load("res://spells/ArcaneBall.tscn")
 var arcane_short_ball_scene = load("res://spells/ArcaneShortBall.tscn")
@@ -54,69 +56,84 @@ func _physics_process(delta):
 func _get_spell():
   var ingredients = resources_ui.get_selected_ingredients()
   var active_count = resources_ui.get_active_count()
+  var to_remove = {}
+  var spell
   if ingredients.red_bird:
-    resources_ui.add_resource(-1, "red_bird")
+    to_remove["red_bird"] = -1
     if active_count == 2:
       if ingredients.chicken:
-        resources_ui.add_resource(-1, "chicken")
-        return fireball_scene.instance()
+        to_remove["chicken"] = -1
+        spell = fireball_scene.instance()
       elif ingredients.cow:
-        resources_ui.add_resource(-1, "cow")
-        return fire_shotgun_scene.instance()
+        to_remove["cow"] = -1
+        spell = fire_shotgun_scene.instance()
       elif ingredients.pig:
-        resources_ui.add_resource(-1, "pig")
-        return fire_snipe_scene.instance()
+        to_remove["pig"] = -1
+        spell = fire_snipe_scene.instance()
     elif active_count == 3:
       if ingredients.chicken && ingredients.pig:
-        resources_ui.add_resource(-1, "pig")
-        resources_ui.add_resource(-1, "chicken")
-        return confused_scene.instance()
+        to_remove["pig"] = -1
+        to_remove["chicken"] = -1
+        spell = confused_scene.instance()
       elif ingredients.cow && ingredients.pig:
-        resources_ui.add_resource(-1, "pig")
-        resources_ui.add_resource(-1, "cow")
-        return fire_ball_trigger_scene.instance()
+        to_remove["pig"] = -1
+        to_remove["cow"] = -1
+        spell = fire_ball_trigger_scene.instance()
       elif ingredients.cow && ingredients.chicken:
-        resources_ui.add_resource(-1, "pig")
-        resources_ui.add_resource(-1, "cow")
-        return fire_ball_short_trigger_scene.instance()
+        to_remove["chicken"] = -1
+        to_remove["cow"] = -1
+        spell = fire_ball_short_trigger_scene.instance()
   elif ingredients.blue_bird:
-    resources_ui.add_resource(-1, "blue_bird")
+    to_remove["blue_bird"] = -1
     if active_count == 2:
       if ingredients.chicken:
-        resources_ui.add_resource(-1, "chicken")
-        return frostball_scene.instance()
+        to_remove["chicken"] = -1
+        spell = frostball_scene.instance()
       elif ingredients.cow:
-        resources_ui.add_resource(-1, "cow")
-        return frost_shotgun_scene.instance()
+        to_remove["cow"] = -1
+        spell = frost_shotgun_scene.instance()
       elif ingredients.pig:
-        resources_ui.add_resource(-1, "pig")
-        return frost_snipe_scene.instance()
+        to_remove["pig"] = -1
+        spell = frost_snipe_scene.instance()
     elif active_count == 3:
       if ingredients.chicken && ingredients.pig:
-        resources_ui.add_resource(-1, "pig")
-        resources_ui.add_resource(-1, "chicken")
-        return confused_scene.instance()
+        to_remove["chicken"] = -1
+        to_remove["pig"] = -1
+        spell = confused_scene.instance()
+      elif ingredients.cow && ingredients.pig:
+        to_remove["pig"] = -1
+        to_remove["cow"] = -1
+        spell = cold_ball_trigger_scene.instance()
+      elif ingredients.cow && ingredients.chicken:
+        to_remove["chicken"] = -1
+        to_remove["cow"] = -1
+        spell = cold_ball_short_trigger_scene.instance()
   elif active_count == 2:
     if ingredients.cow && ingredients.pig:
-      resources_ui.add_resource(-1, "cow")
-      resources_ui.add_resource(-1, "pig")
-      return arcane_ball_scene.instance()
+      to_remove["pig"] = -1
+      to_remove["cow"] = -1
+      spell = arcane_ball_scene.instance()
     if ingredients.cow && ingredients.chicken:
-      resources_ui.add_resource(-1, "cow")
-      resources_ui.add_resource(-1, "chicken")
-      return arcane_short_ball_scene.instance()
+      to_remove["chicken"] = -1
+      to_remove["cow"] = -1
+      spell = arcane_short_ball_scene.instance()
     if ingredients.chicken && ingredients.pig:
-      resources_ui.add_resource(-1, "pig")
-      resources_ui.add_resource(-1, "chicken")
-      return confused_scene.instance()
+      to_remove["chicken"] = -1
+      to_remove["pig"] = -1
+      spell = confused_scene.instance()
   elif active_count == 3:
-    resources_ui.add_resource(-1, "cow")
-    resources_ui.add_resource(-1, "pig")
-    resources_ui.add_resource(-1, "chicken")
-    return arcane_self_explosion_scene.instance()
+    to_remove["chicken"] = -1
+    to_remove["cow"] = -1
+    to_remove["pig"] = -1
+    spell = arcane_self_explosion_scene.instance()
 
-  else:
-    pass
+
+  if spell:
+    for key in to_remove:
+      resources_ui.add_resource(to_remove[key], key)
+
+  return spell
+
 
 func _on_cast_pressed():
   if status == Constants.SPELL_STATUS_TYPE.FROZEN:

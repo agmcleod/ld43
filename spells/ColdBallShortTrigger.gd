@@ -1,9 +1,9 @@
 extends "res://spells/Spell.gd"
 
-var arcane_short_explosion_scene = load("res://spells/ArcaneShortExplosion.tscn")
+var cold_short_explosion_scene = load("res://spells/ColdShortExplosion.tscn")
 
 func _create_explosion():
-  var explosion = arcane_short_explosion_scene.instance()
+  var explosion = cold_short_explosion_scene.instance()
   explosion.position.x = self.position.x
   explosion.position.y = self.position.y
   get_tree().get_root().add_child(explosion)
@@ -17,3 +17,5 @@ func _on_body_entered(other):
 func on_end():
   _create_explosion()
   queue_free()
+
+

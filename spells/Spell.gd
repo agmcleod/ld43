@@ -46,11 +46,15 @@ func _ready():
 func _process(delta):
   time_alive += delta
   if duration != 0 && time_alive > duration:
-    queue_free()
+    on_end()
 
   if velocity > 0:
     self.position.x += velocity * direction.x * delta
     self.position.y += velocity * direction.y * delta
+
+
+func on_end():
+  queue_free()
 
 
 func set_direction(x, y):
