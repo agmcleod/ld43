@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://units/SpellReceiver.gd" type="Script" id=1]
 
@@ -7,7 +7,12 @@
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="KinematicBody2D" type="KinematicBody2D" groups=[
+[sub_resource type="CircleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 10.0
+
+[node name="EnemyBody" type="KinematicBody2D" index="0" groups=[
 "enemy",
 ]]
 
@@ -41,5 +46,21 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 color = Color( 0.15247, 0.344681, 0.644531, 1 )
+
+[node name="Sight" type="Area2D" parent="." index="2"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sight" index="0"]
+
+scale = Vector2( 29.9782, 29.9782 )
+shape = SubResource( 2 )
+_sections_unfolded = [ "Transform" ]
 
 

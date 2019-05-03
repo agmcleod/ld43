@@ -28,18 +28,35 @@ func _ready():
   # Initialization here
   pass
 
+
 func _physics_process(delta):
   velocity.x = 0
   velocity.y = 0
+  var moving = false
+  var animation_player: AnimationPlayer = _get_animation_player()
   if status != Constants.SPELL_STATUS_TYPE.FROZEN:
     if Input.is_action_pressed('right'):
       velocity.x += 1
+      if animation_player.current_animation != "Right":
+        animation_player.play("Right")
+      moving = true
     if Input.is_action_pressed('left'):
       velocity.x -= 1
+      moving = true
     if Input.is_action_pressed('down'):
       velocity.y += 1
+      moving = true
+      if animation_player.current_animation != "Right":
+        animation_player.play("Down")
     if Input.is_action_pressed('up'):
       velocity.y -= 1
+      moving = true
+
+
+  if moving && !animation_player.is_playing():
+    animation_player.play()
+  elif !moving && animation_player.is_playing():
+    animation_player.stop()
 
   if velocity.x != 0 || velocity.y != 0:
     direction.x = velocity.x
@@ -52,6 +69,11 @@ func _physics_process(delta):
   move_and_slide(velocity.normalized() * resulting_speed)
 
   pass
+
+
+func _get_animation_player() -> Node:
+  return self.get_node("AnimationPlayer")
+
 
 func _get_spell():
   var ingredients = resources_ui.get_selected_ingredients()

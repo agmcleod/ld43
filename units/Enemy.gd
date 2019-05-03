@@ -1,0 +1,1 @@
+extends "res://units/SpellReceiver.gd"
