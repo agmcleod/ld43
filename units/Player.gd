@@ -34,22 +34,29 @@ func _physics_process(delta):
   velocity.y = 0
   var moving = false
   var animation_player: AnimationPlayer = _get_animation_player()
+  var sprite: Sprite = _get_sprite()
   if status != Constants.SPELL_STATUS_TYPE.FROZEN:
     if Input.is_action_pressed('right'):
-      velocity.x += 1
+      velocity.x = 1
+      sprite.set_flip_h(false)
       if animation_player.current_animation != "Right":
         animation_player.play("Right")
       moving = true
     if Input.is_action_pressed('left'):
-      velocity.x -= 1
-      moving = true
-    if Input.is_action_pressed('down'):
-      velocity.y += 1
+      velocity.x = -1
       moving = true
       if animation_player.current_animation != "Right":
+        animation_player.play("Right")
+        sprite.set_flip_h(true)
+    if Input.is_action_pressed('down'):
+      moving = true
+      velocity.y = 1
+      if animation_player.current_animation != "Down":
         animation_player.play("Down")
+        sprite.set_flip_h(false)
     if Input.is_action_pressed('up'):
-      velocity.y -= 1
+      velocity.y = -1
+      sprite.set_flip_h(false)
       moving = true
 
 
@@ -73,6 +80,10 @@ func _physics_process(delta):
 
 func _get_animation_player() -> Node:
   return self.get_node("AnimationPlayer")
+
+
+func _get_sprite() -> Node:
+  return self.get_node("Sprite")
 
 
 func _get_spell():
