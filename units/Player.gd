@@ -11,10 +11,16 @@ var direction = Vector2(1, 0)
 func _ready():
   # Called when the node is added to the scene for the first time.
   # Initialization here
+  print(self.get_path())
   pass
 
 
 func _physics_process(delta):
+  if Input.is_action_just_pressed("ui_inventory"):
+    var panel = get_node("/root/game/UI/Inventory")
+    if !panel.visible:
+      panel.visible = true
+
   velocity.x = 0
   velocity.y = 0
   var moving = false

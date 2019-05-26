@@ -1,42 +1,39 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://TileSet.res" type="TileSet" id=1]
 [ext_resource path="res://Block.tscn" type="PackedScene" id=2]
-[ext_resource path="res://BlueBird.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Chicken.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Cow.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Pig.tscn" type="PackedScene" id=6]
-[ext_resource path="res://RedBird.tscn" type="PackedScene" id=7]
-[ext_resource path="res://units/Player.gd" type="Script" id=8]
-[ext_resource path="res://images/player/down/player1.png" type="Texture" id=9]
-[ext_resource path="res://images/player/down/player2.png" type="Texture" id=10]
-[ext_resource path="res://images/player/down/player4.png" type="Texture" id=11]
-[ext_resource path="res://images/player/down/player5.png" type="Texture" id=12]
-[ext_resource path="res://images/player/down/player6.png" type="Texture" id=13]
-[ext_resource path="res://images/player/down/player7.png" type="Texture" id=14]
-[ext_resource path="res://images/player/down/player8.png" type="Texture" id=15]
-[ext_resource path="res://images/player/right/player_right1.png" type="Texture" id=16]
-[ext_resource path="res://images/player/right/player_right3.png" type="Texture" id=17]
-[ext_resource path="res://images/player/right/player_right4.png" type="Texture" id=18]
-[ext_resource path="res://images/player/right/player_right5.png" type="Texture" id=19]
-[ext_resource path="res://images/player/right/player_right6.png" type="Texture" id=20]
-[ext_resource path="res://images/player/right/player_right7.png" type="Texture" id=21]
-[ext_resource path="res://images/player/right/player_right8.png" type="Texture" id=22]
-[ext_resource path="res://images/player/right/player_right9.png" type="Texture" id=23]
-[ext_resource path="res://images/player/right/player_right10.png" type="Texture" id=24]
-[ext_resource path="res://images/player/right/player_right11.png" type="Texture" id=25]
-[ext_resource path="res://images/player/right/player_right12.png" type="Texture" id=26]
-[ext_resource path="res://images/player/right/player_right13.png" type="Texture" id=27]
-[ext_resource path="res://images/player/up/player_up1.png" type="Texture" id=28]
-[ext_resource path="res://images/player/up/player_up2.png" type="Texture" id=29]
-[ext_resource path="res://images/player/up/player_up3.png" type="Texture" id=30]
-[ext_resource path="res://images/player/up/player_up5.png" type="Texture" id=31]
-[ext_resource path="res://images/player/up/player_up6.png" type="Texture" id=32]
-[ext_resource path="res://images/player/up/player_up7.png" type="Texture" id=33]
-[ext_resource path="res://images/player/up/player_up8.png" type="Texture" id=34]
-[ext_resource path="res://units/Enemy.tscn" type="PackedScene" id=35]
+[ext_resource path="res://ui/Discover.gd" type="Script" id=3]
+[ext_resource path="res://ui/crafting/IngredientItemList.gd" type="Script" id=4]
+[ext_resource path="res://units/Player.gd" type="Script" id=5]
+[ext_resource path="res://images/player/down/player1.png" type="Texture" id=6]
+[ext_resource path="res://images/player/down/player2.png" type="Texture" id=7]
+[ext_resource path="res://images/player/down/player4.png" type="Texture" id=8]
+[ext_resource path="res://images/player/down/player5.png" type="Texture" id=9]
+[ext_resource path="res://images/player/down/player6.png" type="Texture" id=10]
+[ext_resource path="res://images/player/down/player7.png" type="Texture" id=11]
+[ext_resource path="res://images/player/down/player8.png" type="Texture" id=12]
+[ext_resource path="res://images/player/right/player_right1.png" type="Texture" id=13]
+[ext_resource path="res://images/player/right/player_right3.png" type="Texture" id=14]
+[ext_resource path="res://images/player/right/player_right4.png" type="Texture" id=15]
+[ext_resource path="res://images/player/right/player_right5.png" type="Texture" id=16]
+[ext_resource path="res://images/player/right/player_right6.png" type="Texture" id=17]
+[ext_resource path="res://images/player/right/player_right7.png" type="Texture" id=18]
+[ext_resource path="res://images/player/right/player_right8.png" type="Texture" id=19]
+[ext_resource path="res://images/player/right/player_right9.png" type="Texture" id=20]
+[ext_resource path="res://images/player/right/player_right10.png" type="Texture" id=21]
+[ext_resource path="res://images/player/right/player_right11.png" type="Texture" id=22]
+[ext_resource path="res://images/player/right/player_right12.png" type="Texture" id=23]
+[ext_resource path="res://images/player/right/player_right13.png" type="Texture" id=24]
+[ext_resource path="res://images/player/up/player_up1.png" type="Texture" id=25]
+[ext_resource path="res://images/player/up/player_up2.png" type="Texture" id=26]
+[ext_resource path="res://images/player/up/player_up3.png" type="Texture" id=27]
+[ext_resource path="res://images/player/up/player_up5.png" type="Texture" id=28]
+[ext_resource path="res://images/player/up/player_up6.png" type="Texture" id=29]
+[ext_resource path="res://images/player/up/player_up7.png" type="Texture" id=30]
+[ext_resource path="res://images/player/up/player_up8.png" type="Texture" id=31]
+[ext_resource path="res://units/Enemy.tscn" type="PackedScene" id=32]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=1]
 resource_name = "Down"
 length = 0.7
 loop = true
@@ -50,10 +47,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ]
+"values": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "Right"
 length = 1.2
 loop = true
@@ -67,10 +64,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 16 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ) ]
+"values": [ ExtResource( 13 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "Up"
 length = 0.7
 tracks/0/type = "value"
@@ -83,15 +80,16 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ) ]
+"values": [ ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 9.89196, 15.3487 )
 
 [node name="game" type="Node"]
 
 [node name="TileMap" type="TileMap" parent="."]
+position = Vector2( 512, 288 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
@@ -103,77 +101,86 @@ position = Vector2( 976.855, 193.743 )
 [node name="BlockTwo" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1483.19, -278.404 )
 
-[node name="BlueBird" parent="." instance=ExtResource( 3 )]
-editor/display_folded = true
-position = Vector2( 924.809, -363.753 )
-
-[node name="Area2D" parent="BlueBird" index="1"]
-amount = 3
-
-[node name="Chicken" parent="." instance=ExtResource( 4 )]
-editor/display_folded = true
-position = Vector2( 923.558, -328.959 )
-
-[node name="Area2D" parent="Chicken" index="1"]
-amount = 3
-
-[node name="Cow" parent="." instance=ExtResource( 5 )]
-editor/display_folded = true
-position = Vector2( 982.052, -360.811 )
-
-[node name="Area2D" parent="Cow" index="0"]
-amount = 3
-
-[node name="Pig" parent="." instance=ExtResource( 6 )]
-editor/display_folded = true
-position = Vector2( 970.747, -311.272 )
-
-[node name="Area2D" parent="Pig" index="0"]
-amount = 3
-
-[node name="RedBird" parent="." instance=ExtResource( 7 )]
-editor/display_folded = true
-position = Vector2( 1028.09, -333.883 )
-
-[node name="Area2D" parent="RedBird" index="1"]
-amount = 2
-
 [node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Inventory" type="WindowDialog" parent="UI"]
+margin_left = 421.0
+margin_top = 192.0
+margin_right = 666.0
+margin_bottom = 416.0
+
+[node name="TabContainer" type="TabContainer" parent="UI/Inventory"]
+margin_left = -0.136322
+margin_top = 4.59103
+margin_right = 245.864
+margin_bottom = 225.591
+
+[node name="Discover" type="Control" parent="UI/Inventory/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+script = ExtResource( 3 )
+
+[node name="IngredientItemList" type="ItemList" parent="UI/Inventory/TabContainer/Discover"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -4.0
+margin_top = -5.0
+margin_right = 6.0
+margin_bottom = -28.0
+select_mode = 1
+allow_reselect = true
+allow_rmb_select = true
+max_columns = 2
+script = ExtResource( 4 )
+
+[node name="Button" type="Button" parent="UI/Inventory/TabContainer/Discover"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 73.038
+margin_top = 161.181
+margin_right = -65.962
+margin_bottom = 2.18109
+text = "Craft"
+
+[node name="Craft" type="Control" parent="UI/Inventory/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -202.0
+margin_bottom = -149.0
 
 [node name="Player" type="KinematicBody2D" parent="." groups=[
 "player",
 ]]
-editor/display_folded = true
-script = ExtResource( 8 )
+position = Vector2( 512, 288 )
+script = ExtResource( 5 )
 health = 400
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
-anims/Down = SubResource( 3 )
-anims/Right = SubResource( 4 )
-anims/Up = SubResource( 5 )
+anims/Down = SubResource( 1 )
+anims/Right = SubResource( 2 )
+anims/Up = SubResource( 3 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
 
 [node name="Sprite" type="Sprite" parent="Player"]
-texture = ExtResource( 34 )
+texture = ExtResource( 31 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
-[node name="Enemy" parent="." instance=ExtResource( 35 )]
+[node name="Enemy" parent="." instance=ExtResource( 32 )]
 position = Vector2( 1780, -140 )
 
-[node name="Enemy2" parent="." instance=ExtResource( 35 )]
+[node name="Enemy2" parent="." instance=ExtResource( 32 )]
 position = Vector2( 1780, 60 )
 
-
-[editable path="BlueBird"]
-
-[editable path="Chicken"]
-
-[editable path="Cow"]
-
-[editable path="Pig"]
-
-[editable path="RedBird"]
+[connection signal="item_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_item_selected"]
+[connection signal="multi_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_multi_selected"]

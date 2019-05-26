@@ -18,5 +18,4 @@ func _process(delta):
 
 func _on_body_entered(body):
   if body.name == "Player":
-    player.add_resource(amount, type_name)
     self.get_parent().queue_free()
