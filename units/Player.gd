@@ -15,7 +15,7 @@ func _ready():
   pass
 
 
-func _physics_process(delta):
+func _physics_process(delta: float):
   if Input.is_action_just_pressed("ui_inventory"):
     var panel = get_node("/root/game/UI/Inventory")
     if !panel.visible:

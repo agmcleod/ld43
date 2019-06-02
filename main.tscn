@@ -104,6 +104,7 @@ position = Vector2( 1483.19, -278.404 )
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Inventory" type="WindowDialog" parent="UI"]
+visible = true
 margin_left = 421.0
 margin_top = 192.0
 margin_right = 666.0
@@ -127,10 +128,7 @@ script = ExtResource( 3 )
 [node name="IngredientItemList" type="ItemList" parent="UI/Inventory/TabContainer/Discover"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -4.0
-margin_top = -5.0
-margin_right = 6.0
-margin_bottom = -28.0
+margin_bottom = -35.0
 select_mode = 1
 allow_reselect = true
 allow_rmb_select = true
@@ -140,10 +138,11 @@ script = ExtResource( 4 )
 [node name="Button" type="Button" parent="UI/Inventory/TabContainer/Discover"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 73.038
-margin_top = 161.181
-margin_right = -65.962
-margin_bottom = 2.18109
+margin_left = 73.0
+margin_top = 165.0
+margin_right = -66.0
+margin_bottom = -5.0
+disabled = true
 text = "Craft"
 
 [node name="Craft" type="Control" parent="UI/Inventory/TabContainer"]
@@ -152,8 +151,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
-margin_right = -202.0
-margin_bottom = -149.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Inventory/TabContainer/Craft"]
+margin_right = 238.0
+margin_bottom = 190.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Inventory/TabContainer/Craft/ScrollContainer"]
 
 [node name="Player" type="KinematicBody2D" parent="." groups=[
 "player",
@@ -184,3 +189,4 @@ position = Vector2( 1780, 60 )
 
 [connection signal="item_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_item_selected"]
 [connection signal="multi_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_multi_selected"]
+[connection signal="pressed" from="UI/Inventory/TabContainer/Discover/Button" to="UI/Inventory/TabContainer/Discover" method="_on_Button_pressed"]
