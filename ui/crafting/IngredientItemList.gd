@@ -1,52 +1,49 @@
 extends ItemList
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+onready var Constants = $"/root/Constants"
+onready var INGREDIENT_TYPES = Constants.INGREDIENT_TYPES
+onready var Inventory = $"/root/Inventory"
 
-enum INGREDIENT_TYPES {
-  RED,
-  BLUE,
-  SEED,
-  BIRD,
-  FROG,
-  SQUIRREL,
-  TURTLE
-}
-
-var DATA = [
+onready var DATA = [
   {
     "type": INGREDIENT_TYPES.RED,
-    "texture": load("res://images/ingredients/redflower.png")
+    "texture": load("res://images/ingredients/redflower.png"),
+    "label": str(Inventory.inventory_data[INGREDIENT_TYPES.RED])
   },
   {
     "type": INGREDIENT_TYPES.BLUE,
-    "texture": load("res://images/ingredients/blueflower.png")
+    "texture": load("res://images/ingredients/blueflower.png"),
+    "label": str(Inventory.inventory_data[INGREDIENT_TYPES.BLUE])
   },
   {
     "type": INGREDIENT_TYPES.SEED,
-    "texture": load("res://images/ingredients/seed.png")
+    "texture": load("res://images/ingredients/seed.png"),
+    "label": str(Inventory.inventory_data[INGREDIENT_TYPES.SEED])
   },
   {
     "type": INGREDIENT_TYPES.SQUIRREL,
-    "texture": load("res://images/ingredients/squirrel.png")
+    "texture": load("res://images/ingredients/squirrel.png"),
+    "label": str(Inventory.inventory_data[INGREDIENT_TYPES.SQUIRREL])
   },
   {
     "type": INGREDIENT_TYPES.BIRD,
-    "texture": load("res://images/ingredients/bird.png")
+    "texture": load("res://images/ingredients/bird.png"),
+    "label": str(Inventory.inventory_data[INGREDIENT_TYPES.BIRD])
   },
   {
     "type": INGREDIENT_TYPES.FROG,
-    "texture": load("res://images/ingredients/frog.png")
+    "texture": load("res://images/ingredients/frog.png"),
+    "label": str(Inventory.inventory_data[INGREDIENT_TYPES.FROG])
   },
   {
     "type": INGREDIENT_TYPES.TURTLE,
-    "texture": load("res://images/ingredients/turtle.png")
+    "texture": load("res://images/ingredients/turtle.png"),
+    "label": str(Inventory.inventory_data[INGREDIENT_TYPES.TURTLE])
   }
 ]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
   for item in DATA:
-    self.add_item("", item.texture)
+    self.add_item(item.label, item.texture)
 

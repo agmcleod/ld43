@@ -5,3 +5,13 @@ enum SPELL_STATUS_TYPE {
   FROZEN = 2,
   SLOWED = 3,
 }
+
+enum INGREDIENT_TYPES {
+  RED,
+  BLUE,
+  SEED,
+  BIRD,
+  FROG,
+  SQUIRREL,
+  TURTLE
+}
