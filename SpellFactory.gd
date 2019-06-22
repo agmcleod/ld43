@@ -5,7 +5,9 @@ class_name SpellFactory
 onready var Constants = $"/root/Constants"
 onready var Inventory = $"/root/Inventory"
 
-func create(selected_ingredients: Array):
+var discovered_spells: Dictionary = {}
+
+func cast_spell(selected_ingredients: Array):
   # if user has enough of the ingredients:
     # instances to track
     # spells = []
@@ -55,5 +57,16 @@ func discover(selected_ingredients: Array):
     spell_name.append("Shield")
   if ingredient_dictionary[Constants.INGREDIENT_TYPES.BIRD]:
     spell_name.append("Blast Wave")
+    
+  var crafted_count = 1
+  
+  if discovered_spells.has(spell_name):
+    crafted_count = discovered_spells[spell_name].crafted_count + 1
+    
+  discovered_spells[spell_name] = {
+    spell_name: spell_name,
+    ingredients: ingredient_dictionary.keys(),
+    crafted_count: crafted_count
+  }
   
   pass
