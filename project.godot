@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "ItemList",
+"class": "IngredientItemList",
+"language": "GDScript",
+"path": "res://ui/crafting/IngredientItemList.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -23,11 +28,18 @@ _global_script_classes=[ {
 "class": "SpellReceiver",
 "language": "GDScript",
 "path": "res://units/SpellReceiver.gd"
+}, {
+"base": "Control",
+"class": "SpellRow",
+"language": "GDScript",
+"path": "res://ui/crafting/CraftList.gd"
 } ]
 _global_script_class_icons={
+"IngredientItemList": "",
 "Player": "",
 "SpellFactory": "",
-"SpellReceiver": ""
+"SpellReceiver": "",
+"SpellRow": ""
 }
 
 [application]

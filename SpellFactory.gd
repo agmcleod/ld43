@@ -5,6 +5,11 @@ class_name SpellFactory
 onready var Constants = $"/root/Constants"
 onready var Inventory = $"/root/Inventory"
 
+onready var ingredient_item_list: IngredientItemList = $"../Discover/IngredientItemList"
+onready var crafted_spells_vbox = $"ScrollContainer/VBoxContainer"
+
+const SpellRow = preload("res://ui/crafting/SpellRow.tscn")
+
 var discovered_spells: Dictionary = {}
 
 func cast_spell(selected_ingredients: Array):
@@ -34,39 +39,49 @@ func discover(selected_ingredients: Array):
   var ingredient_dictionary := {}
   # do another pass to remove ingredients, and take stock
   for ingredient in selected_ingredients:
-    Inventory.invetory_data[ingredient] -= 1
+    Inventory.inventory_data[ingredient] -= 1
     ingredient_dictionary[ingredient] = true
     
-  var spell_name := []
+  ingredient_item_list.update_resources()
     
-  if ingredient_dictionary[Constants.INGREDIENT_TYPES.FROG]:
+  var spell_name = []
+    
+  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.FROG):
     spell_name.append("Multi")
-  if ingredient_dictionary[Constants.INGREDIENT_TYPES.SQUIRREL]:
+  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.SQUIRREL):
     spell_name.append("Amplified")
     
-  if ingredient_dictionary[Constants.INGREDIENT_TYPES.RED] && ingredient_dictionary[Constants.INGREDIENT_TYPES.BLUE]:
+  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.RED) && ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BLUE):
     spell_name.append("Water")
-  elif ingredient_dictionary[Constants.INGREDIENT_TYPES.RED]:
+  elif ingredient_dictionary.has(Constants.INGREDIENT_TYPES.RED):
     spell_name.append("Fire")
-  elif ingredient_dictionary[Constants.INGREDIENT_TYPES.BLUE]:
+  elif ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BLUE):
     spell_name.append("Frost")
     
-  if ingredient_dictionary[Constants.INGREDIENT_TYPES.SEED]:
+  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.SEED):
     spell_name.append("Ball")
-  if ingredient_dictionary[Constants.INGREDIENT_TYPES.TURTLE]:
+  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.TURTLE):
     spell_name.append("Shield")
-  if ingredient_dictionary[Constants.INGREDIENT_TYPES.BIRD]:
+  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD):
     spell_name.append("Blast Wave")
     
-  var crafted_count = 1
+  spell_name = PoolStringArray(spell_name).join(" ")
   
   if discovered_spells.has(spell_name):
-    crafted_count = discovered_spells[spell_name].crafted_count + 1
-    
-  discovered_spells[spell_name] = {
-    spell_name: spell_name,
-    ingredients: ingredient_dictionary.keys(),
-    crafted_count: crafted_count
-  }
+    discovered_spells[spell_name].crafted_count += 1
+    for child in crafted_spells_vbox.get_children():
+      if child.spell_name == spell_name:
+        child.set_count(discovered_spells[spell_name].crafted_count)
+        
+  else:
+    discovered_spells[spell_name] = {
+      "spell_name": spell_name,
+      "ingredients": ingredient_dictionary.keys(),
+      "crafted_count": 1
+    }
+  
+    var row := SpellRow.instance()
+    row.set_values(discovered_spells[spell_name])
+    crafted_spells_vbox.add_child(row)
   
   pass

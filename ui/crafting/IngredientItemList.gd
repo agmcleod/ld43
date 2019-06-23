@@ -4,6 +4,8 @@ onready var Constants = $"/root/Constants"
 onready var INGREDIENT_TYPES = Constants.INGREDIENT_TYPES
 onready var Inventory = $"/root/Inventory"
 
+class_name IngredientItemList
+
 onready var DATA = [
   {
     "type": INGREDIENT_TYPES.RED,
@@ -47,3 +49,10 @@ func _ready():
   for item in DATA:
     self.add_item(item.label, item.texture)
 
+
+func update_resources():
+  var i := 0
+  for item in DATA:
+    self.set_item_text(i, str(Inventory.inventory_data[item.type]))
+    i += 1
+    

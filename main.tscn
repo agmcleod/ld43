@@ -1,36 +1,37 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://TileSet.res" type="TileSet" id=1]
 [ext_resource path="res://ui/Discover.gd" type="Script" id=2]
 [ext_resource path="res://ui/crafting/IngredientItemList.gd" type="Script" id=3]
-[ext_resource path="res://units/Player.gd" type="Script" id=4]
-[ext_resource path="res://images/player/down/player1.png" type="Texture" id=5]
-[ext_resource path="res://images/player/down/player2.png" type="Texture" id=6]
-[ext_resource path="res://images/player/down/player4.png" type="Texture" id=7]
-[ext_resource path="res://images/player/down/player5.png" type="Texture" id=8]
-[ext_resource path="res://images/player/down/player6.png" type="Texture" id=9]
-[ext_resource path="res://images/player/down/player7.png" type="Texture" id=10]
-[ext_resource path="res://images/player/down/player8.png" type="Texture" id=11]
-[ext_resource path="res://images/player/right/player_right1.png" type="Texture" id=12]
-[ext_resource path="res://images/player/right/player_right3.png" type="Texture" id=13]
-[ext_resource path="res://images/player/right/player_right4.png" type="Texture" id=14]
-[ext_resource path="res://images/player/right/player_right5.png" type="Texture" id=15]
-[ext_resource path="res://images/player/right/player_right6.png" type="Texture" id=16]
-[ext_resource path="res://images/player/right/player_right7.png" type="Texture" id=17]
-[ext_resource path="res://images/player/right/player_right8.png" type="Texture" id=18]
-[ext_resource path="res://images/player/right/player_right9.png" type="Texture" id=19]
-[ext_resource path="res://images/player/right/player_right10.png" type="Texture" id=20]
-[ext_resource path="res://images/player/right/player_right11.png" type="Texture" id=21]
-[ext_resource path="res://images/player/right/player_right12.png" type="Texture" id=22]
-[ext_resource path="res://images/player/right/player_right13.png" type="Texture" id=23]
-[ext_resource path="res://images/player/up/player_up1.png" type="Texture" id=24]
-[ext_resource path="res://images/player/up/player_up2.png" type="Texture" id=25]
-[ext_resource path="res://images/player/up/player_up3.png" type="Texture" id=26]
-[ext_resource path="res://images/player/up/player_up5.png" type="Texture" id=27]
-[ext_resource path="res://images/player/up/player_up6.png" type="Texture" id=28]
-[ext_resource path="res://images/player/up/player_up7.png" type="Texture" id=29]
-[ext_resource path="res://images/player/up/player_up8.png" type="Texture" id=30]
-[ext_resource path="res://units/Enemy.tscn" type="PackedScene" id=31]
+[ext_resource path="res://SpellFactory.gd" type="Script" id=4]
+[ext_resource path="res://units/Player.gd" type="Script" id=5]
+[ext_resource path="res://images/player/down/player1.png" type="Texture" id=6]
+[ext_resource path="res://images/player/down/player2.png" type="Texture" id=7]
+[ext_resource path="res://images/player/down/player4.png" type="Texture" id=8]
+[ext_resource path="res://images/player/down/player5.png" type="Texture" id=9]
+[ext_resource path="res://images/player/down/player6.png" type="Texture" id=10]
+[ext_resource path="res://images/player/down/player7.png" type="Texture" id=11]
+[ext_resource path="res://images/player/down/player8.png" type="Texture" id=12]
+[ext_resource path="res://images/player/right/player_right1.png" type="Texture" id=13]
+[ext_resource path="res://images/player/right/player_right3.png" type="Texture" id=14]
+[ext_resource path="res://images/player/right/player_right4.png" type="Texture" id=15]
+[ext_resource path="res://images/player/right/player_right5.png" type="Texture" id=16]
+[ext_resource path="res://images/player/right/player_right6.png" type="Texture" id=17]
+[ext_resource path="res://images/player/right/player_right7.png" type="Texture" id=18]
+[ext_resource path="res://images/player/right/player_right8.png" type="Texture" id=19]
+[ext_resource path="res://images/player/right/player_right9.png" type="Texture" id=20]
+[ext_resource path="res://images/player/right/player_right10.png" type="Texture" id=21]
+[ext_resource path="res://images/player/right/player_right11.png" type="Texture" id=22]
+[ext_resource path="res://images/player/right/player_right12.png" type="Texture" id=23]
+[ext_resource path="res://images/player/right/player_right13.png" type="Texture" id=24]
+[ext_resource path="res://images/player/up/player_up1.png" type="Texture" id=25]
+[ext_resource path="res://images/player/up/player_up2.png" type="Texture" id=26]
+[ext_resource path="res://images/player/up/player_up3.png" type="Texture" id=27]
+[ext_resource path="res://images/player/up/player_up5.png" type="Texture" id=28]
+[ext_resource path="res://images/player/up/player_up6.png" type="Texture" id=29]
+[ext_resource path="res://images/player/up/player_up7.png" type="Texture" id=30]
+[ext_resource path="res://images/player/up/player_up8.png" type="Texture" id=31]
+[ext_resource path="res://units/Enemy.tscn" type="PackedScene" id=32]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Down"
@@ -46,7 +47,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ]
+"values": [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -63,7 +64,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 12 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ) ]
+"values": [ ExtResource( 13 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -79,7 +80,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ) ]
+"values": [ ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ) ]
 }
 
 [sub_resource type="RectangleShape2D" id=4]
@@ -145,6 +146,7 @@ margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
+script = ExtResource( 4 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="UI/Inventory/TabContainer/Craft"]
 margin_right = 238.0
@@ -156,7 +158,7 @@ margin_bottom = 190.0
 "player",
 ]]
 position = Vector2( 512, 288 )
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 health = 400
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
@@ -168,15 +170,15 @@ anims/Up = SubResource( 3 )
 current = true
 
 [node name="Sprite" type="Sprite" parent="Player"]
-texture = ExtResource( 30 )
+texture = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource( 4 )
 
-[node name="Enemy" parent="." instance=ExtResource( 31 )]
+[node name="Enemy" parent="." instance=ExtResource( 32 )]
 position = Vector2( 1780, -140 )
 
-[node name="Enemy2" parent="." instance=ExtResource( 31 )]
+[node name="Enemy2" parent="." instance=ExtResource( 32 )]
 position = Vector2( 1780, 60 )
 
 [connection signal="item_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_item_selected"]
