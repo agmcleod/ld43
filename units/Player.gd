@@ -5,6 +5,8 @@ class_name Player
 
 export (int) var speed = 200
 
+onready var spell_factory = $"/root/game/UI/Inventory/Craft"
+
 var velocity = Vector2()
 var direction = Vector2(1, 0)
 
@@ -67,8 +69,23 @@ func _physics_process(delta: float):
     resulting_speed /= 2
 
   move_and_slide(velocity.normalized() * resulting_speed)
+  
+  self._handle_spell_cast()
 
   pass
+
+
+func _handle_spell_cast():
+  if Input.is_action_pressed("cast_one"):
+    spell_factory.cast_spell(1)
+  elif Input.is_action_pressed("cast_two"):
+    spell_factory.cast_spell(2)
+  elif Input.is_action_pressed("cast_three"):
+    spell_factory.cast_spell(3)
+  elif Input.is_action_pressed("cast_four"):
+    spell_factory.cast_spell(4)
+  elif Input.is_action_pressed("cast_fice"):
+    spell_factory.cast_spell(5)
 
 
 func _get_animation_player() -> Node:

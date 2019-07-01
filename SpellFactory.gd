@@ -11,8 +11,16 @@ onready var crafted_spells_vbox = $"ScrollContainer/VBoxContainer"
 const SpellRow = preload("res://ui/crafting/SpellRow.tscn")
 
 var discovered_spells: Dictionary = {}
+var bound_spells: Dictionary = {}
 
-func cast_spell(selected_ingredients: Array):
+func cast_spell(spell_index: int):
+  if bound_spells.has(spell_index):
+    var spell_name: String = bound_spells[spell_index]
+    var spell = discovered_spells[spell_name]
+    if spell.crafted_count > 0:
+      var spells_to_spawn = []
+      
+  
   # if user has enough of the ingredients:
     # instances to track
     # spells = []
@@ -82,6 +90,17 @@ func discover(selected_ingredients: Array):
   
     var row := SpellRow.instance()
     row.set_values(discovered_spells[spell_name])
+    row.connect("item_selected", self, "_on_spell_binding_changed")
     crafted_spells_vbox.add_child(row)
   
   pass
+
+
+func _on_spell_binding_changed(spell_name: String, selected_node_index: int, num: int):
+  if discovered_spells.has(spell_name):
+    for child in crafted_spells_vbox.get_children():
+      var option_button: OptionButton = child.get_option_button()
+      if option_button.selected == num && child.get_index() != selected_node_index:
+        option_button.select(0)
+        
+    bound_spells[num] = spell_name
