@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://images/spells/FireWave.png" type="Texture" id=1]
+[ext_resource path="res://spells/Spell.gd" type="Script" id=1]
+[ext_resource path="res://images/spells/FireWave.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 29.2996 )
@@ -33,11 +34,14 @@ tracks/1/keys = {
 "values": [ Vector2( 10, 9.77551 ), Vector2( 10, 12.9953 ), Vector2( 10, 16.9001 ), Vector2( 10, 20.3254 ), Vector2( 10, 23.8192 ), Vector2( 10, 29.2996 ) ]
 }
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="Area2D" type="Area2D"]
+script = ExtResource( 1 )
+spell_type = 2
+damage = 12
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.998165, 1 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 hframes = 6
 frame = 5
 

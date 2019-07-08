@@ -13,30 +13,61 @@ const SpellRow = preload("res://ui/crafting/SpellRow.tscn")
 var discovered_spells: Dictionary = {}
 var bound_spells: Dictionary = {}
 
-func cast_spell(spell_index: int):
+func cast_spell(player: Node, spell_index: int, direction: Vector2):
   if bound_spells.has(spell_index):
     var spell_name: String = bound_spells[spell_index]
     var spell = discovered_spells[spell_name]
     if spell.crafted_count > 0:
-      var spells_to_spawn = []
+      var spell_base := ""
       
-  
-  # if user has enough of the ingredients:
-    # instances to track
-    # spells = []
-    # check for seed in list
-      # spells.push(ball_scene)
-    # check for turtle (shield), and bird (wave)
-      # spells.push(scene based on type)
-    # if red, apply fire status to spells[]
-    # if blue, apply frost status to spells[]
-    # if both red & blue? dont know
+      # check for seed in list
+      if spell.ingredients.has(Constants.INGREDIENT_TYPES.SEED):
+        spell_base = "ball"
+      # check for turtle (shield), and bird (wave)
+      if spell.ingredients.has(Constants.INGREDIENT_TYPES.TURTLE):
+        spell_base = "shield"
+      if spell.ingredients.has(Constants.INGREDIENT_TYPES.BIRD):
+        spell_base = "wave"
 
-    # check for squirrel (amplify)
-      # modify damage accordingly
-    # check for frog (split)
-      # split spell, and create two adjacent ones on different angle
-  pass
+      var spell_type_name = "Arcane"
+      var spell_status_type = Constants.SPELL_STATUS_TYPE.ARCANE
+      if spell.ingredients.has(Constants.INGREDIENT_TYPES.RED) && spell.ingredients.has(Constants.INGREDIENT_TYPES.BLUE):
+        spell_type_name = "Water"
+        assert("Water not supported yet")
+      elif spell.ingredients.has(Constants.INGREDIENT_TYPES.RED):
+        spell_type_name = "Fire"
+        spell_status_type = Constants.SPELL_STATUS_TYPE.FIRE
+      elif spell.ingredients.has(Constants.INGREDIENT_TYPES.BLUE):
+        spell_type_name = "Frost"
+        spell_status_type = Constants.SPELL_STATUS_TYPE.FROST
+        
+      print("Creating res://spells/%s%s.tscn" % [spell_type_name, spell_base])
+      var spell_scene = load("res://spells/%s%s.tscn" % [spell_type_name, spell_base]).instance()
+      spell_scene.set_status_type(spell_status_type)
+      var spells_to_spawn = [spell_scene]
+      
+      if spell_base == "shield":
+        spell_scene.set_velocity(0)
+      else:
+        spell_scene.set_velocity(600)
+        spell_scene.set_direction(direction)
+  
+      if spell.ingredients.has(Constants.INGREDIENT_TYPES.FROG):
+        # apply rotational direction to two spells
+        # keep original in center
+        # reduce dmg by 50% for each
+        pass
+      if spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL):
+        # amplify dmg by 50%
+        pass
+        
+      for spell in spells_to_spawn:
+        if spell_base == "shield":
+          player.add_child(spell)
+        else:
+          spell.position.x = player.position.x
+          spell.position.y = player.position.y
+          get_tree().get_root().add_child(spell)
 
 
 func discover(selected_ingredients: Array):
@@ -84,7 +115,7 @@ func discover(selected_ingredients: Array):
   else:
     discovered_spells[spell_name] = {
       "spell_name": spell_name,
-      "ingredients": ingredient_dictionary.keys(),
+      "ingredients": ingredient_dictionary,
       "crafted_count": 1
     }
   

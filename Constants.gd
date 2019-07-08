@@ -1,9 +1,9 @@
 extends Node
 
 enum SPELL_STATUS_TYPE {
-  BURNING = 1,
-  FROZEN = 2,
-  SLOWED = 3,
+  ARCANE = 1,
+  FIRE = 2,
+  FROST = 3,
 }
 
 enum INGREDIENT_TYPES {
@@ -14,4 +14,10 @@ enum INGREDIENT_TYPES {
   FROG,
   SQUIRREL,
   TURTLE
+}
+
+enum SPELL_TYPE {
+  BALL = 1,
+  WAVE = 2,
+  SHIELD = 3
 }
