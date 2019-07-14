@@ -13,6 +13,19 @@ const SpellRow = preload("res://ui/crafting/SpellRow.tscn")
 var discovered_spells: Dictionary = {}
 var bound_spells: Dictionary = {}
 
+func _create_spell_type(spell_status_type, spell_type_name: String, spell_base: String, direction: Vector2) -> Node:
+  var spell_scene = load("res://spells/%s%s.tscn" % [spell_type_name, spell_base]).instance()
+  spell_scene.set_status_type(spell_status_type)
+  
+  if spell_base == "shield":
+    spell_scene.set_velocity(0)
+  else:
+    spell_scene.set_velocity(600)
+    spell_scene.set_direction(direction)
+    
+  return spell_scene
+  
+
 func cast_spell(player: Node, spell_index: int, direction: Vector2):
   if bound_spells.has(spell_index):
     var spell_name: String = bound_spells[spell_index]
@@ -42,21 +55,41 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
         spell_status_type = Constants.SPELL_STATUS_TYPE.FROST
         
       print("Creating res://spells/%s%s.tscn" % [spell_type_name, spell_base])
-      var spell_scene = load("res://spells/%s%s.tscn" % [spell_type_name, spell_base]).instance()
-      spell_scene.set_status_type(spell_status_type)
+      var spell_scene = _create_spell_type(spell_status_type, spell_type_name, spell_base, direction)
       var spells_to_spawn = [spell_scene]
-      
-      if spell_base == "shield":
-        spell_scene.set_velocity(0)
-      else:
-        spell_scene.set_velocity(600)
-        spell_scene.set_direction(direction)
   
       if spell.ingredients.has(Constants.INGREDIENT_TYPES.FROG):
-        # apply rotational direction to two spells
-        # keep original in center
-        # reduce dmg by 50% for each
-        pass
+        if spell_base == "shield":
+          spell_scene.position.x = -32
+          spell_scene.position.y = 32
+          for n in range(2):
+            var other_spell = _create_spell_type(spell_status_type, spell_type_name, spell_base, direction)
+            if n == 0:
+              other_spell.position.x = 32
+              other_spell.position.y = 32
+            else:
+              other_spell.position.y = -32
+
+            spells_to_spawn.append(other_spell)
+        else:
+          spells_to_spawn[0].damage /= 2
+          # create the adjacent spells
+          for n in range(2):
+            var other_spell = _create_spell_type(spell_status_type, spell_type_name, spell_base, direction)
+            if n == 0:
+              if other_spell.direction.x != 0:              
+                other_spell.direction.y = -0.5
+              elif other_spell.direction.y != 0:
+                other_spell.direction.x = -0.5
+            else:
+              if other_spell.direction.x != 0:              
+                other_spell.direction.y = 0.5
+              elif other_spell.direction.y != 0:
+                other_spell.direction.x = 0.5
+            
+            other_spell.damage /= 2
+            spells_to_spawn.append(other_spell)
+      
       if spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL):
         # amplify dmg by 50%
         pass
