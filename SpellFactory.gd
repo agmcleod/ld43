@@ -26,11 +26,19 @@ func _create_spell_type(spell_status_type, spell_type_name: String, spell_base: 
   return spell_scene
   
 
+func _set_spell_crafted_count(spell_name: String):
+  for child in crafted_spells_vbox.get_children():
+    if child.spell_name == spell_name:
+      child.set_count(discovered_spells[spell_name].crafted_count)
+  
+
 func cast_spell(player: Node, spell_index: int, direction: Vector2):
   if bound_spells.has(spell_index):
     var spell_name: String = bound_spells[spell_index]
     var spell = discovered_spells[spell_name]
     if spell.crafted_count > 0:
+      spell.crafted_count -= 1
+      _set_spell_crafted_count(spell_name)
       var spell_base := ""
       
       # check for seed in list
@@ -141,9 +149,7 @@ func discover(selected_ingredients: Array):
   
   if discovered_spells.has(spell_name):
     discovered_spells[spell_name].crafted_count += 1
-    for child in crafted_spells_vbox.get_children():
-      if child.spell_name == spell_name:
-        child.set_count(discovered_spells[spell_name].crafted_count)
+    _set_spell_crafted_count(spell_name)
         
   else:
     discovered_spells[spell_name] = {
@@ -155,6 +161,7 @@ func discover(selected_ingredients: Array):
     var row := SpellRow.instance()
     row.set_values(discovered_spells[spell_name])
     row.connect("item_selected", self, "_on_spell_binding_changed")
+    row.connect("spell_name_crafted", self, "_on_spell_name_crafted")
     crafted_spells_vbox.add_child(row)
   
   pass
@@ -168,3 +175,10 @@ func _on_spell_binding_changed(spell_name: String, selected_node_index: int, num
         option_button.select(0)
         
     bound_spells[num] = spell_name
+    
+
+func _on_spell_name_crafted(spell_name: String):
+  # if the user is triggering this, they should have a spell
+  if discovered_spells.has(spell_name):
+    discovered_spells[spell_name].crafted_count += 1
+    _set_spell_crafted_count(spell_name)

@@ -3,6 +3,7 @@ extends Control
 class_name SpellRow
 
 signal item_selected
+signal spell_name_crafted
 
 var spell_name := ""
 
@@ -42,3 +43,7 @@ func _on_OptionButton_item_selected(id: int):
 func get_option_button() -> Node:
   return $"HBoxContainer/OptionButton"
   
+
+func _on_CraftButton_pressed():
+  emit_signal("spell_name_crafted", spell_name)
+  pass # Replace with function body.
