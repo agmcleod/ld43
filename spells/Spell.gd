@@ -8,6 +8,7 @@ export (int) var damage;
 onready var status_type = Constants.SPELL_STATUS_TYPE.ARCANE
 
 var direction = Vector2()
+var default_direction = Vector2(1, 0)
 var velocity = 0
 var duration: float = 100
 var time_alive: float = 0
@@ -24,6 +25,7 @@ func _process(delta):
 
 func set_direction(dir: Vector2):
   direction = dir
+  rotate(default_direction.angle_to(dir))
 
 
 func set_status_type(new_status_type):
