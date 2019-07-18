@@ -18,11 +18,6 @@ onready var DATA = [
     "label": str(Inventory.inventory_data[INGREDIENT_TYPES.BLUE])
   },
   {
-    "type": INGREDIENT_TYPES.SEED,
-    "texture": load("res://images/ingredients/seed.png"),
-    "label": str(Inventory.inventory_data[INGREDIENT_TYPES.SEED])
-  },
-  {
     "type": INGREDIENT_TYPES.SQUIRREL,
     "texture": load("res://images/ingredients/squirrel.png"),
     "label": str(Inventory.inventory_data[INGREDIENT_TYPES.SQUIRREL])

@@ -39,17 +39,19 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
     if spell.crafted_count > 0:
       spell.crafted_count -= 1
       _set_spell_crafted_count(spell_name)
-      var spell_base := ""
-      
-      # check for seed in list
-      if spell.ingredients.has(Constants.INGREDIENT_TYPES.SEED):
-        spell_base = "ball"
+      var spell_base := "ball"
+
       # check for turtle (shield), and bird (wave)
       if spell.ingredients.has(Constants.INGREDIENT_TYPES.TURTLE):
         spell_base = "shield"
       if spell.ingredients.has(Constants.INGREDIENT_TYPES.BIRD):
         spell_base = "wave"
 
+      # Since removing seed as a thing, arcane ball no longer exists
+      # Need to figure out how to make this work
+      
+      # Selecting a spell without seed doesnt seem useful, unless i want
+      # spell craft fail states, like cooking in BOTW
       var spell_type_name = "Arcane"
       var spell_status_type = Constants.SPELL_STATUS_TYPE.ARCANE
       if spell.ingredients.has(Constants.INGREDIENT_TYPES.RED) && spell.ingredients.has(Constants.INGREDIENT_TYPES.BLUE):
@@ -99,8 +101,8 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
             spells_to_spawn.append(other_spell)
       
       if spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL):
-        # amplify dmg by 50%
-        pass
+        for spell in spells_to_spawn:
+          spell.damage *= 0.5
         
       for spell in spells_to_spawn:
         if spell_base == "shield":
@@ -138,12 +140,12 @@ func discover(selected_ingredients: Array):
   elif ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BLUE):
     spell_name.append("Frost")
     
-  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.SEED):
-    spell_name.append("Ball")
   if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.TURTLE):
     spell_name.append("Shield")
   if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD):
     spell_name.append("Blast Wave")
+  if !ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD) && !ingredient_dictionary.has(Constants.INGREDIENT_TYPES.TURTLE):
+    spell_name.append("Ball")
     
   spell_name = PoolStringArray(spell_name).join(" ")
   

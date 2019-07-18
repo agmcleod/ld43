@@ -9,7 +9,6 @@ enum SPELL_STATUS_TYPE {
 enum INGREDIENT_TYPES {
   RED,
   BLUE,
-  SEED,
   BIRD,
   FROG,
   SQUIRREL,
