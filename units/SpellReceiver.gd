@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 class_name SpellReceiver
 
+const FloatingText = preload("res://ui/FloatingText.tscn")
+
 export var health = 0
 var status = 0
 var effect_timer = 0
@@ -10,6 +12,9 @@ var tick_rate = 1.0
 
 func take_damage(amount: int):
   health -= amount
+  var floating_text = FloatingText.instance()
+  floating_text.text = "%d" % round(amount * -1)
+  add_child(floating_text)
   if health <= 0:
     queue_free()
 

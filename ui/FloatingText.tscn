@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/FloatingText.gd" type="Script" id=1]
+
+[node name="Label" type="Label"]
+margin_left = -0.0981789
+margin_top = -10.0
+custom_colors/font_color = Color( 0.952941, 0.945098, 0, 1 )
+text = "Hi"
+script = ExtResource( 1 )
+

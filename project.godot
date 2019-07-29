@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Arrow",
+"language": "GDScript",
+"path": "res://units/Arrow.gd"
+}, {
+"base": "Label",
+"class": "FloatingText",
+"language": "GDScript",
+"path": "res://ui/FloatingText.gd"
+}, {
 "base": "ItemList",
 "class": "IngredientItemList",
 "language": "GDScript",
@@ -35,6 +45,8 @@ _global_script_classes=[ {
 "path": "res://ui/crafting/SpellRow.gd"
 } ]
 _global_script_class_icons={
+"Arrow": "",
+"FloatingText": "",
 "IngredientItemList": "",
 "Player": "",
 "SpellFactory": "",

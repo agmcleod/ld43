@@ -16,8 +16,7 @@ var time_alive: float = 0
 func _process(delta):
   time_alive += delta
   if velocity != 0:
-    self.position.x += direction.x * velocity * delta
-    self.position.y += direction.y * velocity * delta
+    self.position += direction.normalized() * velocity * delta
 
   if time_alive >= duration:
     queue_free()

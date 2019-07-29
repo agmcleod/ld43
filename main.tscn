@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://TileSet.res" type="TileSet" id=1]
 [ext_resource path="res://ui/Discover.gd" type="Script" id=2]
@@ -31,6 +31,7 @@
 [ext_resource path="res://images/player/up/player_up6.png" type="Texture" id=29]
 [ext_resource path="res://images/player/up/player_up7.png" type="Texture" id=30]
 [ext_resource path="res://images/player/up/player_up8.png" type="Texture" id=31]
+[ext_resource path="res://units/RangedGoblin.tscn" type="PackedScene" id=32]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Down"
@@ -158,6 +159,7 @@ margin_bottom = 190.0
 [node name="Player" type="KinematicBody2D" parent="." groups=[
 "player",
 ]]
+editor/display_folded = true
 position = Vector2( 512, 288 )
 script = ExtResource( 5 )
 health = 400
@@ -175,6 +177,9 @@ texture = ExtResource( 11 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource( 4 )
+
+[node name="KinematicBody2D" parent="." instance=ExtResource( 32 )]
+position = Vector2( 747.552, 187.385 )
 
 [connection signal="item_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_item_selected"]
 [connection signal="multi_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_multi_selected"]
