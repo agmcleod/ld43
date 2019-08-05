@@ -88,8 +88,10 @@ extents = Vector2( 9.89196, 15.3487 )
 
 [node name="game" type="Node"]
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="Navigation2D" type="Navigation2D" parent="."]
 position = Vector2( 512, 288 )
+
+[node name="TileMap" type="TileMap" parent="Navigation2D"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
@@ -178,7 +180,7 @@ texture = ExtResource( 11 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 shape = SubResource( 4 )
 
-[node name="KinematicBody2D" parent="." instance=ExtResource( 32 )]
+[node name="Enemy" parent="." instance=ExtResource( 32 )]
 position = Vector2( 747.552, 187.385 )
 
 [connection signal="item_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_item_selected"]
