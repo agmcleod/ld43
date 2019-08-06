@@ -5,7 +5,7 @@ onready var nav_2d: Navigation2D = $"/root/game/Navigation2D"
 
 const Arrow = preload("res://units/Arrow.tscn")
 
-export (float) var speed = 1800
+export (float) var speed = 3500
 export (float) var fire_rate = 1.5
 
 var tracked_node = null
@@ -38,6 +38,7 @@ func _physics_process(delta: float):
     for i in range(path.size()):
       var distance_to_point := start_point.distance_to(path[0])
       if distance <= distance_to_point && distance >= 0.0:
+        # print(path[0], " - ", start_point, " = ", (path[0] - start_point).normalized())
         move_and_slide((path[0] - start_point).normalized() * distance)
         break
       distance -= distance_to_point
@@ -56,5 +57,5 @@ func _on_body_exited_vision(body):
     last_tracked_position.x = tracked_node.position.x
     last_tracked_position.y = tracked_node.position.y
     tracked_node = null
-    path = nav_2d.get_simple_path(self.position, last_tracked_position)
-    print(self.position, " to ", last_tracked_position, " ", path)
+    path = nav_2d.get_simple_path(self.global_position, last_tracked_position)
+    print("path for ", global_position, " ", last_tracked_position, " ", path)
