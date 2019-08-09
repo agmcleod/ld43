@@ -89,9 +89,9 @@ extents = Vector2( 9.89196, 15.3487 )
 [node name="game" type="Node"]
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
-position = Vector2( 512, 288 )
 
 [node name="TileMap" type="TileMap" parent="Navigation2D"]
+position = Vector2( 512, 288 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1

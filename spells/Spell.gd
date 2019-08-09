@@ -12,6 +12,12 @@ var default_direction = Vector2(1, 0)
 var velocity = 0
 var duration: float = 100
 var time_alive: float = 0
+var spell_owner :Node = null
+
+
+func _ready():
+  self.connect("body_entered", self, "_on_body_entered")
+
 
 func _process(delta):
   time_alive += delta
@@ -20,6 +26,10 @@ func _process(delta):
 
   if time_alive >= duration:
     queue_free()
+
+
+func set_owner(node: Node):
+  spell_owner = node
 
 
 func set_direction(dir: Vector2):
@@ -34,3 +44,8 @@ func set_status_type(new_status_type):
 func set_velocity(vel: int):
   velocity = vel
 
+
+func _on_body_entered(other):
+  if other != spell_owner && other.get_groups().has("spell_receiver"):
+    queue_free()
+    other.take_damage(damage)

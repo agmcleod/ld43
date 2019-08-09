@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 class_name Arrow
 
-var velocity := 280
+var velocity := 5
 var direction = Vector2(0, 0)
 var damage = 5
 
@@ -17,7 +17,7 @@ func _ready():
   
 
 func _physics_process(delta):
-  var collision = move_and_collide(direction * velocity * delta)
+  var collision = move_and_collide(direction * velocity)
   if collision:
     var collider = collision.get_collider()
     var groups = collider.get_groups()
@@ -28,5 +28,5 @@ func _physics_process(delta):
       self.queue_free()
 
 
-func set_target(position: Vector2):
-  direction = (position - self.position).normalized()
+func set_direction(dir: Vector2):
+  direction = dir

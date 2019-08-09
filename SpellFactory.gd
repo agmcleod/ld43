@@ -105,6 +105,7 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
           spell.damage *= 0.5
         
       for spell in spells_to_spawn:
+        spell.set_owner(player)
         if spell_base == "shield":
           player.add_child(spell)
         else:

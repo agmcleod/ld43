@@ -10,6 +10,10 @@ var effect_timer = 0
 var damage_per_tick = 0
 var tick_rate = 1.0
 
+func _ready():
+  add_to_group("spell_receiver")
+  
+
 func take_damage(amount: int):
   health -= amount
   var floating_text = FloatingText.instance()
