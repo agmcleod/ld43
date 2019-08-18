@@ -7,6 +7,7 @@ const Arrow = preload("res://units/Arrow.tscn")
 
 export (float) var speed = 3800
 export (float) var fire_rate = 1.5
+export (float) var chase_distance = 400
 
 var tracked_node = null
 var last_tracked_position := Vector2(0, 0)
@@ -56,4 +57,17 @@ func _on_body_exited_vision(body):
     last_tracked_position.x = tracked_node.position.x
     last_tracked_position.y = tracked_node.position.y
     tracked_node = null
-    path = nav_2d.get_simple_path(self.global_position, last_tracked_position)
+    _set_path_for_tracked_position()
+
+
+func _set_path_for_tracked_position():
+  path = nav_2d.get_simple_path(self.global_position, last_tracked_position)
+
+
+func handle_spell(spell: Spell):
+  .handle_spell(spell)
+  # Move towards where spell came from
+  if tracked_node == null:
+    last_tracked_position.x = spell.direction.x * -chase_distance + position.x
+    last_tracked_position.y = spell.direction.y * -chase_distance + position.y
+    _set_path_for_tracked_position()

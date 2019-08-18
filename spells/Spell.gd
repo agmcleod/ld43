@@ -1,9 +1,13 @@
 extends Area2D
 
+class_name Spell
+
 onready var Constants = $"/root/Constants"
 
 export (Constants.SPELL_TYPE) var spell_type
 export (int) var damage;
+export (int) var status_duration = 10
+export (int) var status_damage = 0
 
 onready var status_type = Constants.SPELL_STATUS_TYPE.ARCANE
 
@@ -45,7 +49,8 @@ func set_velocity(vel: int):
   velocity = vel
 
 
-func _on_body_entered(other):
-  if other != spell_owner && other.get_groups().has("spell_receiver"):
+func _on_body_entered(body: PhysicsBody2D):
+  if body != spell_owner && body.get_groups().has("spell_receiver"):
     queue_free()
-    other.take_damage(damage)
+    body.handle_spell(self)
+    print(position, " ", body.position, " ", (position - body.position).normalized())

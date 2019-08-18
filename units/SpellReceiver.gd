@@ -24,11 +24,12 @@ func take_damage(amount: int):
 
 
 # Status Effect is actually a value from SPELL_STATUS_TYPE
-func handle_spell(status_effect: int, status_duration: float, status_damage: int):
-  status = status_effect
-  effect_timer = status_duration
-  if status_duration > 0 && status_damage > 0:
-    damage_per_tick = status_damage / status_duration
+func handle_spell(spell: Spell):
+  self.take_damage(spell.damage)
+  status = spell.status_type
+  effect_timer = spell.status_duration
+  if spell.status_duration > 0 && spell.status_damage > 0:
+    damage_per_tick = spell.status_damage / spell.status_duration
   pass
 
 
