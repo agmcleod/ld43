@@ -2,13 +2,14 @@ extends KinematicBody2D
 
 class_name SpellReceiver
 
+onready var Constants = $"/root/Constants"
 const FloatingText = preload("res://ui/FloatingText.tscn")
 
 export var health = 0
 var status = 0
 var effect_timer = 0
 var damage_per_tick = 0
-var tick_rate = 1.0
+var damage_tick_rate = 1.0
 
 func _ready():
   add_to_group("spell_receiver")
@@ -34,9 +35,9 @@ func handle_spell(spell: Spell):
 
 
 func _handle_damage_per_tick(delta: float):
-  tick_rate -= delta
-  if tick_rate <= 0:
-    tick_rate = 1.0
+  damage_tick_rate -= delta
+  if damage_tick_rate <= 0:
+    damage_tick_rate = 1.0
     take_damage(damage_per_tick)
 
 

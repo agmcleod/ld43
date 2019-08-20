@@ -5,16 +5,15 @@ class_name Spell
 onready var Constants = $"/root/Constants"
 
 export (Constants.SPELL_TYPE) var spell_type
+export (Constants.SPELL_STATUS_TYPE) var status_type = Constants.SPELL_STATUS_TYPE.ARCANE
 export (int) var damage;
 export (int) var status_duration = 10
 export (int) var status_damage = 0
-
-onready var status_type = Constants.SPELL_STATUS_TYPE.ARCANE
+export (float) var duration = 0.5
 
 var direction = Vector2()
 var default_direction = Vector2(1, 0)
 var velocity = 0
-var duration: float = 100
 var time_alive: float = 0
 var spell_owner :Node = null
 

@@ -35,6 +35,8 @@ func _physics_process(delta: float):
       $"/root/game".add_child(arrow_scene)
   else:
     var distance: float = speed * delta
+    if status == Constants.SPELL_STATUS_TYPE.FROST:
+      distance /= 2
     var start_point := self.position
     for i in range(path.size()):
       var distance_to_point := start_point.distance_to(path[0])

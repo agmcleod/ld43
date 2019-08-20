@@ -8,6 +8,8 @@
 [node name="KinematicBody2D" type="Area2D"]
 script = ExtResource( 1 )
 spell_type = 3
+status_type = 3
+duration = 10.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

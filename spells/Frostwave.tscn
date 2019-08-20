@@ -37,7 +37,9 @@ tracks/1/keys = {
 [node name="Area2D" type="Area2D"]
 script = ExtResource( 1 )
 spell_type = 2
+status_type = 3
 damage = 11
+duration = 1.0
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.998165, 1 )
