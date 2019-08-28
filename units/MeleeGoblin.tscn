@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://images/enemies/melee-enemy.png" type="Texture" id=1]
+[ext_resource path="res://units/MeleeGoblin.gd" type="Script" id=1]
+[ext_resource path="res://images/enemies/melee-enemy.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.79533, 8.47092 )
@@ -8,17 +9,29 @@ extents = Vector2( 5.79533, 8.47092 )
 [sub_resource type="CircleShape2D" id=2]
 radius = 132.907
 
+[sub_resource type="CircleShape2D" id=3]
+radius = 11.1095
+
 [node name="KinematicBody2D" type="KinematicBody2D"]
+script = ExtResource( 1 )
+health = 60
+speed = 120.0
+chase_distance = 600.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.0547867, -0.164354 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="Vision" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Vision"]
 shape = SubResource( 2 )
+
+[node name="AttackZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackZone"]
+shape = SubResource( 3 )
 

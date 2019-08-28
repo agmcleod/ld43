@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://units/Arrow.gd"
 }, {
+"base": "",
+"class": "EnemyTracker",
+"language": "GDScript",
+"path": "res://units/EnemyTracker.gd"
+}, {
 "base": "Label",
 "class": "FloatingText",
 "language": "GDScript",
@@ -51,6 +56,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Arrow": "",
+"EnemyTracker": "",
 "FloatingText": "",
 "IngredientItemList": "",
 "Player": "",
