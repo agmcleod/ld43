@@ -20,6 +20,8 @@ var spell_owner :Node = null
 
 func _ready():
   self.connect("body_entered", self, "_on_body_entered")
+  if spell_type != Constants.SPELL_TYPE.SHIELD:
+    add_to_group("projectiles")
 
 
 func _process(delta):
@@ -49,6 +51,13 @@ func set_velocity(vel: int):
 
 
 func _on_body_entered(body: PhysicsBody2D):
-  if body != spell_owner && body.get_groups().has("spell_receiver"):
-    queue_free()
-    body.handle_spell(self)
+  if body != spell_owner:
+    var groups = body.get_groups()
+    if groups.has("spell_receiver"):
+      
+      if spell_type != Constants.SPELL_TYPE.SHIELD:
+        queue_free()
+      body.handle_spell(self)
+    elif groups.has("enemies") && groups.has("projectiles") && spell_type == Constants.SPELL_TYPE.SHIELD:
+      # destroy the other thing if its a projectile hitting a shield
+      body.queue_free()

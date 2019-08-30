@@ -8,6 +8,7 @@ var damage := 5
 
 func _ready():
   add_to_group("enemies")
+  add_to_group("projectiles")
   pass
   
 

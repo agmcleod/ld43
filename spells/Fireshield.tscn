@@ -12,7 +12,7 @@ status_type = 2
 damage = 5
 status_duration = 5
 status_damage = 5
-duration = 10.0
+duration = 5.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
