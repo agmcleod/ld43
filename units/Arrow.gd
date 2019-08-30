@@ -2,15 +2,10 @@ extends KinematicBody2D
 
 class_name Arrow
 
-var velocity := 5
-var direction = Vector2(0, 0)
-var damage = 5
+var velocity := 4.5
+var direction := Vector2(0, 0)
+var damage := 5
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
   add_to_group("enemies")
   pass

@@ -9,7 +9,6 @@ onready var camera = $"/root/game/Player/Camera2D"
 onready var spell_factory = $"/root/game/UI/Inventory/TabContainer/Craft"
 
 var velocity = Vector2()
-var direction = Vector2(1, 0)
 
 func _ready():
   pass
@@ -58,10 +57,6 @@ func _physics_process(delta: float):
   elif !moving && animation_player.is_playing():
     animation_player.stop()
 
-  if velocity.x != 0 || velocity.y != 0:
-    direction.x = velocity.x
-    direction.y = velocity.y
-
   var resulting_speed = speed
   if status == Constants.SPELL_STATUS_TYPE.FROST:
     resulting_speed /= 2
@@ -87,6 +82,7 @@ func _handle_spell_cast():
     spell_num = 5
     
   if spell_num != 0:
+    var direction = (get_global_mouse_position() - position).normalized()
     spell_factory.cast_spell(self, spell_num, direction)
 
 

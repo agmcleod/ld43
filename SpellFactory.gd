@@ -84,18 +84,13 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
         else:
           spells_to_spawn[0].damage /= 2
           # create the adjacent spells
+          var base_angle = direction.angle()
           for n in range(2):
             var other_spell = _create_spell_type(spell_status_type, spell_type_name, spell_base, direction)
             if n == 0:
-              if other_spell.direction.x != 0:              
-                other_spell.direction.y = -0.5
-              elif other_spell.direction.y != 0:
-                other_spell.direction.x = -0.5
+              other_spell.direction = other_spell.direction.rotated(-0.7853982)
             else:
-              if other_spell.direction.x != 0:              
-                other_spell.direction.y = 0.5
-              elif other_spell.direction.y != 0:
-                other_spell.direction.x = 0.5
+              other_spell.direction = other_spell.direction.rotated(0.7853982)
             
             other_spell.damage /= 2
             spells_to_spawn.append(other_spell)

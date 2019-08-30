@@ -52,4 +52,3 @@ func _on_body_entered(body: PhysicsBody2D):
   if body != spell_owner && body.get_groups().has("spell_receiver"):
     queue_free()
     body.handle_spell(self)
-    print(position, " ", body.position, " ", (position - body.position).normalized())

@@ -9,5 +9,4 @@ func _ready():
 
 
 func _on_Inventory_popup_hide():
-  print("popup hide")
   get_tree().paused = false
