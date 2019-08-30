@@ -3,7 +3,7 @@ extends Node
 class_name SpellFactory
 
 onready var Constants = $"/root/Constants"
-onready var Inventory = $"/root/Inventory"
+onready var InventoryStorage = $"/root/InventoryStorage"
 
 onready var ingredient_item_list: IngredientItemList = $"../Discover/IngredientItemList"
 onready var crafted_spells_vbox = $"ScrollContainer/VBoxContainer"
@@ -116,13 +116,13 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
 
 func discover(selected_ingredients: Array):
   for ingredient in selected_ingredients:
-    if Inventory.inventory_data[ingredient] == 0:
+    if InventoryStorage.inventory_data[ingredient] == 0:
       return
       
   var ingredient_dictionary := {}
   # do another pass to remove ingredients, and take stock
   for ingredient in selected_ingredients:
-    Inventory.inventory_data[ingredient] -= 1
+    InventoryStorage.inventory_data[ingredient] -= 1
     ingredient_dictionary[ingredient] = true
     
   ingredient_item_list.update_resources()

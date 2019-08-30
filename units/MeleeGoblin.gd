@@ -25,8 +25,7 @@ func _physics_process(delta):
     attack_ticker += delta
     if attack_ticker > attack_rate:
       player.take_damage(10)
-      attack_ticker = 0.0
-      
+      attack_ticker = 0.0   
 
 
 func _on_body_entered_attack_zone(body):
@@ -36,7 +35,6 @@ func _on_body_entered_attack_zone(body):
 
 func _on_body_exited_attack_zone(body):
   if body.name == "Player":
-    print("in range")
     out_of_range = true
   
   

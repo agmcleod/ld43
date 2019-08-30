@@ -17,9 +17,10 @@ func _ready():
 
 func _physics_process(delta: float):
   if Input.is_action_just_pressed("ui_inventory"):
-    var panel = get_node("/root/game/UI/Inventory")
-    if !panel.visible:
-      panel.visible = true
+    var panel: WindowDialog = get_node("/root/game/UI/Inventory")
+    panel.popup()
+    
+    get_tree().paused = true
 
   velocity.x = 0
   velocity.y = 0
