@@ -17,6 +17,8 @@ func _ready():
 
 
 func _physics_process(delta):
+  if is_knockedback():
+    return
   if out_of_range && tracked_node && last_target != tracked_node.position:
     last_target = tracked_node.position
     _set_path_for_tracked_position(last_target)

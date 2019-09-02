@@ -10,6 +10,8 @@ var status = 0
 var effect_timer = 0
 var damage_per_tick = 0
 var damage_tick_rate = 1.0
+var knocked_back_vector := Vector2(0, 0)
+var knocked_back_tick := 0.0
 
 func _ready():
   add_to_group("spell_receiver")
@@ -23,6 +25,14 @@ func take_damage(amount: int):
   if health <= 0:
     queue_free()
 
+func apply_knockback(vector: Vector2):
+  knocked_back_tick = 0.15
+  knocked_back_vector = vector
+
+
+func is_knockedback():
+  return knocked_back_tick > 0
+  
 
 # Status Effect is actually a value from SPELL_STATUS_TYPE
 func handle_spell(spell: Spell):
@@ -31,7 +41,8 @@ func handle_spell(spell: Spell):
   effect_timer = spell.status_duration
   if spell.status_duration > 0 && spell.status_damage > 0:
     damage_per_tick = spell.status_damage / spell.status_duration
-  pass
+  else:
+    damage_per_tick = 0
 
 
 func _handle_damage_per_tick(delta: float):
@@ -42,7 +53,10 @@ func _handle_damage_per_tick(delta: float):
 
 
 func _process(delta: float):
-  if effect_timer > 0:
+  if is_knockedback():
+    knocked_back_tick -= delta
+    move_and_slide(knocked_back_vector * 200)
+  elif effect_timer > 0:
     if damage_per_tick > 0:
       _handle_damage_per_tick(delta)
     effect_timer -= delta

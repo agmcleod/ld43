@@ -55,9 +55,12 @@ func _on_body_entered(body: PhysicsBody2D):
     var groups = body.get_groups()
     if groups.has("spell_receiver"):
       
+      # dont destroy a spell if it's a shield
       if spell_type != Constants.SPELL_TYPE.SHIELD:
         queue_free()
       body.handle_spell(self)
+      if spell_type == Constants.SPELL_TYPE.WAVE:
+        body.apply_knockback(direction)
     elif groups.has("enemies") && groups.has("projectiles") && spell_type == Constants.SPELL_TYPE.SHIELD:
-      # destroy the other thing if its a projectile hitting a shield
+      # destroy the it if its a projectile hitting a shield
       body.queue_free()

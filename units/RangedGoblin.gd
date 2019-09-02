@@ -12,6 +12,8 @@ func _ready():
 
 
 func _physics_process(delta: float):
+  if is_knockedback():
+    return
   if tracked_node != null:
     attack_ticker += delta
     if attack_ticker > fire_rate:

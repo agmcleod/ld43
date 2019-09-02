@@ -26,6 +26,8 @@ func _ready():
 
 
 func _physics_process(delta: float):
+  if is_knockedback():
+    return
   if should_follow():
     var distance: float = speed * delta
     if status == Constants.SPELL_STATUS_TYPE.FROST:

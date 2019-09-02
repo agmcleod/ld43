@@ -20,6 +20,9 @@ func _physics_process(delta: float):
     panel.popup()
     
     get_tree().paused = true
+    
+  if is_knockedback():
+    return
 
   velocity.x = 0
   velocity.y = 0
