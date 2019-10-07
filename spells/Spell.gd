@@ -50,7 +50,7 @@ func set_velocity(vel: int):
   velocity = vel
 
 
-func _on_body_entered(body: PhysicsBody2D):
+func _on_body_entered(body: Node2D):
   if body != spell_owner:
     var groups = body.get_groups()
     if groups.has("spell_receiver"):

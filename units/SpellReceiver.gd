@@ -25,6 +25,7 @@ func take_damage(amount: int):
   if health <= 0:
     queue_free()
 
+
 func apply_knockback(vector: Vector2):
   knocked_back_tick = 0.15
   knocked_back_vector = vector
