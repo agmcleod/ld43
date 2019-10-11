@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://TileSet.res" type="TileSet" id=1]
 [ext_resource path="res://ui/Inventory.gd" type="Script" id=2]
@@ -8,10 +8,7 @@
 [ext_resource path="res://Player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://units/MeleeGoblin.tscn" type="PackedScene" id=7]
 [ext_resource path="res://units/RangedGoblin.tscn" type="PackedScene" id=8]
-[ext_resource path="res://units/PitTile.gd" type="Script" id=9]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 18.1133, 21.3851 )
+[ext_resource path="res://units/PitTile.tscn" type="PackedScene" id=9]
 
 [node name="game" type="Node"]
 
@@ -152,13 +149,35 @@ position = Vector2( 1660, 980 )
 [node name="MeleeGoblin11" parent="Enemies" instance=ExtResource( 7 )]
 position = Vector2( 1660, 1130 )
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2( 18.1033, 23.6511 )
-script = ExtResource( 9 )
+[node name="PitTile" parent="." instance=ExtResource( 9 )]
+position = Vector2( 1928.35, 629.653 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 1.52588e-005, -3.8147e-006 )
-shape = SubResource( 1 )
+[node name="PitTile9" parent="." instance=ExtResource( 9 )]
+position = Vector2( 2104.76, 633.399 )
+
+[node name="PitTile2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 1928.69, 672.223 )
+
+[node name="PitTile10" parent="." instance=ExtResource( 9 )]
+position = Vector2( 2105.1, 675.969 )
+
+[node name="PitTile3" parent="." instance=ExtResource( 9 )]
+position = Vector2( 1929.03, 714.112 )
+
+[node name="PitTile6" parent="." instance=ExtResource( 9 )]
+position = Vector2( 2105.44, 717.858 )
+
+[node name="PitTile4" parent="." instance=ExtResource( 9 )]
+position = Vector2( 1928.69, 756.682 )
+
+[node name="PitTile8" parent="." instance=ExtResource( 9 )]
+position = Vector2( 2105.1, 760.428 )
+
+[node name="PitTile5" parent="." instance=ExtResource( 9 )]
+position = Vector2( 1928.35, 798.571 )
+
+[node name="PitTile7" parent="." instance=ExtResource( 9 )]
+position = Vector2( 2104.76, 802.317 )
 [connection signal="popup_hide" from="UI/Inventory" to="UI/Inventory" method="_on_Inventory_popup_hide"]
 [connection signal="item_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_item_selected"]
 [connection signal="multi_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_multi_selected"]

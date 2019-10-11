@@ -1,33 +1,40 @@
 extends Area2D
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-var bodies := []
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
   connect("body_shape_entered", self, "_on_body_shape_entered")
-  connect("body_shape_exited", self, "_on_body_shape_exited")
 
 
-func _on_body_shape_entered(id, body: KinematicBody2D, body_shape, area_shape):
-  if body != null:
-    bodies.append(body)
-    print(id, " ", body_shape, " ", area_shape, " ", body.get_shape(body_shape))
-
-
-func _on_body_shape_exited(id, exited_body):
-  var index = -1
-  var i = 0
-  for body in bodies:
-    if body.get_instance_id() == exited_body.get_instance_id():
-      index = i
-    i += 1
+func _on_body_shape_entered(id, body, body_shape, area_shape):
+  if body != null && (body.get_groups().has("player") || body.get_groups().has("enemies")):
+    body.take_damage(10)
+    var body_shape2d: Shape2D = body.shape_owner_get_shape(body_shape, 0)
+    var area_shape2d: Shape2D = shape_owner_get_shape(area_shape, 0)
+    var body_shape2d_transform = body.shape_owner_get_owner(body_shape).get_global_transform()
+    var area_shape2d_transform = shape_owner_get_owner(area_shape).get_global_transform()
     
-  if index > -1:
-    bodies.remove(index)
+    var collision_points = area_shape2d.collide_and_get_contacts(area_shape2d_transform, body_shape2d, body_shape2d_transform)
+    var w = 0
+    var h = 0
+    var last_point = null
+    for point in collision_points:
+      if last_point != null:
+        if last_point[0] - point[0] != 0:
+          w = last_point[0] - point[0]
+        if last_point[1] - point[1] != 0:
+          h = last_point[1] - point[1]
+      
+      last_point = point
+    
+    if abs(w) > abs(h):
+      var y = 30
+      if w < 0:
+        y *= -1
+      body.move_and_collide(Vector2(0, y))
+    else:
+      var x = 30
+      if h > 0:
+        x *= -1
+      body.move_and_collide(Vector2(x, 0))
 
 
 func _process(delta):
