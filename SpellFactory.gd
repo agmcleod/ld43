@@ -98,7 +98,7 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
       
       if spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL):
         for spell in spells_to_spawn:
-          spell.damage *= 0.5
+          spell.damage *= 1.25
         
       for spell in spells_to_spawn:
         spell.set_owner(player)
