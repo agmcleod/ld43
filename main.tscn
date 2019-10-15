@@ -85,9 +85,9 @@ margin_bottom = 190.0
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
 position = Vector2( 166.427, 289.995 )
+health = 100.0
 
 [node name="Enemies" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="MeleeGoblin" parent="Enemies" instance=ExtResource( 7 )]
 position = Vector2( 829.484, 150.168 )

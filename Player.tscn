@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://units/Player.gd" type="Script" id=1]
 [ext_resource path="res://images/player/down/player1.png" type="Texture" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://images/player/up/player_up6.png" type="Texture" id=25]
 [ext_resource path="res://images/player/up/player_up7.png" type="Texture" id=26]
 [ext_resource path="res://images/player/up/player_up8.png" type="Texture" id=27]
+[ext_resource path="res://ui/HealthBar.tscn" type="PackedScene" id=28]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Down"
@@ -86,7 +87,6 @@ extents = Vector2( 9.89196, 15.3487 )
 ]]
 position = Vector2( 512, 288 )
 script = ExtResource( 1 )
-health = 400
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Down = SubResource( 1 )
@@ -99,7 +99,12 @@ current = true
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 7 )
 
+[node name="HealthBar" parent="Sprite" instance=ExtResource( 28 )]
+margin_left = -8.2135
+margin_top = -17.9669
+margin_right = 7.7865
+margin_bottom = -15.9669
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.436584, -0.702972 )
 shape = SubResource( 4 )
-

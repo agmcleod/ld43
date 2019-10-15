@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://units/MeleeGoblin.gd" type="Script" id=1]
 [ext_resource path="res://images/enemies/melee-enemy.png" type="Texture" id=2]
+[ext_resource path="res://ui/HealthBar.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.79533, 8.47092 )
@@ -14,16 +15,13 @@ radius = 11.1095
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
 script = ExtResource( 1 )
-health = 60
+health = 40.0
 speed = 120.0
 chase_distance = 600.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.0547867, -0.164354 )
 shape = SubResource( 1 )
-
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
 
 [node name="Vision" type="Area2D" parent="."]
 
@@ -35,3 +33,11 @@ shape = SubResource( 2 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackZone"]
 shape = SubResource( 3 )
 
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="HealthBar" parent="Sprite" instance=ExtResource( 3 )]
+margin_left = -7.45589
+margin_top = -13.5562
+margin_right = 8.54411
+margin_bottom = -11.5562
