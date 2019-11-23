@@ -1,0 +1,13 @@
+[package]
+name = "ld43"
+version = "0.1.0"
+authors = ["Aaron McLeod <aaron.g.mcleod@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+gdnative = { git = "https://github.com/GodotNativeTools/godot-rust", rev = "e95c7e6e8ec0cade723c6bda5dbb5c72b6fcb6a8" }
+
+[lib]
+crate-type = ["cdylib"]
