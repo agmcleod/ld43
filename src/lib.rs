@@ -2,6 +2,7 @@ use gdnative::*;
 
 mod crafting;
 mod inventory_data;
+mod paths;
 mod spells;
 
 /// The HelloWorld "class"
@@ -25,9 +26,7 @@ impl HelloWorld {
     #[export]
     fn _ready(&self, _owner: Node) {
         let ingredient_list: Option<ItemList> = unsafe {
-            let node = _owner.get_node(NodePath::from_str(
-                "UI/Inventory/TabContainer/Discover/IngredientItemList",
-            ));
+            let node = _owner.get_node(NodePath::from_str(paths::INGREDIENT_ITEM_LIST));
 
             if let Some(node) = node {
                 node.cast::<ItemList>()
