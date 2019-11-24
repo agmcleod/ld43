@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "SpellFactory",
 "language": "GDScript",
-"path": "res://SpellFactory.gd"
+"path": "res://ui/crafting/Craft.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "SpellReceiver",

@@ -41,8 +41,9 @@ onready var DATA = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-  for item in DATA:
-    self.add_item(item.label, item.texture)
+  # for item in DATA:
+  #   self.add_item(item.label, item.texture)
+  pass
 
 
 func update_resources():
@@ -50,4 +51,4 @@ func update_resources():
   for item in DATA:
     self.set_item_text(i, str(InventoryStorage.inventory_data[item.type]))
     i += 1
-    
+

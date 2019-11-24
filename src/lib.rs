@@ -1,5 +1,9 @@
 use gdnative::*;
 
+mod crafting;
+mod inventory_data;
+mod spells;
+
 /// The HelloWorld "class"
 #[derive(NativeClass)]
 #[inherit(Node)]
@@ -9,7 +13,6 @@ pub struct HelloWorld;
 // code to automatically bind any exported methods to Godot.
 #[methods]
 impl HelloWorld {
-
     /// The "constructor" of the class.
     fn _init(_owner: Node) -> Self {
         HelloWorld
@@ -21,13 +24,30 @@ impl HelloWorld {
     // The owner is passed to every single exposed method.
     #[export]
     fn _ready(&self, _owner: Node) {
-        unsafe {
-            let node = _owner.get_node(NodePath::from_str("UI/Inventory/TabContainer/Discover"));
-            if let Some(node) = node {
-                godot_print!("{:?}", node);
-            }
-        }
+        let ingredient_list: Option<ItemList> = unsafe {
+            let node = _owner.get_node(NodePath::from_str(
+                "UI/Inventory/TabContainer/Discover/IngredientItemList",
+            ));
 
+            if let Some(node) = node {
+                node.cast::<ItemList>()
+            } else {
+                None
+            }
+        };
+
+        let inventory_data_object = inventory_data::InventoryData {
+            red: 999,
+            blue: 999,
+            bird: 999,
+            frog: 999,
+            squirrel: 999,
+            turtle: 999,
+        };
+
+        if let Some(mut ingredient_list) = ingredient_list {
+            crafting::create_ingredient_items(&inventory_data_object, &mut ingredient_list);
+        }
     }
 }
 
