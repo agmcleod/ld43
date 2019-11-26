@@ -2,6 +2,7 @@ use gdnative::*;
 
 mod crafting;
 mod inventory_data;
+mod load_scene;
 mod paths;
 mod spells;
 

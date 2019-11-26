@@ -1,3 +1,6 @@
+mod spell;
+pub use self::spell::*;
+
 pub enum SPELL_STATUS_TYPE {
   ARCANE,
   FIRE,
