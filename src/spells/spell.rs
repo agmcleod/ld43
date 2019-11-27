@@ -13,7 +13,10 @@ impl Spell {
     #[export]
     fn _ready(&self, mut owner: Area2D) {
         unsafe {
-            owner.connect(GodotString::from_str("body_entered"));
+            owner.connect(GodotString::from_str("body_entered"), owner, , "_onbody_entered");
         }
     }
+
+    #[export]
+    fn _onbody_entered() {}
 }
