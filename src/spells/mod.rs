@@ -1,53 +1,54 @@
 mod spell;
 pub use self::spell::*;
 
-pub enum SPELL_STATUS_TYPE {
+#[derive(PartialEq)]
+pub enum SpellStatusType {
   ARCANE,
   FIRE,
   FROST,
 }
 
-impl SPELL_STATUS_TYPE {
+impl SpellStatusType {
   fn to_str(&self) -> &str {
     match self {
-      SPELL_STATUS_TYPE::ARCANE => "arcane",
-      SPELL_STATUS_TYPE::FIRE => "fire",
-      SPELL_STATUS_TYPE::FROST => "frost",
+      SpellStatusType::ARCANE => "arcane",
+      SpellStatusType::FIRE => "fire",
+      SpellStatusType::FROST => "frost",
     }
   }
 
-  fn from_str(value: &str) {
+  fn from_str(value: &str) -> SpellStatusType {
     match value {
-      "arcane" => SPELL_TYPE::ARCANE,
-      "fire" => SPELL_TYPE::FIRE,
-      "frost" => SPELL_TYPE::FROST,
-      _ => panic!("Invalid type {:?}", value)
+      "arcane" => SpellStatusType::ARCANE,
+      "fire" => SpellStatusType::FIRE,
+      "frost" => SpellStatusType::FROST,
+      _ => SpellStatusType::ARCANE,
     }
   }
 }
 
-
-pub enum SPELL_TYPE {
+#[derive(PartialEq)]
+pub enum SpellType {
   BALL,
   WAVE,
-  SHEILD,
+  SHIELD,
 }
 
-impl SPELL_TYPE {
+impl SpellType {
   fn to_str(&self) -> &str {
     match self {
-      SPELL_TYPE::BALL => "ball",
-      SPELL_TYPE::WAVE => "wave",
-      SPELL_TYPE::SHIELD => "shield",
+      SpellType::BALL => "ball",
+      SpellType::WAVE => "wave",
+      SpellType::SHIELD => "shield",
     }
   }
 
-  fn from_str(value: &str) {
+  fn from_str(value: &str) -> SpellType {
     match value {
-      "ball" => SPELL_TYPE::BALL,
-      "wave" => SPELL_TYPE::WAVE,
-      "shield" => SPELL_TYPE::SHEILD,
-      _ => panic!("Invalid type {:?}", value),
+      "ball" => SpellType::BALL,
+      "wave" => SpellType::WAVE,
+      "shield" => SpellType::SHIELD,
+      _ => SpellType::BALL,
     }
   }
 }
