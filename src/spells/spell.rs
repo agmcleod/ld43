@@ -3,7 +3,7 @@ use gdnative::{
     init::{ClassBuilder, Property, PropertyHint, PropertyUsage},
     methods,
     user_data::MutexData,
-    Area2D, GodotString, NativeClass, Object, VariantArray,
+    Area2D, GodotString, KinematicBody2D, NativeClass, VariantArray,
 };
 
 use crate::spells::{SpellStatusType, SpellType};
@@ -11,6 +11,10 @@ use crate::spells::{SpellStatusType, SpellType};
 pub struct Spell {
     spell_type: SpellType,
     spell_status_type: SpellStatusType,
+    damage: isize,
+    status_duration: isize,
+    status_damage: isize,
+    duration: f32,
 }
 
 impl NativeClass for Spell {
@@ -68,6 +72,10 @@ impl Spell {
         Spell {
             spell_type: SpellType::BALL,
             spell_status_type: SpellStatusType::ARCANE,
+            damage: 0,
+            status_duration: 0,
+            status_damage: 0,
+            duration: 0.0,
         }
     }
 
@@ -86,7 +94,7 @@ impl Spell {
     }
 
     #[export]
-    fn _onbody_entered(body: Object) {
+    unsafe fn _onbody_entered(body: KinematicBody2D) {
         println!("{:?}", body);
     }
 }
