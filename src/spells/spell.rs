@@ -3,7 +3,8 @@ use gdnative::{
     init::{ClassBuilder, Property, PropertyHint, PropertyUsage},
     methods,
     user_data::MutexData,
-    Area2D, GodotString, KinematicBody2D, NativeClass, VariantArray,
+    Area2D, GodotString, GodotObject, KinematicBody2D, NativeClass, VariantArray,
+    godot_print
 };
 
 use crate::spells::{SpellStatusType, SpellType};
@@ -63,8 +64,47 @@ impl NativeClass for Spell {
             },
             usage: PropertyUsage::DEFAULT,
         });
+
+        builder.add_property(Property {
+            name: "Damage",
+            default: 0,
+            hint: PropertyHint::None,
+            getter: |this: &Spell| this.damage,
+            setter: |this: &mut Spell, v| this.damage = v,
+            usage: PropertyUsage::DEFAULT,
+        });
+
+        builder.add_property(Property {
+            name: "Status duration",
+            default: 0,
+            hint: PropertyHint::None,
+            getter: |this: &Spell| this.status_duration,
+            setter: |this: &mut Spell, v| this.status_duration = v,
+            usage: PropertyUsage::DEFAULT,
+        });
+
+        builder.add_property(Property {
+            name: "Status damage",
+            default: 0,
+            hint: PropertyHint::None,
+            getter: |this: &Spell| this.status_damage,
+            setter: |this: &mut Spell, v| this.status_damage = v,
+            usage: PropertyUsage::DEFAULT,
+        });
+
+        builder.add_property(Property {
+            name: "Duration",
+            default: 0.0,
+            hint: PropertyHint::None,
+            getter: |this: &Spell| this.duration,
+            setter: |this: &mut Spell, v| this.duration = v,
+            usage: PropertyUsage::DEFAULT,
+        });
     }
 }
+
+// not even sure if this is the right approach
+unsafe impl GodotObject for Spell {}
 
 #[methods]
 impl Spell {
@@ -94,7 +134,7 @@ impl Spell {
     }
 
     #[export]
-    unsafe fn _onbody_entered(body: KinematicBody2D) {
-        println!("{:?}", body);
+    unsafe fn _onbody_entered(&self, owner: Area2D, body: KinematicBody2D) {
+        godot_print!("owner: {:?}, body: {:?}", owner, body);
     }
 }

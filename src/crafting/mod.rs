@@ -4,7 +4,7 @@ use crate::{inventory_data::InventoryData, paths};
 
 pub mod discover;
 
-pub enum INGREDIENT_TYPES {
+pub enum IngredientTypes {
     RED,
     BLUE,
     BIRD,
@@ -14,13 +14,13 @@ pub enum INGREDIENT_TYPES {
 }
 
 struct IngredientItem {
-    ingredient_type: INGREDIENT_TYPES,
+    ingredient_type: IngredientTypes,
     texture: String,
     amount: usize,
 }
 
 impl IngredientItem {
-    fn new(ingredient_type: INGREDIENT_TYPES, texture: &str, amount: usize) -> IngredientItem {
+    fn new(ingredient_type: IngredientTypes, texture: &str, amount: usize) -> IngredientItem {
         IngredientItem {
             ingredient_type,
             texture: format!("res://images/ingredients/{}", texture),
@@ -31,20 +31,20 @@ impl IngredientItem {
 
 fn get_ingredetient_items_data(inventory_data: &InventoryData) -> [IngredientItem; 6] {
     [
-        IngredientItem::new(INGREDIENT_TYPES::RED, "redflower.png", inventory_data.red),
+        IngredientItem::new(IngredientTypes::RED, "redflower.png", inventory_data.red),
         IngredientItem::new(
-            INGREDIENT_TYPES::BLUE,
+            IngredientTypes::BLUE,
             "blueflower.png",
             inventory_data.blue,
         ),
         IngredientItem::new(
-            INGREDIENT_TYPES::SQUIRREL,
+            IngredientTypes::SQUIRREL,
             "squirrel.png",
             inventory_data.blue,
         ),
-        IngredientItem::new(INGREDIENT_TYPES::BIRD, "bird.png", inventory_data.blue),
-        IngredientItem::new(INGREDIENT_TYPES::FROG, "frog.png", inventory_data.blue),
-        IngredientItem::new(INGREDIENT_TYPES::TURTLE, "turtle.png", inventory_data.blue),
+        IngredientItem::new(IngredientTypes::BIRD, "bird.png", inventory_data.blue),
+        IngredientItem::new(IngredientTypes::FROG, "frog.png", inventory_data.blue),
+        IngredientItem::new(IngredientTypes::TURTLE, "turtle.png", inventory_data.blue),
     ]
 }
 

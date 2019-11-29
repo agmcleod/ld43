@@ -1,4 +1,4 @@
-use crate::crafting::INGREDIENT_TYPES;
+use crate::crafting::IngredientTypes;
 
 pub struct InventoryData {
     pub red: usize,
@@ -10,14 +10,14 @@ pub struct InventoryData {
 }
 
 impl InventoryData {
-    pub fn get_for_type(&self, ingredient_type: INGREDIENT_TYPES) -> usize {
+    pub fn get_for_type(&self, ingredient_type: IngredientTypes) -> usize {
         match ingredient_type {
-            INGREDIENT_TYPES::RED => self.red,
-            INGREDIENT_TYPES::BLUE => self.blue,
-            INGREDIENT_TYPES::BIRD => self.bird,
-            INGREDIENT_TYPES::FROG => self.frog,
-            INGREDIENT_TYPES::SQUIRREL => self.squirrel,
-            INGREDIENT_TYPES::TURTLE => self.turtle,
+            IngredientTypes::RED => self.red,
+            IngredientTypes::BLUE => self.blue,
+            IngredientTypes::BIRD => self.bird,
+            IngredientTypes::FROG => self.frog,
+            IngredientTypes::SQUIRREL => self.squirrel,
+            IngredientTypes::TURTLE => self.turtle,
         }
     }
 }
