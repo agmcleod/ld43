@@ -1,10 +1,10 @@
 use gdnative::{
-    godot_error, godot_wrap_method, godot_wrap_method_inner, godot_wrap_method_parameter_count,
+    godot_error, godot_print, godot_wrap_method, godot_wrap_method_inner,
+    godot_wrap_method_parameter_count,
     init::{ClassBuilder, Property, PropertyHint, PropertyUsage},
     methods,
     user_data::MutexData,
-    Area2D, GodotString, GodotObject, KinematicBody2D, NativeClass, VariantArray,
-    godot_print
+    Area2D, GodotObject, GodotString, KinematicBody2D, NativeClass, Node, VariantArray, Vector2,
 };
 
 use crate::spells::{SpellStatusType, SpellType};
@@ -16,6 +16,10 @@ pub struct Spell {
     status_duration: isize,
     status_damage: isize,
     duration: f32,
+    direction: Vector2,
+    velocity: isize,
+    time_alive: f32,
+    spell_owner: Node,
 }
 
 impl NativeClass for Spell {
@@ -102,9 +106,6 @@ impl NativeClass for Spell {
         });
     }
 }
-
-// not even sure if this is the right approach
-unsafe impl GodotObject for Spell {}
 
 #[methods]
 impl Spell {

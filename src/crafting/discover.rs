@@ -16,7 +16,17 @@ fn create_spell_type(
     if let Some(mut spell_scene) = spell_scene {
         match instance_scene::<Spell>(&spell_scene) {
             Ok(mut spell_scene) {
+                spell_scene.map_mut(|spell_scene, owner| {
+                    spell_scene.status_type = spell_status_type;
+                    if spell_base == "shield" {
+                        spell_scene.velocity = 0;
+                    } else {
+                        spell_scene.velocity = 600;
+                        spell_scene.direction =
+                    }
+                });
 
+                spell_scene
             },
             Err(err) => godot_print!("Could not load spell scene as spell type"),
         }
