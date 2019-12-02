@@ -7,20 +7,24 @@ use gdnative::{
     Area2D, GodotObject, GodotString, KinematicBody2D, NativeClass, Node, VariantArray, Vector2,
 };
 
+const DEFAULT_DIRECTION: Vector2 = Vector2::new(1.0, 0.0);
+
 use crate::spells::{SpellStatusType, SpellType};
 
 pub struct Spell {
-    spell_type: SpellType,
-    spell_status_type: SpellStatusType,
-    damage: isize,
-    status_duration: isize,
-    status_damage: isize,
-    duration: f32,
-    direction: Vector2,
-    velocity: isize,
-    time_alive: f32,
-    spell_owner: Node,
+    pub spell_type: SpellType,
+    pub spell_status_type: SpellStatusType,
+    pub damage: isize,
+    pub status_duration: isize,
+    pub status_damage: isize,
+    pub duration: f32,
+    pub direction: Vector2,
+    pub velocity: f32,
+    pub time_alive: f32,
+    pub caster: Option<Node>,
 }
+
+unsafe impl Send for Spell {}
 
 impl NativeClass for Spell {
     type Base = Area2D;
@@ -117,25 +121,58 @@ impl Spell {
             status_duration: 0,
             status_damage: 0,
             duration: 0.0,
+            direction: DEFAULT_DIRECTION.clone(),
+            velocity: 0.0,
+            time_alive: 0.0,
+            caster: None,
         }
     }
 
     #[export]
     fn _ready(&self, mut owner: Area2D) {
         unsafe {
-            owner.connect(
+            let owner_obj = owner.clone().to_object();
+            let res = owner.connect(
                 GodotString::from_str("body_entered"),
-                Some(owner.to_object()),
+                Some(owner_obj),
                 GodotString::from_str("_onbody_entered"),
                 VariantArray::new(),
                 0,
             );
-            if self.spell_type != SpellType::SHIELD {}
+            if res.is_err() {
+                panic!("Could not connect spell body_entered");
+            }
+            if self.spell_type != SpellType::SHIELD {
+                owner.add_to_group(GodotString::from_str("projectiles"), false);
+            }
+        }
+    }
+
+    #[export]
+    fn _process(&mut self, mut owner: Area2D, delta: f32) {
+        self.time_alive += delta;
+        if self.velocity != 0.0 {
+            unsafe {
+                owner.translate(self.direction.normalize() * self.velocity * delta);
+            }
+        }
+
+        if self.time_alive >= self.duration {
+            unsafe {
+                owner.queue_free();
+            }
         }
     }
 
     #[export]
     unsafe fn _onbody_entered(&self, owner: Area2D, body: KinematicBody2D) {
         godot_print!("owner: {:?}, body: {:?}", owner, body);
+    }
+
+    pub fn set_direction(&mut self, mut owner: Area2D, direction: Vector2) {
+        self.direction = direction;
+        unsafe {
+            owner.rotate(DEFAULT_DIRECTION.angle_to(self.direction).get().into());
+        }
     }
 }
