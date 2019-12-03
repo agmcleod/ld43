@@ -2,9 +2,9 @@
 
 [ext_resource path="res://TileSet.res" type="TileSet" id=1]
 [ext_resource path="res://ui/Inventory.gd" type="Script" id=2]
-[ext_resource path="res://ui/Discover.gd" type="Script" id=3]
+[ext_resource path="res://ui/DiscoverButton.gd" type="Script" id=3]
 [ext_resource path="res://ui/crafting/IngredientItemList.gd" type="Script" id=4]
-[ext_resource path="res://SpellFactory.gd" type="Script" id=5]
+[ext_resource path="res://ui/crafting/Craft.gd" type="Script" id=5]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://units/MeleeGoblin.tscn" type="PackedScene" id=7]
 [ext_resource path="res://units/RangedGoblin.tscn" type="PackedScene" id=8]
@@ -23,7 +23,6 @@ tile_data = PoolIntArray( -589841, 5, 0, -589840, 5, 0, -589839, 5, 0, -589838, 
 
 [node name="UI" type="CanvasLayer" parent="."]
 pause_mode = 2
-editor/display_folded = true
 
 [node name="Inventory" type="WindowDialog" parent="UI"]
 margin_left = 421.0
@@ -178,6 +177,7 @@ position = Vector2( 1928.35, 798.571 )
 
 [node name="PitTile7" parent="." instance=ExtResource( 9 )]
 position = Vector2( 2104.76, 802.317 )
+
 [connection signal="popup_hide" from="UI/Inventory" to="UI/Inventory" method="_on_Inventory_popup_hide"]
 [connection signal="item_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_item_selected"]
 [connection signal="multi_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_multi_selected"]

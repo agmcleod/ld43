@@ -14,6 +14,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://units/Arrow.gd"
 }, {
+"base": "Node",
+"class": "Craft",
+"language": "GDScript",
+"path": "res://ui/crafting/Craft.gd"
+}, {
+"base": "Reference",
+"class": "DiscoveredSpell",
+"language": "GDScript",
+"path": "res://types/DiscoveredSpell.gd"
+}, {
 "base": "",
 "class": "EnemyTracker",
 "language": "GDScript",
@@ -39,11 +49,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://spells/Spell.gd"
 }, {
-"base": "Node",
-"class": "SpellFactory",
-"language": "GDScript",
-"path": "res://SpellFactory.gd"
-}, {
 "base": "KinematicBody2D",
 "class": "SpellReceiver",
 "language": "GDScript",
@@ -56,12 +61,13 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Arrow": "",
+"Craft": "",
+"DiscoveredSpell": "",
 "EnemyTracker": "",
 "FloatingText": "",
 "IngredientItemList": "",
 "Player": "",
 "Spell": "",
-"SpellFactory": "",
 "SpellReceiver": "",
 "SpellRow": ""
 }

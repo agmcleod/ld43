@@ -2,6 +2,8 @@ extends Control
 
 class_name SpellRow
 
+const DiscoveredSpell = preload("res://types/DiscoveredSpell.gd")
+
 signal item_selected
 signal spell_name_crafted
 
@@ -22,7 +24,7 @@ func _ready():
 #func _process(delta):
 #  pass
 
-func set_values(spell: Dictionary):
+func set_values(spell: DiscoveredSpell):
   var label_node: Label = $"HBoxContainer/SpellName"
   label_node.text = spell.spell_name
   
