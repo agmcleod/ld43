@@ -5,7 +5,7 @@
 [ext_resource path="res://ui/DiscoverButton.gd" type="Script" id=3]
 [ext_resource path="res://ui/crafting/IngredientItemList.gd" type="Script" id=4]
 [ext_resource path="res://ui/crafting/Craft.gd" type="Script" id=5]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://units/MeleeGoblin.tscn" type="PackedScene" id=7]
 [ext_resource path="res://units/RangedGoblin.tscn" type="PackedScene" id=8]
 [ext_resource path="res://units/PitTile.tscn" type="PackedScene" id=9]
@@ -38,6 +38,7 @@ margin_right = 245.864
 margin_bottom = 225.591
 
 [node name="Discover" type="Control" parent="UI/Inventory/TabContainer"]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -67,6 +68,7 @@ disabled = true
 text = "Craft"
 
 [node name="Craft" type="Control" parent="UI/Inventory/TabContainer"]
+editor/display_folded = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -84,9 +86,9 @@ margin_bottom = 190.0
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
 position = Vector2( 166.427, 289.995 )
-health = 100.0
 
 [node name="Enemies" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="MeleeGoblin" parent="Enemies" instance=ExtResource( 7 )]
 position = Vector2( 829.484, 150.168 )

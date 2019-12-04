@@ -1,6 +1,6 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
-[ext_resource path="res://units/Player.gd" type="Script" id=1]
+[ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://images/player/down/player1.png" type="Texture" id=2]
 [ext_resource path="res://images/player/down/player2.png" type="Texture" id=3]
 [ext_resource path="res://images/player/down/player4.png" type="Texture" id=4]
@@ -28,6 +28,7 @@
 [ext_resource path="res://images/player/up/player_up7.png" type="Texture" id=26]
 [ext_resource path="res://images/player/up/player_up8.png" type="Texture" id=27]
 [ext_resource path="res://ui/HealthBar.tscn" type="PackedScene" id=28]
+[ext_resource path="res://player/Casting.gd" type="Script" id=29]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Down"
@@ -108,3 +109,7 @@ margin_bottom = -15.9669
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.436584, -0.702972 )
 shape = SubResource( 4 )
+
+[node name="Casting" type="Node" parent="."]
+script = ExtResource( 29 )
+

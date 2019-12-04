@@ -11,5 +11,3 @@ onready var inventory_data := {
   INGREDIENT_TYPES.SQUIRREL: 999,
   INGREDIENT_TYPES.TURTLE: 999
 }
-
-onready var crafted_spells := []

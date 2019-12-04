@@ -5,8 +5,8 @@ class_name Player
 
 export (int) var speed = 200
 
-onready var camera = $"/root/game/Player/Camera2D"
-onready var crafting: Craft = $"/root/game/UI/Inventory/TabContainer/Craft"
+onready var camera = $"./Camera2D"
+onready var casting: Casting = $"./Casting"
 
 var velocity = Vector2()
 
@@ -86,7 +86,7 @@ func _handle_spell_cast():
     
   if spell_num != 0:
     var direction = (get_global_mouse_position() - position).normalized()
-    crafting.cast_spell(self, spell_num, direction)
+    casting.cast_spell(self, spell_num, direction)
 
 
 func _get_animation_player() -> Node:
