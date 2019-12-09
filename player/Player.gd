@@ -5,7 +5,6 @@ class_name Player
 
 export (int) var speed = 200
 
-onready var camera = $"./Camera2D"
 onready var casting: Casting = $"./Casting"
 
 var velocity = Vector2()
@@ -18,9 +17,9 @@ func _physics_process(delta: float):
   if Input.is_action_just_pressed("ui_inventory"):
     var panel: WindowDialog = get_node("/root/game/UI/Inventory")
     panel.popup()
-    
+
     get_tree().paused = true
-    
+
   if is_knockedback():
     return
 
@@ -65,7 +64,7 @@ func _physics_process(delta: float):
     resulting_speed /= 2
 
   move_and_slide(velocity.normalized() * resulting_speed)
-  
+
   self._handle_spell_cast()
 
   pass
@@ -83,7 +82,7 @@ func _handle_spell_cast():
     spell_num = 4
   elif Input.is_action_just_pressed("cast_fice"):
     spell_num = 5
-    
+
   if spell_num != 0:
     var direction = (get_global_mouse_position() - position).normalized()
     casting.cast_spell(self, spell_num, direction)

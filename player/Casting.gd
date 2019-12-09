@@ -3,7 +3,7 @@ extends Node
 class_name Casting
 
 onready var State = $"/root/state"
-onready var craft: Craft = $"/root/UI/Inventory/TabContainer/Craft"
+onready var craft: Craft = $"/root/game/UI/Inventory/TabContainer/Craft"
 
 func _create_spell_type(spell_status_type, spell_type_name: String, spell_base: String, direction: Vector2) -> Spell:
   var spell_scene = load("res://spells/%s%s.tscn" % [spell_type_name, spell_base]).instance()
@@ -33,16 +33,11 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
       if spell.ingredients.has(Constants.INGREDIENT_TYPES.BIRD):
         spell_base = "wave"
 
-      # Since removing seed as a thing, arcane ball no longer exists
-      # Need to figure out how to make this work
-
-      # Selecting a spell without seed doesnt seem useful, unless i want
-      # spell craft fail states, like cooking in BOTW
+      # We default to arcane
       var spell_type_name = "Arcane"
       var spell_status_type = Constants.SPELL_STATUS_TYPE.ARCANE
       if spell.ingredients.has(Constants.INGREDIENT_TYPES.RED) && spell.ingredients.has(Constants.INGREDIENT_TYPES.BLUE):
         spell_type_name = "Water"
-        assert("Water not supported yet")
       elif spell.ingredients.has(Constants.INGREDIENT_TYPES.RED):
         spell_type_name = "Fire"
         spell_status_type = Constants.SPELL_STATUS_TYPE.FIRE
