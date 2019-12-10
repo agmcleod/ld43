@@ -1,31 +1,31 @@
 class_name SpellReceiver
 
-onready var Constants = $"/root/Constants"
-onready var health_bar = $"./Sprite/HealthBar"
 const FloatingText = preload("res://ui/FloatingText.tscn")
+const HealthBar = preload("res://ui/HealthBar.gd")
 
-export var health: float = 0.0
-var max_health
 var status = 0
 var effect_timer = 0
 var damage_per_tick = 0
 var damage_tick_rate = 1.0
 var knocked_back_vector := Vector2(0, 0)
 var knocked_back_tick := 0.0
+var health
+var max_health
+var owner
 
-func _init(health):
+func _init(owner: KinematicBody2D, health: int):
   self.health = health
   self.max_health = health
+  self.owner = owner
 
 func take_damage(amount: int):
   health -= amount
   var floating_text = FloatingText.instance()
   floating_text.text = "%d" % round(amount * -1)
-  add_child(floating_text
-  if health_bar != null:
-    health_bar.set_width_from_percent(health / max_health)
+  self.owner.add_child(floating_text)
+  self.owner.health_bar.set_width_from_percent(health / max_health)
   if health <= 0:
-    queue_free()
+    self.owner.queue_free()
 
 
 func apply_knockback(vector: Vector2):
@@ -58,7 +58,7 @@ func _handle_damage_per_tick(delta: float):
 func _process(delta: float):
   if is_knockedback():
     knocked_back_tick -= delta
-    move_and_slide(knocked_back_vector * 200)
+    self.owner.move_and_slide(knocked_back_vector * 200)
   elif effect_timer > 0:
     if damage_per_tick > 0:
       _handle_damage_per_tick(delta)

@@ -88,7 +88,6 @@ margin_bottom = 190.0
 position = Vector2( 166.427, 289.995 )
 
 [node name="Enemies" type="Node2D" parent="."]
-editor/display_folded = true
 
 [node name="MeleeGoblin" parent="Enemies" instance=ExtResource( 7 )]
 position = Vector2( 829.484, 150.168 )

@@ -1,7 +1,13 @@
-extends "res://units/EnemyTracker.gd"
+extends KinematicBody2D
 
+var EnemyTracker = preload("res://units/EnemyTracker.gd")
+var SpellReceiver = preload("res://units/SpellReceiver.gd")
+
+onready var vision_area: Area2D = $Vision
+onready var nav_2d: Navigation2D = $"/root/game/Navigation2D"
 onready var attack_zone: Area2D = $AttackZone
 onready var player: Player = $"/root/game/Player"
+onready var health_bar = $"./Sprite/HealthBar"
 
 export (float) var attack_rate = 1.5
 
@@ -9,25 +15,42 @@ var out_of_range = true
 var last_target: Vector2 = Vector2(0, 0)
 
 var attack_ticker := 0.0
+var spell_receiver
+var enemy_tracker
+var speed := 120
 
 func _ready():
+  add_to_group("enemies")
   attack_ticker = 0.0
+  self.spell_receiver = SpellReceiver.new(self, 40)
+  self.enemy_tracker = EnemyTracker.new(self, nav_2d, 600, vision_area)
   attack_zone.connect("body_entered", self, "_on_body_entered_attack_zone")
   attack_zone.connect("body_exited", self, "_on_body_exited_attack_zone")
 
 
 func _physics_process(delta):
-  if is_knockedback():
+  if self.spell_receiver.is_knockedback():
     return
+  var tracked_node = self.enemy_tracker.tracked_node
   if out_of_range && tracked_node && last_target != tracked_node.position:
     last_target = tracked_node.position
-    _set_path_for_tracked_position(last_target)
-  
+    self.enemy_tracker._set_path_for_tracked_position(last_target)
+
   if !out_of_range:
     attack_ticker += delta
     if attack_ticker > attack_rate:
       player.take_damage(10)
-      attack_ticker = 0.0   
+      attack_ticker = 0.0
+
+  var distance: float = self.speed * delta
+  if self.spell_receiver.status == Constants.SPELL_STATUS_TYPE.FROST:
+    distance /= 2
+  self.spell_receiver._process(delta)
+  self.enemy_tracker._physics_process(distance)
+
+
+func take_damage(amount: int):
+  self.spell_receiver.take_damage(amount)
 
 
 func _on_body_entered_attack_zone(body):
@@ -38,7 +61,7 @@ func _on_body_entered_attack_zone(body):
 func _on_body_exited_attack_zone(body):
   if body.name == "Player":
     out_of_range = true
-  
-  
+
+
 func should_follow():
   return out_of_range

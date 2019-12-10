@@ -6,16 +6,16 @@ var SpellReceiver = preload("res://units/SpellReceiver.gd")
 
 class_name Player
 
-export (int) var speed = 200
-
+onready var health_bar = $"./Sprite/HealthBar"
 onready var casting: Casting = $"./Casting"
 
+var speed = 200
 var velocity = Vector2()
+var spell_receiver
 
 func _ready():
-  self.spell_receiver: SpellReceiver = SpellReceiver::new(50)
-  self.add_to_group("spell_receiver")
-  pass
+  self.spell_receiver = SpellReceiver.new(self, 50)
+  add_to_group("spell_receiver")
 
 
 func take_damage(amount: int):
@@ -70,7 +70,7 @@ func _physics_process(delta: float):
     animation_player.stop()
 
   var resulting_speed = speed
-  if status == Constants.SPELL_STATUS_TYPE.FROST:
+  if self.spell_receiver.status == Constants.SPELL_STATUS_TYPE.FROST:
     resulting_speed /= 2
 
   move_and_slide(velocity.normalized() * resulting_speed)

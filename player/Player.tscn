@@ -112,4 +112,3 @@ shape = SubResource( 4 )
 
 [node name="Casting" type="Node" parent="."]
 script = ExtResource( 29 )
-
