@@ -1,5 +1,3 @@
-extends KinematicBody2D
-
 class_name SpellReceiver
 
 onready var Constants = $"/root/Constants"
@@ -15,19 +13,16 @@ var damage_tick_rate = 1.0
 var knocked_back_vector := Vector2(0, 0)
 var knocked_back_tick := 0.0
 
-func _ready():
-  max_health = health
-  print(get_name(), " ", health, " ", max_health)
-  add_to_group("spell_receiver")
-  
+func _init(health):
+  self.health = health
+  self.max_health = health
 
 func take_damage(amount: int):
   health -= amount
   var floating_text = FloatingText.instance()
   floating_text.text = "%d" % round(amount * -1)
-  add_child(floating_text)
+  add_child(floating_text
   if health_bar != null:
-    print(health, " / ", max_health)
     health_bar.set_width_from_percent(health / max_health)
   if health <= 0:
     queue_free()
@@ -40,7 +35,7 @@ func apply_knockback(vector: Vector2):
 
 func is_knockedback():
   return knocked_back_tick > 0
-  
+
 
 # Status Effect is actually a value from SPELL_STATUS_TYPE
 func handle_spell(spell: Spell):

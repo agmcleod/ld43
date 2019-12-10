@@ -1,5 +1,8 @@
 # Defines status & health
-extends "res://units/SpellReceiver.gd"
+# extends "res://units/SpellReceiver.gd"
+extends KinematicBody2D
+
+var SpellReceiver = preload("res://units/SpellReceiver.gd")
 
 class_name Player
 
@@ -10,17 +13,24 @@ onready var casting: Casting = $"./Casting"
 var velocity = Vector2()
 
 func _ready():
+  self.spell_receiver: SpellReceiver = SpellReceiver::new(50)
+  self.add_to_group("spell_receiver")
   pass
 
 
+func take_damage(amount: int):
+  self.spell_receiver.take_damage(amount)
+
+
 func _physics_process(delta: float):
+  self.spell_receiver._process(delta)
   if Input.is_action_just_pressed("ui_inventory"):
     var panel: WindowDialog = get_node("/root/game/UI/Inventory")
     panel.popup()
 
     get_tree().paused = true
 
-  if is_knockedback():
+  if self.spell_receiver.is_knockedback():
     return
 
   velocity.x = 0
