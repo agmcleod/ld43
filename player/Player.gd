@@ -11,11 +11,10 @@ onready var casting: Casting = $"./Casting"
 
 var speed = 200
 var velocity = Vector2()
-var spell_receiver
+var spell_receiver: SpellReceiver
 
 func _ready():
-  self.spell_receiver = SpellReceiver.new(self, 50)
-  add_to_group("spell_receiver")
+  spell_receiver = SpellReceiver.new(self, 50)
 
 
 func take_damage(amount: int):

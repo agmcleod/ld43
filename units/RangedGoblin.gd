@@ -11,16 +11,15 @@ onready var health_bar = $"./Sprite/HealthBar"
 export (float) var fire_rate = 1.5
 
 var attack_ticker := 0.0
-var spell_receiver
-var enemy_tracker
+var spell_receiver: SpellReceiver
+var enemy_tracker: EnemyTracker
 var speed := 120
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-  add_to_group("enemies")
   attack_ticker = 0.0
-  self.spell_receiver = SpellReceiver.new(self, 30)
-  self.enemy_tracker = EnemyTracker.new(self, nav_2d, 400, vision_area)
+  spell_receiver = SpellReceiver.new(self, 30)
+  enemy_tracker = EnemyTracker.new(self, nav_2d, 400, vision_area)
 
 
 func take_damage(amount: int):

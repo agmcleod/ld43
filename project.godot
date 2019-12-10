@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/FloatingText.gd"
 }, {
+"base": "ColorRect",
+"class": "HealthBar",
+"language": "GDScript",
+"path": "res://ui/HealthBar.gd"
+}, {
 "base": "ItemList",
 "class": "IngredientItemList",
 "language": "GDScript",
@@ -76,6 +81,7 @@ _global_script_class_icons={
 "DiscoveredSpell": "",
 "EnemyTracker": "",
 "FloatingText": "",
+"HealthBar": "",
 "IngredientItemList": "",
 "Player": "",
 "Spell": "",

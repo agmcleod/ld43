@@ -178,6 +178,7 @@ position = Vector2( 1928.35, 798.571 )
 
 [node name="PitTile7" parent="." instance=ExtResource( 9 )]
 position = Vector2( 2104.76, 802.317 )
+
 [connection signal="popup_hide" from="UI/Inventory" to="UI/Inventory" method="_on_Inventory_popup_hide"]
 [connection signal="item_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_item_selected"]
 [connection signal="multi_selected" from="UI/Inventory/TabContainer/Discover/IngredientItemList" to="UI/Inventory/TabContainer/Discover" method="_on_ItemList_multi_selected"]

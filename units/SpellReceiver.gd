@@ -17,6 +17,7 @@ func _init(owner: KinematicBody2D, health: int):
   self.health = health
   self.max_health = health
   self.owner = owner
+  owner.add_to_group("spell_receiver")
 
 func take_damage(amount: int):
   health -= amount

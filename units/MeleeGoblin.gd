@@ -20,7 +20,6 @@ var enemy_tracker
 var speed := 120
 
 func _ready():
-  add_to_group("enemies")
   attack_ticker = 0.0
   self.spell_receiver = SpellReceiver.new(self, 40)
   self.enemy_tracker = EnemyTracker.new(self, nav_2d, 600, vision_area)

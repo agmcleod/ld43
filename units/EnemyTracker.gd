@@ -18,16 +18,14 @@ func _init(owner: Node, nav_2d: Navigation2D, chase_distance: float, vision_area
   last_tracked_position.x = owner.position.x
   last_tracked_position.y = owner.position.y
   self.owner = owner
+  owner.add_to_group("enemies")
+  self.vision_area.connect("body_entered", self, "_on_body_entered_vision")
+  self.vision_area.connect("body_exited", self, "_on_body_exited_vision")
 
 
 # setup so it can be overridden by sub classes
 func should_follow():
   return tracked_node == null
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-  self.vision_area.connect("body_entered", self, "_on_body_entered_vision")
-  self.vision_area.connect("body_exited", self, "_on_body_exited_vision")
 
 
 func _physics_process(distance: float):
