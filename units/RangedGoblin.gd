@@ -27,6 +27,7 @@ func take_damage(amount: int):
 
 
 func _physics_process(delta: float):
+  self.spell_receiver._process(delta)
   if self.spell_receiver.is_knockedback():
     return
   if self.enemy_tracker.tracked_node != null:
@@ -43,5 +44,13 @@ func _physics_process(delta: float):
   var distance: float = self.speed * delta
   if self.spell_receiver.status == Constants.SPELL_STATUS_TYPE.FROST:
     distance /= 2
-  self.spell_receiver._process(delta)
   self.enemy_tracker._physics_process(distance)
+
+
+func handle_spell(spell):
+  enemy_tracker.handle_spell(spell)
+  spell_receiver.handle_spell(spell)
+
+
+func apply_knockback(direction: Vector2):
+  spell_receiver.apply_knockback(direction)

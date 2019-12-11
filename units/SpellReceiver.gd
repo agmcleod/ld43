@@ -59,7 +59,7 @@ func _handle_damage_per_tick(delta: float):
 func _process(delta: float):
   if is_knockedback():
     knocked_back_tick -= delta
-    self.owner.move_and_slide(knocked_back_vector * 200)
+    owner.move_and_slide(knocked_back_vector * 200)
   elif effect_timer > 0:
     if damage_per_tick > 0:
       _handle_damage_per_tick(delta)

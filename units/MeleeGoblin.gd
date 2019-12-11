@@ -28,6 +28,7 @@ func _ready():
 
 
 func _physics_process(delta):
+  self.spell_receiver._process(delta)
   if self.spell_receiver.is_knockedback():
     return
   var tracked_node = self.enemy_tracker.tracked_node
@@ -44,7 +45,6 @@ func _physics_process(delta):
   var distance: float = self.speed * delta
   if self.spell_receiver.status == Constants.SPELL_STATUS_TYPE.FROST:
     distance /= 2
-  self.spell_receiver._process(delta)
   self.enemy_tracker._physics_process(distance)
 
 
@@ -64,3 +64,12 @@ func _on_body_exited_attack_zone(body):
 
 func should_follow():
   return out_of_range
+
+
+func apply_knockback(direction: Vector2):
+  spell_receiver.apply_knockback(direction)
+
+
+func handle_spell(spell):
+  enemy_tracker.handle_spell(spell)
+  spell_receiver.handle_spell(spell)

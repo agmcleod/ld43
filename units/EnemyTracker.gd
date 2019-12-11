@@ -60,7 +60,6 @@ func _set_path_for_tracked_position(pos):
 
 
 func handle_spell(spell: Spell):
-  .handle_spell(spell)
   # Move towards where spell came from
   if tracked_node == null:
     last_tracked_position.x = spell.direction.x * -self.chase_distance + self.owner.position.x
