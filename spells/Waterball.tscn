@@ -7,8 +7,9 @@
 
 [node name="Area2D" type="Area2D"]
 script = ExtResource( 1 )
+status_type = 4
 damage = 20
-duration = 0.8
+duration = 4.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

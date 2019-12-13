@@ -37,30 +37,31 @@ func _physics_process(delta: float):
   var moving = false
   var animation_player: AnimationPlayer = _get_animation_player()
   var sprite: Sprite = _get_sprite()
-  if Input.is_action_pressed('right'):
-    velocity.x = 1
-    sprite.set_flip_h(false)
-    if animation_player.current_animation != "Right":
-      animation_player.play("Right")
-    moving = true
-  elif Input.is_action_pressed('left'):
-    velocity.x = -1
-    moving = true
-    if animation_player.current_animation != "Right":
-      animation_player.play("Right")
-      sprite.set_flip_h(true)
-  elif Input.is_action_pressed('down'):
-    moving = true
-    velocity.y = 1
-    if animation_player.current_animation != "Down":
-      animation_player.play("Down")
+  if spell_receiver.can_move():
+    if Input.is_action_pressed('right'):
+      velocity.x = 1
       sprite.set_flip_h(false)
-  elif Input.is_action_pressed('up'):
-    velocity.y = -1
-    if animation_player.current_animation != "Up":
-      animation_player.play("Up")
-      sprite.set_flip_h(false)
-    moving = true
+      if animation_player.current_animation != "Right":
+        animation_player.play("Right")
+      moving = true
+    elif Input.is_action_pressed('left'):
+      velocity.x = -1
+      moving = true
+      if animation_player.current_animation != "Right":
+        animation_player.play("Right")
+        sprite.set_flip_h(true)
+    elif Input.is_action_pressed('down'):
+      moving = true
+      velocity.y = 1
+      if animation_player.current_animation != "Down":
+        animation_player.play("Down")
+        sprite.set_flip_h(false)
+    elif Input.is_action_pressed('up'):
+      velocity.y = -1
+      if animation_player.current_animation != "Up":
+        animation_player.play("Up")
+        sprite.set_flip_h(false)
+      moving = true
 
 
   if moving && !animation_player.is_playing():

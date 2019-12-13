@@ -28,7 +28,7 @@ func take_damage(amount: int):
 
 func _physics_process(delta: float):
   self.spell_receiver._process(delta)
-  if self.spell_receiver.is_knockedback():
+  if self.spell_receiver.is_knockedback() || !spell_receiver.can_move():
     return
   if self.enemy_tracker.tracked_node != null:
     var tracked_node = self.enemy_tracker.tracked_node

@@ -4,6 +4,8 @@ enum SPELL_STATUS_TYPE {
   ARCANE = 1,
   FIRE = 2,
   FROST = 3,
+  WET = 4,
+  FROZEN = 5
 }
 
 enum INGREDIENT_TYPES {

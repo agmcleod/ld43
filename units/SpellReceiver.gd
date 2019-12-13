@@ -3,6 +3,9 @@ class_name SpellReceiver
 const FloatingText = preload("res://ui/FloatingText.tscn")
 const HealthBar = preload("res://ui/HealthBar.gd")
 
+const Constants = preload("res://Constants.gd")
+
+# is status type, but can just default to zero
 var status = 0
 var effect_timer = 0
 var damage_per_tick = 0
@@ -18,6 +21,11 @@ func _init(owner: KinematicBody2D, health: int):
   self.max_health = health
   self.owner = owner
   owner.add_to_group("spell_receiver")
+
+
+func can_move():
+  return status != Constants.SPELL_STATUS_TYPE.FROZEN
+
 
 func take_damage(amount: int):
   health -= amount
@@ -38,10 +46,12 @@ func is_knockedback():
   return knocked_back_tick > 0
 
 
-# Status Effect is actually a value from SPELL_STATUS_TYPE
 func handle_spell(spell: Spell):
   self.take_damage(spell.damage)
-  status = spell.status_type
+  if status == Constants.SPELL_STATUS_TYPE.WET && spell.status_type == Constants.SPELL_STATUS_TYPE.FROST:
+    status = Constants.SPELL_STATUS_TYPE.FROZEN
+  else:
+    status = spell.status_type
   effect_timer = spell.status_duration
   if spell.status_duration > 0 && spell.status_damage > 0:
     damage_per_tick = spell.status_damage / spell.status_duration
