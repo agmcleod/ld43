@@ -2,14 +2,14 @@ extends Area2D
 
 class_name Spell
 
-onready var Constants = $"/root/Constants"
+const Constants = preload("res://Constants.gd")
 
 export (Constants.SPELL_TYPE) var spell_type
 export (Constants.SPELL_STATUS_TYPE) var status_type = Constants.SPELL_STATUS_TYPE.ARCANE
 export (int) var damage;
-export (int) var status_duration = 10
-export (int) var status_damage = 0
-export (float) var duration = 0.5
+export (int) var status_duration
+export (int) var status_damage
+export (float) var duration
 
 var direction = Vector2()
 var default_direction = Vector2(1, 0)
@@ -54,7 +54,7 @@ func _on_body_entered(body: Node2D):
   if body != spell_owner:
     var groups = body.get_groups()
     if groups.has("spell_receiver"):
-      
+
       # dont destroy a spell if it's a shield
       if spell_type != Constants.SPELL_TYPE.SHIELD:
         queue_free()

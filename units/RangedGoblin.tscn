@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://units/RangedGoblin.gd" type="Script" id=1]
 [ext_resource path="res://images/enemies/ranged-enemy.png" type="Texture" id=2]
 [ext_resource path="res://ui/HealthBar.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/StatusType.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.79533, 8.47092 )
@@ -31,3 +32,5 @@ margin_left = -8.13368
 margin_top = -11.7487
 margin_right = 7.86632
 margin_bottom = -9.74866
+
+[node name="StatusType" parent="." instance=ExtResource( 4 )]

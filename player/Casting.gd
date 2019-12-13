@@ -2,6 +2,8 @@ extends Node
 
 class_name Casting
 
+const Constants = preload("res://Constants.gd")
+
 onready var State = $"/root/state"
 onready var craft: Craft = $"/root/game/UI/Inventory/TabContainer/Craft"
 

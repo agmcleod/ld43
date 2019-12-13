@@ -1,10 +1,10 @@
 extends Node
 
-onready var Constants = $"/root/Constants"
+const Constants = preload("res://Constants.gd")
 onready var INGREDIENT_TYPES = Constants.INGREDIENT_TYPES
 
 onready var inventory_data := {
-  INGREDIENT_TYPES.RED: 999, 
+  INGREDIENT_TYPES.RED: 999,
   INGREDIENT_TYPES.BLUE: 999,
   INGREDIENT_TYPES.BIRD: 999,
   INGREDIENT_TYPES.FROG: 999,

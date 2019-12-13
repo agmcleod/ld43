@@ -39,7 +39,8 @@ script = ExtResource( 1 )
 spell_type = 2
 status_type = 4
 damage = 15
-duration = 4.0
+status_duration = 5
+duration = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.847382, 0.770348 )

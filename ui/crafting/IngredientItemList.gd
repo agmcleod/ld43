@@ -1,6 +1,7 @@
 extends ItemList
 
-onready var Constants = $"/root/Constants"
+const Constants = preload("res://Constants.gd")
+
 onready var INGREDIENT_TYPES = Constants.INGREDIENT_TYPES
 onready var InventoryStorage = $"/root/InventoryStorage"
 
@@ -50,4 +51,4 @@ func update_resources():
   for item in DATA:
     self.set_item_text(i, str(InventoryStorage.inventory_data[item.type]))
     i += 1
-    
+

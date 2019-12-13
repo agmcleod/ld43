@@ -1,8 +1,9 @@
 extends KinematicBody2D
 
 const Arrow = preload("res://units/Arrow.tscn")
-var EnemyTracker = preload("res://units/EnemyTracker.gd")
-var SpellReceiver = preload("res://units/SpellReceiver.gd")
+const Constants = preload("res://Constants.gd")
+const EnemyTracker = preload("res://units/EnemyTracker.gd")
+const SpellReceiver = preload("res://units/SpellReceiver.gd")
 
 onready var vision_area: Area2D = $Vision
 onready var nav_2d: Navigation2D = $"/root/game/Navigation2D"
@@ -26,8 +27,11 @@ func take_damage(amount: int):
   self.spell_receiver.take_damage(amount)
 
 
-func _physics_process(delta: float):
+func _process(delta):
   self.spell_receiver._process(delta)
+
+
+func _physics_process(delta: float):
   if self.spell_receiver.is_knockedback() || !spell_receiver.can_move():
     return
   if self.enemy_tracker.tracked_node != null:
@@ -54,3 +58,7 @@ func handle_spell(spell):
 
 func apply_knockback(direction: Vector2):
   spell_receiver.apply_knockback(direction)
+
+
+func set_status_text(status):
+  $"./StatusType".set_status_text(status)

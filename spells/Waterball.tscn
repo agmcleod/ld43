@@ -9,7 +9,8 @@
 script = ExtResource( 1 )
 status_type = 4
 damage = 20
-duration = 4.0
+status_duration = 5
+duration = 0.8
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

@@ -46,13 +46,20 @@ func is_knockedback():
   return knocked_back_tick > 0
 
 
+func _set_status(status_type):
+  status = status_type
+  owner.set_status_text(status)
+
+
 func handle_spell(spell: Spell):
   self.take_damage(spell.damage)
   if status == Constants.SPELL_STATUS_TYPE.WET && spell.status_type == Constants.SPELL_STATUS_TYPE.FROST:
-    status = Constants.SPELL_STATUS_TYPE.FROZEN
+    _set_status(Constants.SPELL_STATUS_TYPE.FROZEN)
   else:
-    status = spell.status_type
+    _set_status(spell.status_type)
+
   effect_timer = spell.status_duration
+  print("effect timer ", effect_timer)
   if spell.status_duration > 0 && spell.status_damage > 0:
     damage_per_tick = spell.status_damage / spell.status_duration
   else:
@@ -75,4 +82,5 @@ func _process(delta: float):
       _handle_damage_per_tick(delta)
     effect_timer -= delta
     if effect_timer <= 0:
-      status = 0
+      print("reset status")
+      _set_status(0)

@@ -3,8 +3,8 @@ extends Node
 class_name Craft
 
 const DiscoveredSpell = preload("res://types/DiscoveredSpell.gd")
+const Constants = preload("res://Constants.gd")
 
-onready var Constants = $"/root/Constants"
 onready var InventoryStorage = $"/root/InventoryStorage"
 onready var State = $"/root/state"
 

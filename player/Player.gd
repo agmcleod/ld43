@@ -3,6 +3,7 @@
 extends KinematicBody2D
 
 var SpellReceiver = preload("res://units/SpellReceiver.gd")
+const Constants = preload("res://Constants.gd")
 
 class_name Player
 
@@ -21,8 +22,11 @@ func take_damage(amount: int):
   self.spell_receiver.take_damage(amount)
 
 
-func _physics_process(delta: float):
+func _process(delta):
   self.spell_receiver._process(delta)
+
+
+func _physics_process(delta: float):
   if Input.is_action_just_pressed("ui_inventory"):
     var panel: WindowDialog = get_node("/root/game/UI/Inventory")
     panel.popup()
@@ -108,3 +112,7 @@ func _get_sprite() -> Node:
 
 func add_resource(name, type_name):
   assert(false)
+
+
+func set_status_text(status):
+  $"./StatusType".set_status_text(status)

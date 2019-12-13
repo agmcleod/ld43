@@ -9,13 +9,13 @@
 script = ExtResource( 1 )
 status_type = 3
 damage = 14
-duration = 0.8
+status_duration = 5
+duration = 5.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 1.90735e-06, 0 )
+position = Vector2( 1.90735e-006, 0 )
 scale = Vector2( 0.816553, 0.798773 )
 shape = SubResource( 1 )
-

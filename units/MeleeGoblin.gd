@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+const Constants = preload("res://Constants.gd")
 var EnemyTracker = preload("res://units/EnemyTracker.gd")
 var SpellReceiver = preload("res://units/SpellReceiver.gd")
 
@@ -27,8 +28,11 @@ func _ready():
   attack_zone.connect("body_exited", self, "_on_body_exited_attack_zone")
 
 
-func _physics_process(delta):
+func _process(delta):
   self.spell_receiver._process(delta)
+
+
+func _physics_process(delta):
   if self.spell_receiver.is_knockedback() || !spell_receiver.can_move():
     return
   var tracked_node = self.enemy_tracker.tracked_node
@@ -73,3 +77,7 @@ func apply_knockback(direction: Vector2):
 func handle_spell(spell):
   enemy_tracker.handle_spell(spell)
   spell_receiver.handle_spell(spell)
+
+
+func set_status_text(status):
+  $"./StatusType".set_status_text(status)
