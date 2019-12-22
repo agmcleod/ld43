@@ -30,15 +30,18 @@ func _ready():
 
 func _process(delta):
   self.spell_receiver._process(delta)
+  if self.spell_receiver.is_knockedback() || !spell_receiver.can_move():
+    return
+
+  var tracked_node = self.enemy_tracker.tracked_node
+  if out_of_range && tracked_node && last_target != tracked_node.position:
+    last_target = tracked_node.position
+    self.enemy_tracker._set_path_for_tracked_position(last_target)
 
 
 func _physics_process(delta):
   if self.spell_receiver.is_knockedback() || !spell_receiver.can_move():
     return
-  var tracked_node = self.enemy_tracker.tracked_node
-  if out_of_range && tracked_node && last_target != tracked_node.position:
-    last_target = tracked_node.position
-    self.enemy_tracker._set_path_for_tracked_position(last_target)
 
   if !out_of_range:
     attack_ticker += delta

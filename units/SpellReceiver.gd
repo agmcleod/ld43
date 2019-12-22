@@ -59,7 +59,6 @@ func handle_spell(spell: Spell):
     _set_status(spell.status_type)
 
   effect_timer = spell.status_duration
-  print("effect timer ", effect_timer)
   if spell.status_duration > 0 && spell.status_damage > 0:
     damage_per_tick = spell.status_damage / spell.status_duration
   else:

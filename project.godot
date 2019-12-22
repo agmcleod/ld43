@@ -104,6 +104,7 @@ state="*res://state.gd"
 [display]
 
 window/size/height=576
+window/size/resizable=false
 
 [input]
 

@@ -56,6 +56,7 @@ func _on_body_exited_vision(body):
 
 
 func _set_path_for_tracked_position(pos):
+  print("set path to ", pos)
   path = self.nav_2d.get_simple_path(self.owner.global_position, pos)
 
 
