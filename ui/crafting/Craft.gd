@@ -50,9 +50,12 @@ func discover(selected_ingredients: Array):
 
   if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.TURTLE):
     spell_name.append("Shield")
+  # Blast wave and shield can be together
   if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD):
     spell_name.append("Blast Wave")
-  if !ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD) && !ingredient_dictionary.has(Constants.INGREDIENT_TYPES.TURTLE):
+
+  # Ball is independent of blast wave. But can combine with shield
+  if !ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD):
     spell_name.append("Ball")
 
   spell_name = PoolStringArray(spell_name).join(" ")
