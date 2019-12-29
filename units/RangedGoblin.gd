@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-const Arrow = preload("res://units/Arrow.tscn")
+var Arrow = load("res://units/Arrow.tscn")
 const Constants = preload("res://Constants.gd")
 const EnemyTracker = preload("res://units/EnemyTracker.gd")
 const SpellReceiver = preload("res://units/SpellReceiver.gd")
@@ -48,7 +48,8 @@ func _physics_process(delta: float):
   var distance: float = self.speed * delta
   if self.spell_receiver.status == Constants.SPELL_STATUS_TYPE.FROST:
     distance /= 2
-  self.enemy_tracker._physics_process(distance)
+  if self.enemy_tracker.get_tracked_node() == null:
+    self.enemy_tracker.move_towards_target(distance)
 
 
 func handle_spell(spell):

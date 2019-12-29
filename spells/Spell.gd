@@ -3,6 +3,7 @@ extends Area2D
 class_name Spell
 
 const Constants = preload("res://Constants.gd")
+const EnvironmentalEffectScene = preload("res://spells/environmental_effects/EnvironmentalEffect.tscn")
 
 export (Constants.SPELL_TYPE) var spell_type
 export (Constants.SPELL_STATUS_TYPE) var status_type = Constants.SPELL_STATUS_TYPE.ARCANE
@@ -54,10 +55,20 @@ func _on_body_entered(body: Node2D):
   if body != spell_owner:
     var groups = body.get_groups()
     if groups.has("spell_receiver"):
-
-      # dont destroy a spell if it's a shield
+      # non shield logic
       if spell_type != Constants.SPELL_TYPE.SHIELD:
         queue_free()
+        if status_type == Constants.SPELL_STATUS_TYPE.FIRE || status_type == Constants.SPELL_STATUS_TYPE.WET:
+          var env_effect = EnvironmentalEffectScene.instance()
+          if status_type == Constants.SPELL_STATUS_TYPE.FIRE:
+            env_effect.set_sprite_texture("fire")
+          elif status_type == Constants.SPELL_STATUS_TYPE.WET:
+            env_effect.set_sprite_texture("wet")
+
+          env_effect
+
+          env_effect.position = self.position
+          $"/root/game/GroundLevel".add_child(env_effect)
       body.handle_spell(self)
       if spell_type == Constants.SPELL_TYPE.WAVE:
         body.apply_knockback(direction)

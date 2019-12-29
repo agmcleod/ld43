@@ -23,23 +23,21 @@ func _init(owner: Node, nav_2d: Navigation2D, chase_distance: float, vision_area
   self.vision_area.connect("body_exited", self, "_on_body_exited_vision")
 
 
-# setup so it can be overridden by sub classes
-func should_follow():
-  return tracked_node == null
+func get_tracked_node() -> Node:
+  return tracked_node
 
 
-func _physics_process(distance: float):
-  if should_follow():
-    var start_point :Vector2 = self.owner.position
-    for i in range(path.size()):
-      var distance_to_point := start_point.distance_to(path[0])
-      if distance <= distance_to_point && distance >= 0.0:
-        self.owner.move_and_collide((path[0] - start_point).normalized() * distance)
-        break
-      distance -= distance_to_point
-      start_point = path[0]
-      self.owner.move_and_collide((path[0] - start_point).normalized())
-      path.remove(0)
+func move_towards_target(delta: float):
+  var start_point :Vector2 = self.owner.position
+  for i in range(path.size()):
+    var distance_to_point := start_point.distance_to(path[0])
+    if delta <= distance_to_point && delta >= 0.0:
+      self.owner.move_and_collide((path[0] - start_point).normalized() * delta)
+      break
+      delta -= distance_to_point
+    start_point = path[0]
+    self.owner.move_and_collide((path[0] - start_point).normalized())
+    path.remove(0)
 
 
 func _on_body_entered_vision(body):
@@ -56,7 +54,6 @@ func _on_body_exited_vision(body):
 
 
 func _set_path_for_tracked_position(pos):
-  print("set path to ", pos)
   path = self.nav_2d.get_simple_path(self.owner.global_position, pos)
 
 

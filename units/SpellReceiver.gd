@@ -16,7 +16,7 @@ var health
 var max_health
 var owner
 
-func _init(owner: KinematicBody2D, health: int):
+func _init(owner: KinematicBody2D, health: float):
   self.health = health
   self.max_health = health
   self.owner = owner
@@ -81,5 +81,4 @@ func _process(delta: float):
       _handle_damage_per_tick(delta)
     effect_timer -= delta
     if effect_timer <= 0:
-      print("reset status")
       _set_status(0)
