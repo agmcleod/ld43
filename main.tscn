@@ -34,9 +34,6 @@ position = Vector2( 166.427, 289.995 )
 [node name="MeleeGoblin" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 829.484, 150.168 )
 
-[node name="MeleeGoblin2" parent="Enemies" instance=ExtResource( 4 )]
-position = Vector2( 830.484, 411.168 )
-
 [node name="RangedGoblin" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1138.04, 720.876 )
 
@@ -90,6 +87,9 @@ position = Vector2( 1660, 980 )
 
 [node name="MeleeGoblin11" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1660, 1130 )
+
+[node name="MeleeGoblin2" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 830.484, 411.168 )
 
 [node name="PitTiles" type="Node" parent="."]
 editor/display_folded = true

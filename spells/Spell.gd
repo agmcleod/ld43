@@ -65,7 +65,8 @@ func _on_body_entered(body: Node2D):
           elif status_type == Constants.SPELL_STATUS_TYPE.WET:
             env_effect.set_sprite_texture("wet")
 
-          env_effect
+          env_effect.status_duration = self.status_duration
+          env_effect.status_damage = self.status_damage
 
           env_effect.position = self.position
           $"/root/game/GroundLevel".add_child(env_effect)

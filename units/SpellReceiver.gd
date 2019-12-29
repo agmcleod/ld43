@@ -53,14 +53,18 @@ func _set_status(status_type):
 
 func handle_spell(spell: Spell):
   self.take_damage(spell.damage)
-  if status == Constants.SPELL_STATUS_TYPE.WET && spell.status_type == Constants.SPELL_STATUS_TYPE.FROST:
+  self.apply_status_effect(spell.status_type, spell.status_duration, spell.status_damage)
+
+
+func apply_status_effect(status_type: int, status_duration: int, status_damage: int):
+  if self.status == Constants.SPELL_STATUS_TYPE.WET && status_type == Constants.SPELL_STATUS_TYPE.FROST:
     _set_status(Constants.SPELL_STATUS_TYPE.FROZEN)
   else:
-    _set_status(spell.status_type)
+    _set_status(status_type)
 
-  effect_timer = spell.status_duration
-  if spell.status_duration > 0 && spell.status_damage > 0:
-    damage_per_tick = spell.status_damage / spell.status_duration
+  effect_timer = status_duration
+  if status_duration > 0 && status_damage > 0:
+    damage_per_tick = status_damage / status_duration
   else:
     damage_per_tick = 0
 

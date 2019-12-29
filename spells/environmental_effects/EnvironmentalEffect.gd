@@ -19,17 +19,27 @@ var textures: Dictionary = {
 }
 
 var spell_type = Constants.SPELL_STATUS_TYPE.ARCANE
+var status_duration = 0
+var status_damage = 0
 var time_alive := 30.0
+var entered_bodies: Dictionary = {}
 
 func _ready():
   var area = _get_area2d()
-  self.connect("body_entered", area, "_on_body_entered")
+  area.connect("body_entered", self, "_on_body_entered")
+  area.connect("body_exited", self, "_on_body_exited")
 
 
 func _process(delta: float):
   time_alive -= delta
   if time_alive <= 0:
     queue_free()
+  else:
+    for body in entered_bodies.values():
+      if body.get_groups().has("spell_receiver"):
+        var spell_receiver = body.spell_receiver
+        if spell_receiver.status == 0:
+          spell_receiver.apply_status_effect(spell_type, status_duration, status_damage)
 
 
 func _get_area2d() -> Area2D:
@@ -37,7 +47,11 @@ func _get_area2d() -> Area2D:
 
 
 func _on_body_entered(body: KinematicBody2D):
-  print("body entered ", body)
+  entered_bodies[body.get_instance_id()] = body
+
+
+func _on_body_exited(body: KinematicBody2D):
+  entered_bodies.erase(body.get_instance_id())
 
 
 func set_sprite_texture(texture_name: String) -> bool:
