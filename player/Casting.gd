@@ -43,6 +43,7 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
       var spell_status_type = Constants.SPELL_STATUS_TYPE.ARCANE
       if spell.ingredients.has(Constants.INGREDIENT_TYPES.RED) && spell.ingredients.has(Constants.INGREDIENT_TYPES.BLUE):
         spell_type_name = "Water"
+        spell_status_type = Constants.SPELL_STATUS_TYPE.WET
       elif spell.ingredients.has(Constants.INGREDIENT_TYPES.RED):
         spell_type_name = "Fire"
         spell_status_type = Constants.SPELL_STATUS_TYPE.FIRE

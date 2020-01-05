@@ -6,7 +6,7 @@ const Constants = preload("res://Constants.gd")
 const EnvironmentalEffectScene = preload("res://spells/environmental_effects/EnvironmentalEffect.tscn")
 
 export (Constants.SPELL_TYPE) var spell_type
-export (Constants.SPELL_STATUS_TYPE) var status_type = Constants.SPELL_STATUS_TYPE.ARCANE
+var status_type = Constants.SPELL_STATUS_TYPE.ARCANE
 export (int) var damage;
 export (int) var status_duration
 export (int) var status_damage
@@ -23,6 +23,7 @@ func _ready():
   self.connect("body_entered", self, "_on_body_entered")
   if spell_type != Constants.SPELL_TYPE.SHIELD:
     add_to_group("projectiles")
+  add_to_group("spell")
 
 
 func _process(delta):
@@ -69,6 +70,7 @@ func _on_body_entered(body: Node2D):
           env_effect.status_damage = self.status_damage
 
           env_effect.position = self.position
+          env_effect.spell_status_type = status_type
           $"/root/game/GroundLevel".add_child(env_effect)
       body.handle_spell(self)
       if spell_type == Constants.SPELL_TYPE.WAVE:
