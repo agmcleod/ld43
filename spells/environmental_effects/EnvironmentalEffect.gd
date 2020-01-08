@@ -40,7 +40,7 @@ func _process(delta: float):
       if body.get_groups().has("spell_receiver"):
         var spell_receiver = body.spell_receiver
         if spell_receiver.status == 0:
-          spell_receiver.apply_status_effect(spell_type, status_duration, status_damage)
+          spell_receiver.apply_status_effect(spell_status_type, status_duration, status_damage)
 
 
 func _get_area2d() -> Area2D:
@@ -50,15 +50,16 @@ func _get_area2d() -> Area2D:
 func _on_area_entered(area: Area2D):
   if area.get_groups().has("spell"):
     # incoming spell is frost type, and current is wet
-    if area.spell_status_type == Constants.SPELL_STATUS_TYPE.FROST && spell_status_type == Constants.SPELL_STATUS_TYPE.WET:
+    if area.status_type == Constants.SPELL_STATUS_TYPE.FROST && spell_status_type == Constants.SPELL_STATUS_TYPE.WET:
       spell_status_type = Constants.SPELL_STATUS_TYPE.FROST
+      set_sprite_texture("frozen")
 
       # set tracked entities to frozen
       for body in entered_bodies.values():
         if body.get_groups().has("spell_receiver"):
           var spell_receiver = body.spell_receiver
           if spell_receiver.status == 0:
-            spell_receiver.apply_status_effect(spell_type, status_duration, status_damage)
+            spell_receiver.apply_status_effect(spell_status_type, status_duration, status_damage)
 
 
 func _on_body_entered(body: KinematicBody2D):
@@ -74,6 +75,6 @@ func set_sprite_texture(texture_name: String) -> bool:
     return false
 
   set_texture(textures[texture_name].texture)
-  spell_type = textures[texture_name].status_type
+  spell_status_type = textures[texture_name].status_type
 
   return true

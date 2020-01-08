@@ -30,6 +30,7 @@ tile_data = PoolIntArray( -589841, 5, 0, -589840, 5, 0, -589839, 5, 0, -589838, 
 position = Vector2( 166.427, 289.995 )
 
 [node name="Enemies" type="Node2D" parent="."]
+editor/display_folded = true
 
 [node name="MeleeGoblin" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 829.484, 150.168 )
