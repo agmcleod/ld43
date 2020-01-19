@@ -59,7 +59,7 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
         spells_to_spawn.append(spell_scene)
 
         if spell.ingredients.has(Constants.INGREDIENT_TYPES.FROG):
-          if spell_base.has("shield"):
+          if spell_base == "shield":
             spell_scene.position.x = -32
             spell_scene.position.y = 32
             for n in range(2):

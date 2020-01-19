@@ -63,11 +63,13 @@ func _on_area_entered(area: Area2D):
 
 
 func _on_body_entered(body: KinematicBody2D):
-  entered_bodies[body.get_instance_id()] = body
+  if body != null:
+    entered_bodies[body.get_instance_id()] = body
 
 
 func _on_body_exited(body: KinematicBody2D):
-  entered_bodies.erase(body.get_instance_id())
+  if body != null:
+    entered_bodies.erase(body.get_instance_id())
 
 
 func set_sprite_texture(texture_name: String) -> bool:
