@@ -54,6 +54,7 @@ func set_velocity(vel: int):
 
 func _on_body_entered(body: Node2D):
   if body != spell_owner:
+    # tags of the body that collided with the spell
     var groups = body.get_groups()
     if groups.has("spell_receiver"):
       # non shield logic
@@ -76,5 +77,8 @@ func _on_body_entered(body: Node2D):
       if spell_type == Constants.SPELL_TYPE.WAVE:
         body.apply_knockback(direction)
     elif groups.has("enemies") && groups.has("projectiles") && spell_type == Constants.SPELL_TYPE.SHIELD:
-      # destroy the it if its a projectile hitting a shield
+      # destroy the it if the incoming body is a projectile hitting a shield
       body.queue_free()
+    elif !groups.has("enemies") && !groups.has("player"):
+      # hit something in the environment, destroy it
+      queue_free()

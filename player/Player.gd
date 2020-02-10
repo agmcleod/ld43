@@ -16,17 +16,20 @@ var spell_receiver: SpellReceiver
 
 func _ready():
   spell_receiver = SpellReceiver.new(self, 50)
+  add_to_group("player")
 
 
 func take_damage(amount: int):
   self.spell_receiver.take_damage(amount)
+  if spell_receiver.health <= 0:
+    get_tree().reload_current_scene()
 
 
 func _process(delta):
   self.spell_receiver._process(delta)
 
 
-func _physics_process(delta: float):
+func _physics_process(_delta: float):
   if Input.is_action_just_pressed("ui_inventory"):
     var panel: WindowDialog = get_node("/root/game/UI/Inventory")
     panel.popup()
