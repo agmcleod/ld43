@@ -99,7 +99,7 @@ anims/Up = SubResource( 3 )
 current = true
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 7 )
+texture = ExtResource( 2 )
 
 [node name="HealthBar" parent="Sprite" instance=ExtResource( 28 )]
 margin_left = -8.2135
