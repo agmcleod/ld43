@@ -5,6 +5,8 @@ class_name EnemyTracker
 
 var tracked_node = null
 var last_tracked_position := Vector2(0, 0)
+# default to facing left
+var last_direction_vector := Vector2(-0.9, 0.9)
 var path := PoolVector2Array([])
 var nav_2d
 var chase_distance
@@ -29,15 +31,38 @@ func get_tracked_node() -> Node:
 
 func move_towards_target(delta: float):
   var start_point :Vector2 = self.owner.position
-  for i in range(path.size()):
+
+  if path.size() == 0:
+    self.owner.set_animation("%sStill" % self._get_animation_name_from_direction())
+    return
+
+  for _i in range(path.size()):
     var distance_to_point := start_point.distance_to(path[0])
     if delta <= distance_to_point && delta >= 0.0:
-      self.owner.move_and_collide((path[0] - start_point).normalized() * delta)
+      last_direction_vector = (path[0] - start_point).normalized()
+      self.owner.move_and_collide(last_direction_vector * delta)
       break
       delta -= distance_to_point
     start_point = path[0]
-    self.owner.move_and_collide((path[0] - start_point).normalized())
+    last_direction_vector = (path[0] - start_point).normalized()
+    self.owner.move_and_collide(last_direction_vector)
     path.remove(0)
+
+  var dir_name = self._get_animation_name_from_direction()
+  print(rad2deg(last_direction_vector.angle()), " ", last_direction_vector)
+  self.owner.set_animation("%sMove" % [dir_name])
+
+
+func _get_animation_name_from_direction() -> String:
+  var angle = rad2deg(last_direction_vector.angle())
+  if angle >= -45 && angle <= 45:
+    return "Right"
+  elif angle > 45 && angle <= 135:
+    return "Down"
+  elif (angle > 135 && angle <= 180) || (angle >= -180 && angle <= -135):
+    return "Left"
+  else:
+    return "Up"
 
 
 func _on_body_entered_vision(body):

@@ -85,3 +85,9 @@ func handle_spell(spell):
 
 func set_status_text(status):
   $"./StatusType".set_status_text(status)
+
+
+func set_animation(name: String):
+  var anim_player: AnimationPlayer = $"./AnimationPlayer"
+  if anim_player.current_animation != name:
+    anim_player.play(name)

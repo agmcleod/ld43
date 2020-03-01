@@ -88,7 +88,7 @@ position = Vector2( 1660, 980 )
 position = Vector2( 1660, 1130 )
 
 [node name="MeleeGoblin2" parent="Enemies" instance=ExtResource( 4 )]
-position = Vector2( 830.484, 411.168 )
+position = Vector2( 831.507, 400.653 )
 
 [node name="PitTiles" type="Node" parent="."]
 
