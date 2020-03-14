@@ -49,7 +49,6 @@ func move_towards_target(delta: float):
     path.remove(0)
 
   var dir_name = self._get_animation_name_from_direction()
-  print(rad2deg(last_direction_vector.angle()), " ", last_direction_vector)
   self.owner.set_animation("%sMove" % [dir_name])
 
 
