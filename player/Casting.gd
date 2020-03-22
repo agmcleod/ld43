@@ -58,6 +58,7 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
 
         spells_to_spawn.append(spell_scene)
 
+        # Frog causes spell to split
         if spell.ingredients.has(Constants.INGREDIENT_TYPES.FROG):
           if spell_base == "shield":
             spell_scene.position.x = -32
@@ -87,6 +88,7 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
 
         if spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL):
           for spell in spells_to_spawn:
+            spell.amplified = true
             spell.damage *= 1.25
 
       for spell in spells_to_spawn:

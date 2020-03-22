@@ -17,6 +17,7 @@ var default_direction = Vector2(1, 0)
 var velocity = 0
 var time_alive: float = 0
 var spell_owner :Node = null
+var amplified = false
 
 
 func _ready():
@@ -60,7 +61,7 @@ func _on_body_entered(body: Node2D):
       # non shield logic
       if spell_type != Constants.SPELL_TYPE.SHIELD:
         queue_free()
-        if status_type == Constants.SPELL_STATUS_TYPE.FIRE || status_type == Constants.SPELL_STATUS_TYPE.WET:
+        if amplified && (status_type == Constants.SPELL_STATUS_TYPE.FIRE || status_type == Constants.SPELL_STATUS_TYPE.WET):
           var env_effect = EnvironmentalEffectScene.instance()
           if status_type == Constants.SPELL_STATUS_TYPE.FIRE:
             env_effect.set_sprite_texture("fire")
