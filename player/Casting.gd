@@ -5,6 +5,7 @@ class_name Casting
 const Constants = preload("res://Constants.gd")
 
 onready var State = $"/root/state"
+onready var Game = $"/root/game"
 onready var craft: Craft = $"/root/game/UI/Inventory/TabContainer/Craft"
 
 func _create_spell_type(spell_status_type, spell_type_name: String, spell_base: String, direction: Vector2) -> Spell:
@@ -22,7 +23,7 @@ func _create_spell_type(spell_status_type, spell_type_name: String, spell_base: 
 
 func cast_spell(player: Node, spell_index: int, direction: Vector2):
   if State.bound_spells.has(spell_index):
-    var spell_name: String = State.bound_spells[spell_index]
+    var spell_name: String = State.bound_spells[spell_index].spell_name
     var spell = craft.discovered_spells[spell_name]
     if spell.crafted_count > 0:
       spell.crafted_count -= 1
@@ -39,22 +40,12 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
         spell_base_types.append("ball")
 
       # We default to arcane
-      var spell_type_name = "Arcane"
-      var spell_status_type = Constants.SPELL_STATUS_TYPE.ARCANE
-      if spell.ingredients.has(Constants.INGREDIENT_TYPES.RED) && spell.ingredients.has(Constants.INGREDIENT_TYPES.BLUE):
-        spell_type_name = "Water"
-        spell_status_type = Constants.SPELL_STATUS_TYPE.WET
-      elif spell.ingredients.has(Constants.INGREDIENT_TYPES.RED):
-        spell_type_name = "Fire"
-        spell_status_type = Constants.SPELL_STATUS_TYPE.FIRE
-      elif spell.ingredients.has(Constants.INGREDIENT_TYPES.BLUE):
-        spell_type_name = "Frost"
-        spell_status_type = Constants.SPELL_STATUS_TYPE.FROST
+      var spell_status_type_name = Game.get_asset_name_from_status_type(spell.spell_status_type)
 
       var spells_to_spawn = []
 
       for spell_base in spell_base_types:
-        var spell_scene: Spell = _create_spell_type(spell_status_type, spell_type_name, spell_base, direction)
+        var spell_scene: Spell = _create_spell_type(spell.spell_status_type, spell_status_type_name, spell_base, direction)
 
         spells_to_spawn.append(spell_scene)
 
@@ -64,7 +55,7 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
             spell_scene.position.x = -32
             spell_scene.position.y = 32
             for n in range(2):
-              var other_spell: Spell = _create_spell_type(spell_status_type, spell_type_name, spell_base, direction)
+              var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_status_type_name, spell_base, direction)
               if n == 0:
                 other_spell.position.x = 32
                 other_spell.position.y = 32
@@ -76,7 +67,7 @@ func cast_spell(player: Node, spell_index: int, direction: Vector2):
             spells_to_spawn[0].damage /= 2
             # create the adjacent spells
             for n in range(2):
-              var other_spell: Spell = _create_spell_type(spell_status_type, spell_type_name, spell_base, direction)
+              var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_status_type_name, spell_base, direction)
               var deg25 := 0.4363323
               if n == 0:
                 other_spell.direction = other_spell.direction.rotated(-deg25)
