@@ -11,7 +11,7 @@ func set_images_for_bindings(bound_spells: Dictionary):
     if bound_spells.has(num):
       var spell = bound_spells[num]
       var spell_status_type_name = Game.get_asset_name_from_status_type(spell.spell_status_type)
-      sprite.texture = load("res://images/spells/%s%s.png" % [spell_status_type_name, spell.spell_type_name])
+      sprite.texture = load("res://images/ui/ss%s%s.png" % [spell_status_type_name, spell.spell_type_name])
     else:
       sprite.texture = default_texture
 

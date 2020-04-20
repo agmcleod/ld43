@@ -39,10 +39,17 @@ func discover(selected_ingredients: Array):
   var spell_type_name = "Ball"
   var spell_status_type = Constants.SPELL_STATUS_TYPE.ARCANE
 
-  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.FROG):
-    spell_name.append("Multi")
-  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.SQUIRREL):
-    spell_name.append("Amplified")
+  var is_blast_spell = (
+    ingredient_dictionary.has(Constants.INGREDIENT_TYPES.SQUIRREL) &&
+    ingredient_dictionary.has(Constants.INGREDIENT_TYPES.TURTLE) &&
+    ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD)
+  )
+
+  if !is_blast_spell:
+    if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.FROG):
+      spell_name.append("Multi")
+    if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.SQUIRREL):
+      spell_name.append("Amplified")
 
   if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.RED) && ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BLUE):
     spell_name.append("Water")
@@ -53,17 +60,22 @@ func discover(selected_ingredients: Array):
   elif ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BLUE):
     spell_name.append("Frost")
     spell_status_type = Constants.SPELL_STATUS_TYPE.FROST
-  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.TURTLE):
-    spell_name.append("Shield")
-    spell_type_name = "Shield"
-  # Blast wave and shield can be together
-  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD):
-    spell_name.append("Blast Wave")
-    spell_type_name = "Wave"
 
-  # Ball is independent of blast wave. But can combine with shield
-  if !ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD):
-    spell_name.append("Ball")
+  if is_blast_spell:
+    spell_name.append("Blast")
+    spell_type_name = "Blast"
+  else:
+    if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.TURTLE):
+      spell_name.append("Shield")
+      spell_type_name = "Shield"
+    # Blast wave and shield can be together
+    if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD):
+      spell_name.append("Blast Wave")
+      spell_type_name = "Wave"
+
+    # Ball is independent of blast wave. But can combine with shield
+    if !ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD):
+      spell_name.append("Ball")
 
   spell_name = PoolStringArray(spell_name).join(" ")
 
