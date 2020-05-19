@@ -180,6 +180,11 @@ escape={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="entities"
+2d_physics/layer_2="walls"
+
 [rendering]
 
 quality/2d/gles2_use_nvidia_rect_flicker_workaround=true

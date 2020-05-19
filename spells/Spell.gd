@@ -56,6 +56,7 @@ func set_velocity(vel: int):
 func _on_body_entered(body: Node2D):
   if body != spell_owner:
     # tags of the body that collided with the spell
+    # Could improve this by using collision masks
     var groups = body.get_groups()
     if groups.has("spell_receiver"):
       # non shield logic

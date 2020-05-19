@@ -6,6 +6,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 [node name="Area2D" type="Area2D"]
+collision_mask = 3
 script = ExtResource( 1 )
 spell_type = 3
 duration = 5.0
@@ -14,6 +15,6 @@ duration = 5.0
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 1.90735e-006, 0 )
+position = Vector2( 1.90735e-06, 0 )
 scale = Vector2( 3.24684, 3.17614 )
 shape = SubResource( 1 )
