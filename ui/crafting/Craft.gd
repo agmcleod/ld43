@@ -45,11 +45,10 @@ func discover(selected_ingredients: Array):
     ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD)
   )
 
-  if !is_blast_spell:
-    if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.FROG):
-      spell_name.append("Multi")
-    if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.SQUIRREL):
-      spell_name.append("Amplified")
+  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.FROG):
+    spell_name.append("Multi")
+  if !is_blast_spell && ingredient_dictionary.has(Constants.INGREDIENT_TYPES.SQUIRREL):
+    spell_name.append("Amplified")
 
   if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.RED) && ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BLUE):
     spell_name.append("Water")

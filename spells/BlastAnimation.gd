@@ -11,8 +11,9 @@ func _ready():
 
 func _process(delta: float):
   frame_time += delta
-  if frame_time >= 0.1:
+  if frame_time >= 0.017:
     frame_time = 0.0
-    texture.frame += 1
-    if texture.frame > total_frame_count:
+    frame += 1
+    if frame >= total_frame_count:
+      print('should free')
       get_parent().queue_free()

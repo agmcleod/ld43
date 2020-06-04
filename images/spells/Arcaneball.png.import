@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ArcaneBall.png-fe8a1fcb19cfb368f8efb66aced5094e.stex"
+path="res://.import/Arcaneball.png-7689844b790fa0ec9a5617ccc2dd4052.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/spells/ArcaneBall.png"
-dest_files=[ "res://.import/ArcaneBall.png-fe8a1fcb19cfb368f8efb66aced5094e.stex" ]
+source_file="res://images/spells/Arcaneball.png"
+dest_files=[ "res://.import/Arcaneball.png-7689844b790fa0ec9a5617ccc2dd4052.stex" ]
 
 [params]
 

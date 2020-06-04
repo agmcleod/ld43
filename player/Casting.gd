@@ -20,11 +20,13 @@ var casting_state = CASTING_STATE.IDLE
 var prepared_spell = null
 var target_scene = null
 
-func _create_spell_type(spell_status_type, spell_type_name: String, spell_base: String, direction: Vector2) -> Spell:
-  var spell_scene = load("res://spells/%s%s.tscn" % [spell_type_name, spell_base]).instance()
+func _create_spell_type(spell_status_type, spell_base: String, direction: Vector2) -> Spell:
+  # We default to arcane
+  var spell_status_type_name = Game.get_asset_name_from_status_type(spell_status_type)
+  var spell_scene = load("res://spells/%s%s.tscn" % [spell_status_type_name, spell_base]).instance()
   spell_scene.set_status_type(spell_status_type)
 
-  if spell_base == "shield":
+  if spell_base == "shield" || spell_base == "blast":
     spell_scene.set_velocity(0)
   else:
     spell_scene.set_velocity(600)
@@ -33,47 +35,75 @@ func _create_spell_type(spell_status_type, spell_type_name: String, spell_base: 
   return spell_scene
 
 
-func _fire_spell(caster, spell, direction: Vector2):
+func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
   var spell_base_types := []
   casting_state = CASTING_STATE.CASTING
+
+  var is_blast_spell = (
+    spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL) &&
+    spell.ingredients.has(Constants.INGREDIENT_TYPES.TURTLE) &&
+    spell.ingredients.has(Constants.INGREDIENT_TYPES.BIRD)
+  )
+
   # check for turtle (shield), and bird (wave)
-  if spell.ingredients.has(Constants.INGREDIENT_TYPES.BIRD):
-    spell_base_types.append("wave")
-  if spell.ingredients.has(Constants.INGREDIENT_TYPES.TURTLE):
-    spell_base_types.append("shield")
+  if is_blast_spell:
+    spell_base_types.append("blast")
+  else:
+    if spell.ingredients.has(Constants.INGREDIENT_TYPES.BIRD):
+      spell_base_types.append("wave")
+    if spell.ingredients.has(Constants.INGREDIENT_TYPES.TURTLE):
+      spell_base_types.append("shield")
 
-  if spell_base_types.size() == 0:
-    spell_base_types.append("ball")
-
-  # We default to arcane
-  var spell_status_type_name = Game.get_asset_name_from_status_type(spell.spell_status_type)
+    if spell_base_types.size() == 0:
+      spell_base_types.append("ball")
 
   var spells_to_spawn = []
 
   for spell_base in spell_base_types:
-    var spell_scene: Spell = _create_spell_type(spell.spell_status_type, spell_status_type_name, spell_base, direction)
+    var spell_scene: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
+
+    if is_blast_spell:
+      spell_scene.position = target
+      spell_scene.is_blast = true
 
     spells_to_spawn.append(spell_scene)
 
     # Frog causes spell to split
     if spell.ingredients.has(Constants.INGREDIENT_TYPES.FROG):
       if spell_base == "shield":
+        # place bottom left of caster
         spell_scene.position.x = -32
         spell_scene.position.y = 32
         for n in range(2):
-          var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_status_type_name, spell_base, direction)
+          var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
           if n == 0:
+            # place bottom right of character
             other_spell.position.x = 32
             other_spell.position.y = 32
           else:
+            # place above cahracter
             other_spell.position.y = -32
 
+          spells_to_spawn.append(other_spell)
+      elif spell_base == "blast":
+        for n in range(2):
+          var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
+          other_spell.position = spell_scene.position
+          other_spell.is_blast = true
+          var angle = -90
+          if n == 1:
+            angle = 90
+
+          var modified_pos = direction.rotated(deg2rad(angle)) * 64
+          other_spell.position.x += modified_pos.x
+          other_spell.position.y += modified_pos.y
+          other_spell.damage /= 2
           spells_to_spawn.append(other_spell)
       else:
         spells_to_spawn[0].damage /= 2
         # create the adjacent spells
         for n in range(2):
-          var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_status_type_name, spell_base, direction)
+          var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
           var deg25 := 0.4363323
           if n == 0:
             other_spell.direction = other_spell.direction.rotated(-deg25)
@@ -100,6 +130,8 @@ func _fire_spell(caster, spell, direction: Vector2):
           child.queue_free()
       spell.add_to_group("shields")
       caster.add_child(spell)
+    elif spell.spell_type == Constants.SPELL_TYPE.BLAST:
+      get_tree().get_root().add_child(spell)
     else:
       spell.position.x = caster.position.x
       spell.position.y = caster.position.y
@@ -126,10 +158,10 @@ func _process(_delta: float):
   pass
 
 
-func handle_mouse_click(direction: Vector2):
+func handle_mouse_click(direction: Vector2, target: Vector2):
   if casting_state == CASTING_STATE.TARGETING:
     var owner = target_scene.target_owner
-    _fire_spell(owner, prepared_spell, direction)
+    _fire_spell(owner, prepared_spell, direction, target)
     target_scene.queue_free()
 
 
@@ -153,5 +185,5 @@ func cast_spell(caster: Node, spell_index: int, direction: Vector2):
         # This really only applies for player
         _setup_spell_target(caster)
       else:
-        _fire_spell(caster, spell, direction)
+        _fire_spell(caster, spell, direction, Vector2.ZERO)
 

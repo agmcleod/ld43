@@ -89,7 +89,7 @@ func _physics_process(_delta: float):
 
 func _input(event):
   if event is InputEventMouseButton && event.button_index == BUTTON_LEFT && event.pressed:
-    self.casting.handle_mouse_click(_get_facing_direction())
+    self.casting.handle_mouse_click(_get_facing_direction(), get_global_mouse_position())
 
 
 func _get_facing_direction() -> Vector2:
