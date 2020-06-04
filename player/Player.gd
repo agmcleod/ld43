@@ -87,6 +87,15 @@ func _physics_process(_delta: float):
   pass
 
 
+func _input(event):
+  if event is InputEventMouseButton && event.button_index == BUTTON_LEFT && event.pressed:
+    self.casting.handle_mouse_click(_get_facing_direction())
+
+
+func _get_facing_direction() -> Vector2:
+  return (get_global_mouse_position() - position).normalized()
+
+
 func _handle_spell_cast():
   var spell_num := 0
   if Input.is_action_just_pressed("cast_one"):
@@ -101,8 +110,7 @@ func _handle_spell_cast():
     spell_num = 5
 
   if spell_num != 0:
-    var direction = (get_global_mouse_position() - position).normalized()
-    casting.cast_spell(self, spell_num, direction)
+    casting.cast_spell(self, spell_num, _get_facing_direction())
 
 
 func _get_animation_player() -> Node:

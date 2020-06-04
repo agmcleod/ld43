@@ -126,6 +126,13 @@ func _process(_delta: float):
   pass
 
 
+func handle_mouse_click(direction: Vector2):
+  if casting_state == CASTING_STATE.TARGETING:
+    var owner = target_scene.target_owner
+    _fire_spell(owner, prepared_spell, direction)
+    target_scene.queue_free()
+
+
 func cast_spell(caster: Node, spell_index: int, direction: Vector2):
   if State.bound_spells.has(spell_index):
     var spell_name: String = State.bound_spells[spell_index].spell_name

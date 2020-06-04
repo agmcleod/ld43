@@ -6,7 +6,6 @@ func set_owner(o: Node):
   target_owner = o
   position.x = target_owner.position.x
   position.y = target_owner.position.y
-  print('owner ', target_owner)
 
 
 func _physics_process(delta):
