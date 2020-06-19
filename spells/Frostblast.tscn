@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://spells/Spell.gd" type="Script" id=1]
-[ext_resource path="res://images/spells/fireblast.png" type="Texture" id=2]
+[ext_resource path="res://images/spells/frostblast.png" type="Texture" id=2]
 [ext_resource path="res://spells/BlastAnimation.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -12,7 +12,6 @@ script = ExtResource( 1 )
 spell_type = 4
 damage = 35
 status_duration = 10
-status_damage = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

@@ -113,7 +113,7 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
           other_spell.damage /= 2
           spells_to_spawn.append(other_spell)
 
-    if spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL):
+    if spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL) && !is_blast_spell:
       for spell in spells_to_spawn:
         spell.amplified = true
         spell.damage *= 1.25

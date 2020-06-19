@@ -61,7 +61,8 @@ func _on_body_entered(body: Node2D):
     if groups.has("spell_receiver"):
       # non shield logic
       if spell_type != Constants.SPELL_TYPE.SHIELD:
-        queue_free()
+        if !is_blast:
+          queue_free()
         if amplified && !is_blast && (status_type == Constants.SPELL_STATUS_TYPE.FIRE || status_type == Constants.SPELL_STATUS_TYPE.WET):
           var env_effect = EnvironmentalEffectScene.instance()
           if status_type == Constants.SPELL_STATUS_TYPE.FIRE:
@@ -75,6 +76,8 @@ func _on_body_entered(body: Node2D):
           env_effect.position = self.position
           env_effect.spell_status_type = status_type
           $"/root/game/GroundLevel".add_child(env_effect)
+      if is_blast:
+        print("handle blast")
       body.handle_spell(self)
       if spell_type == Constants.SPELL_TYPE.WAVE:
         body.apply_knockback(direction)

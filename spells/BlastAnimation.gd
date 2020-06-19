@@ -14,6 +14,6 @@ func _process(delta: float):
   if frame_time >= 0.017:
     frame_time = 0.0
     frame += 1
-    if frame >= total_frame_count:
+    if frame >= total_frame_count - 1:
       print('should free')
       get_parent().queue_free()
