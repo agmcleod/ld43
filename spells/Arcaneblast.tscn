@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://spells/Spell.gd" type="Script" id=1]
-[ext_resource path="res://images/spells/frostblast.png" type="Texture" id=2]
+[ext_resource path="res://images/spells/arcaneblast.png" type="Texture" id=2]
 [ext_resource path="res://spells/BlastAnimation.gd" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -10,18 +10,17 @@ extents = Vector2( 64, 64 )
 [node name="Area2D" type="Area2D"]
 script = ExtResource( 1 )
 spell_type = 4
-damage = 35
-status_duration = 10
+damage = 40
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
-vframes = 8
-hframes = 8
+vframes = 4
+hframes = 5
 script = ExtResource( 3 )
-total_frame_count = 64
-frame_speed = 0.017
+total_frame_count = 19
+frame_speed = 0.05
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
