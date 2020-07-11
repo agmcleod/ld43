@@ -14,6 +14,7 @@ func _process(delta: float):
   frame_time += delta
   if frame_time >= frame_speed:
     frame_time = 0.0
+    # incrments animation frame
     frame += 1
     if frame >= total_frame_count - 1:
       print('should free')

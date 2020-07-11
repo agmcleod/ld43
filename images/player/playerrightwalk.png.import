@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/FireBall.png-143e61a27e444a4b667cad87b2252cd4.stex"
+path="res://.import/playerrightwalk.png-070c7c09bc6d2b293499dcbf99f5da53.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/spells/FireBall.png"
-dest_files=[ "res://.import/FireBall.png-143e61a27e444a4b667cad87b2252cd4.stex" ]
+source_file="res://images/player/playerrightwalk.png"
+dest_files=[ "res://.import/playerrightwalk.png-070c7c09bc6d2b293499dcbf99f5da53.stex" ]
 
 [params]
 
