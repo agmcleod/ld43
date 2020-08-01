@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Frostball.png-31d9c3325d39481a09e12ba76daab92d.stex"
+path="res://.import/ssFrostBlast.png-8b7ef9c6d05f2200647534131de344a8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/spells/Frostball.png"
-dest_files=[ "res://.import/Frostball.png-31d9c3325d39481a09e12ba76daab92d.stex" ]
+source_file="res://images/ui/ssFrostBlast.png"
+dest_files=[ "res://.import/ssFrostBlast.png-8b7ef9c6d05f2200647534131de344a8.stex" ]
 
 [params]
 

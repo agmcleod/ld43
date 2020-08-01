@@ -59,6 +59,8 @@ func discover(selected_ingredients: Array):
   elif ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BLUE):
     spell_name.append("Frost")
     spell_status_type = Constants.SPELL_STATUS_TYPE.FROST
+  else:
+    spell_name.append("Arcane")
 
   if is_blast_spell:
     spell_name.append("Blast")
