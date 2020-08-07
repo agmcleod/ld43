@@ -18,9 +18,11 @@ var textures: Dictionary = {
   )
 }
 
+# these are set by the casting spell when instance is created
 var spell_status_type = Constants.SPELL_STATUS_TYPE.ARCANE
 var status_duration = 0
 var status_damage = 0
+
 var time_alive := 30.0
 var entered_bodies: Dictionary = {}
 
@@ -58,7 +60,7 @@ func _on_area_entered(area: Area2D):
       for body in entered_bodies.values():
         if body.get_groups().has("spell_receiver"):
           var spell_receiver = body.spell_receiver
-          if spell_receiver.status == 0:
+          if spell_receiver.status == Constants.SPELL_STATUS_TYPE.NONE:
             spell_receiver.apply_status_effect(spell_status_type, status_duration, status_damage)
 
 

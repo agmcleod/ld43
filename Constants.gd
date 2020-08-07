@@ -1,6 +1,7 @@
 extends Node
 
 enum SPELL_STATUS_TYPE {
+  NONE = 0,
   ARCANE = 1,
   FIRE = 2,
   FROST = 3,
