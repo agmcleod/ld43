@@ -48,7 +48,7 @@ func _physics_process(delta: float):
   var distance: float = self.speed * delta
   if self.spell_receiver.status == Constants.SPELL_STATUS_TYPE.FROST:
     distance /= 2
-  if self.enemy_tracker.get_tracked_node() == null:
+  if self.enemy_tracker.tracked_node == null:
     self.enemy_tracker.move_towards_target(distance)
 
 

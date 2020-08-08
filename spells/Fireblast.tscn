@@ -11,8 +11,8 @@ extents = Vector2( 64, 64 )
 script = ExtResource( 1 )
 spell_type = 4
 damage = 35
-status_duration = 10
-status_damage = 5
+status_duration = 5
+status_damage = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )

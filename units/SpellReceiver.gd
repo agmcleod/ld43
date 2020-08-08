@@ -64,7 +64,7 @@ func apply_status_effect(status_type: int, status_duration: int, status_damage: 
 
   effect_timer = status_duration
   if status_duration > 0 && status_damage > 0:
-    damage_per_tick = status_damage / status_duration
+    damage_per_tick = status_damage
   else:
     damage_per_tick = 0
 

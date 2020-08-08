@@ -25,10 +25,6 @@ func _init(owner: Node, nav_2d: Navigation2D, chase_distance: float, vision_area
   self.vision_area.connect("body_exited", self, "_on_body_exited_vision")
 
 
-func get_tracked_node() -> Node:
-  return tracked_node
-
-
 func move_towards_target(delta: float):
   var start_point :Vector2 = self.owner.position
 
@@ -82,8 +78,5 @@ func _set_path_for_tracked_position(pos):
 
 
 func handle_spell(spell: Spell):
-  # Move towards where spell came from
   if tracked_node == null:
-    last_tracked_position.x = spell.direction.x * -self.chase_distance + self.owner.position.x
-    last_tracked_position.y = spell.direction.y * -self.chase_distance + self.owner.position.y
-    _set_path_for_tracked_position(last_tracked_position)
+    _set_path_for_tracked_position(spell.spell_owner.position)
