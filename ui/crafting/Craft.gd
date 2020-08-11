@@ -36,7 +36,7 @@ func discover(selected_ingredients: Array):
   ingredient_item_list.update_resources()
 
   var spell_name = []
-  var spell_type_name = "Ball"
+  var spell_type_name = ""
   var spell_status_type = Constants.SPELL_STATUS_TYPE.ARCANE
 
   var is_blast_spell = (
@@ -74,10 +74,10 @@ func discover(selected_ingredients: Array):
       spell_name.append("Blast Wave")
       spell_type_name = "Wave"
 
-    # Ball is independent of blast wave. But can combine with shield
-    if !ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD):
-      spell_name.append("Ball")
+  if spell_type_name == "":
+    spell_type_name = "Ball"
 
+  spell_name.append(spell_type_name)
   spell_name = PoolStringArray(spell_name).join(" ")
 
   if discovered_spells.has(spell_name):

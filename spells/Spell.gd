@@ -35,6 +35,9 @@ func _process(delta):
   if time_alive >= duration && duration > 0:
     queue_free()
 
+  if amplified && spell_type == Constants.SPELL_TYPE.SHIELD:
+    duration *= 1.5
+
 
 func set_owner(node: Node):
   spell_owner = node
@@ -76,8 +79,6 @@ func _on_body_entered(body: Node2D):
           env_effect.position = self.position
           env_effect.spell_status_type = status_type
           $"/root/game/GroundLevel".add_child(env_effect)
-      if is_blast:
-        print("handle blast")
       body.handle_spell(self)
       if spell_type == Constants.SPELL_TYPE.WAVE:
         body.apply_knockback(direction)
