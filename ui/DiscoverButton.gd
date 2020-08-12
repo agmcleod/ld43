@@ -12,6 +12,6 @@ func _on_Button_pressed():
   var items = item_list.get_selected_items()
   var ingredient_types = []
   for item in items:
-    ingredient_types.append(item_list.DATA[item].type)
-    
+    ingredient_types.append(item_list.current_ingredients[item])
+
   craft_list.discover(ingredient_types)
