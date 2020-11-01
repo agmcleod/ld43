@@ -124,6 +124,10 @@ state="*res://state.gd"
 window/size/height=576
 window/size/resizable=false
 
+[editor_plugins]
+
+enabled=PoolStringArray( "vnen.tiled_importer" )
+
 [input]
 
 up={
@@ -196,3 +200,7 @@ escape={
 quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"
 quality/2d/gles2_use_nvidia_rect_flicker_workaround=true
+
+[tiled_importer]
+
+enable_json_format=true
