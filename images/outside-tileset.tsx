@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="outside" tilewidth="32" tileheight="32" spacing="4" margin="2" tilecount="196" columns="14">
+<tileset version="1.4" tiledversion="1.4.2" name="outside" tilewidth="32" tileheight="32" spacing="4" margin="2" tilecount="196" columns="14">
+ <editorsettings>
+  <export target="outside-tileset.tres" format="Godot"/>
+ </editorsettings>
  <grid orientation="orthogonal" width="34" height="34"/>
+ <properties>
+  <property name="projectRoot" value="../"/>
+ </properties>
  <image source="outside-tiles.png" width="512" height="512"/>
  <tile id="2">
   <objectgroup draworder="index">
@@ -53,8 +59,8 @@
   </objectgroup>
  </tile>
  <tile id="22">
-  <objectgroup draworder="index">
-   <object id="1" x="0.25" y="0.25" width="32" height="32"/>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="32" height="32"/>
   </objectgroup>
  </tile>
  <tile id="24">
