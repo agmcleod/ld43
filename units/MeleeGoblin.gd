@@ -5,9 +5,9 @@ var EnemyTracker = preload("res://units/EnemyTracker.gd")
 var SpellReceiver = preload("res://units/SpellReceiver.gd")
 
 onready var vision_area: Area2D = $Vision
-onready var nav_2d: Navigation2D = $"/root/game/Navigation2D"
+onready var nav_2d: Navigation2D = get_tree().get_current_scene().get_node("Navigation2D")
 onready var attack_zone: Area2D = $AttackZone
-onready var player: Player = $"/root/game/Player"
+onready var player: Player = get_tree().get_current_scene().get_node("Player")
 onready var health_bar = $"./Sprite/HealthBar"
 
 export (float) var attack_rate = 1.5

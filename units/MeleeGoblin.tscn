@@ -170,7 +170,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 25 ), ExtResource( 24 ) ]
 }
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="MeleeGoblin" type="KinematicBody2D"]
 z_index = 2
 collision_mask = 3
 script = ExtResource( 1 )

@@ -1,8 +1,5 @@
 class_name EnemyTracker
 
-# onready var vision_area: Area2D = $Vision
-# onready var nav_2d: Navigation2D = $"/root/game/Navigation2D"
-
 var tracked_node = null
 var last_tracked_position := Vector2(0, 0)
 # default to facing left

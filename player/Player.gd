@@ -75,7 +75,7 @@ func _process(delta):
 
 func _physics_process(delta: float):
   if Input.is_action_just_pressed("ui_inventory"):
-    var panel: WindowDialog = get_node("/root/game/UI/Inventory")
+    var panel: WindowDialog = get_tree().get_current_scene().get_node('UI/Inventory')
     panel.popup()
 
     get_tree().paused = true

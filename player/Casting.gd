@@ -12,9 +12,8 @@ enum CASTING_STATE {
 }
 
 onready var State = $"/root/state"
-onready var Game = $"/root/game"
-onready var craft: Craft = $"/root/game/UI/Inventory/TabContainer/Craft"
-
+onready var Game = get_tree().get_current_scene()
+onready var craft: Craft = get_tree().get_current_scene().get_node("UI").get_craft()
 
 var casting_state = CASTING_STATE.IDLE
 var prepared_spell = null

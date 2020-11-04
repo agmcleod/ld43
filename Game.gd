@@ -9,7 +9,7 @@ func _ready():
 
 
 func get_spell_bindings_ui():
-  return $"/root/game/UI/SpellBindings"
+  return $"./UI/SpellBindings"
 
 
 func get_asset_name_from_status_type(spell_status_type: int) -> String:

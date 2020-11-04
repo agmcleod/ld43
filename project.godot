@@ -111,7 +111,7 @@ _global_script_class_icons={
 [application]
 
 config/name="LD43"
-run/main_scene="res://main.tscn"
+run/main_scene="res://level1.tscn"
 config/icon="res://icon.png"
 
 [autoload]

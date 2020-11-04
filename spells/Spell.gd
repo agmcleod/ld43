@@ -78,7 +78,7 @@ func _on_body_entered(body: Node2D):
 
           env_effect.position = self.position
           env_effect.spell_status_type = status_type
-          $"/root/game/GroundLevel".add_child(env_effect)
+          get_tree().get_current_scene().get_node("GroundLevel").add_child(env_effect)
       body.handle_spell(self)
       if spell_type == Constants.SPELL_TYPE.WAVE:
         body.apply_knockback(direction)

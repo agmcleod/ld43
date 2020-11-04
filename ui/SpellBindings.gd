@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var Game = $"/root/game"
+onready var Game = get_tree().get_current_scene()
 onready var default_texture = load("res://images/ui/SpellSlot.png")
 
 func set_images_for_bindings(bound_spells: Dictionary):

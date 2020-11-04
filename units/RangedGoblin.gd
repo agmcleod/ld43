@@ -6,7 +6,7 @@ const EnemyTracker = preload("res://units/EnemyTracker.gd")
 const SpellReceiver = preload("res://units/SpellReceiver.gd")
 
 onready var vision_area: Area2D = $Vision
-onready var nav_2d: Navigation2D = $"/root/game/Navigation2D"
+onready var nav_2d: Navigation2D = get_tree().get_current_scene().get_node("Navigation2D")
 onready var health_bar = $"./Sprite/HealthBar"
 
 export (float) var fire_rate = 1.5
@@ -43,7 +43,7 @@ func _physics_process(delta: float):
       var direction :Vector2 = (tracked_node.position - self.position).normalized()
       arrow_scene.position = self.position + direction * 5
       arrow_scene.set_direction(direction)
-      $"/root/game".add_child(arrow_scene)
+      get_tree().get_current_scene().add_child(arrow_scene)
 
   var distance: float = self.speed * delta
   if self.spell_receiver.status == Constants.SPELL_STATUS_TYPE.FROST:
