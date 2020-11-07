@@ -7,7 +7,7 @@
  <properties>
   <property name="projectRoot" value="../"/>
  </properties>
- <image source="outside-tiles.png" width="512" height="512"/>
+ <image source="outside-tiles.png" width="504" height="504"/>
  <tile id="2">
   <objectgroup draworder="index">
    <object id="1" x="4" y="3.5" width="25.75" height="24.5"/>
@@ -60,12 +60,12 @@
  </tile>
  <tile id="22">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="0" width="32" height="32"/>
+   <object id="2" x="0" y="0" width="32" height="32"/>
   </objectgroup>
  </tile>
  <tile id="24">
-  <objectgroup draworder="index">
-   <object id="1" x="0.25" y="0.25" width="32" height="32"/>
+  <objectgroup draworder="index" id="3">
+   <object id="1" x="0" y="0" width="32" height="32"/>
   </objectgroup>
  </tile>
  <tile id="29">
@@ -74,15 +74,17 @@
   </objectgroup>
  </tile>
  <tile id="30">
-  <objectgroup draworder="index">
-   <object id="1" x="2.75" y="7.25" width="15.75" height="24.25"/>
-   <object id="2" x="18.25" y="3.5" width="13.5" height="15.75"/>
+  <objectgroup draworder="index" id="2">
+   <object id="3" x="1.75" y="31.5">
+    <polygon points="0,0 4.25,-24.5 29.75,-30 30,-11.75 17,-12 17,0.25"/>
+   </object>
   </objectgroup>
  </tile>
  <tile id="31">
-  <objectgroup draworder="index">
-   <object id="1" x="0.5" y="4.5" width="22.25" height="15.5"/>
-   <object id="2" x="10.25" y="20.25" width="14.25" height="11.25"/>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1.5" y="2.75">
+    <polygon points="0,0 19.75,2.25 25.75,29 5,29 -1,16.25"/>
+   </object>
   </objectgroup>
  </tile>
  <tile id="32">

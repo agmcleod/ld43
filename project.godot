@@ -111,7 +111,7 @@ _global_script_class_icons={
 [application]
 
 config/name="LD43"
-run/main_scene="res://images/outside.tscn"
+run/main_scene="res://level1.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -123,10 +123,6 @@ state="*res://state.gd"
 
 window/size/height=576
 window/size/resizable=false
-
-[editor_plugins]
-
-enabled=PoolStringArray( "vnen.tiled_importer" )
 
 [input]
 
@@ -197,9 +193,9 @@ escape={
 
 [rendering]
 
-quality/2d/gles2_use_nvidia_rect_flicker_workaround=true
 quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"
+quality/2d/gles2_use_nvidia_rect_flicker_workaround=true
 
 [tiled_importer]
 
