@@ -45,6 +45,12 @@ func _ready():
     self.add_item(item.label, item.texture)
 
 
+func enable_ingredient_type(ingredient_type):
+  current_ingredients.append(ingredient_type)
+  var item = DATA[ingredient_type]
+  self.add_item(item.label, item.texture)
+
+
 func update_resources():
   var i := 0
   for ingredient_type in current_ingredients:

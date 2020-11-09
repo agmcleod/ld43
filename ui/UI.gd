@@ -15,6 +15,10 @@ func get_craft():
   return $"Inventory/TabContainer/Craft"
 
 
+func get_ingredient_item_list():
+  return $"Inventory/TabContainer/Discover/IngredientItemList"
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #  pass
