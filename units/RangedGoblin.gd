@@ -4,10 +4,12 @@ var Arrow = load("res://units/Arrow.tscn")
 const Constants = preload("res://Constants.gd")
 const EnemyTracker = preload("res://units/EnemyTracker.gd")
 const SpellReceiver = preload("res://units/SpellReceiver.gd")
+const UnitDrops = preload("res://units/UnitDrops.gd")
 
 onready var vision_area: Area2D = $Vision
 onready var nav_2d: Navigation2D = get_tree().get_current_scene().get_node("Navigation2D")
 onready var health_bar = $"./Sprite/HealthBar"
+onready var player: Player = get_tree().get_current_scene().get_node("Player")
 
 export (float) var fire_rate = 1.5
 
@@ -15,16 +17,25 @@ var attack_ticker := 0.0
 var spell_receiver: SpellReceiver
 var enemy_tracker: EnemyTracker
 var speed := 120
+var unit_drops: UnitDrops
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
   attack_ticker = 0.0
   spell_receiver = SpellReceiver.new(self, 30)
   enemy_tracker = EnemyTracker.new(self, nav_2d, 400, vision_area)
+  unit_drops = UnitDrops.new({
+    Constants.INGREDIENT_TYPES.RED: 5,
+    Constants.INGREDIENT_TYPES.BLUE: 5
+  }, player)
 
 
 func take_damage(amount: int):
   self.spell_receiver.take_damage(amount)
+
+
+func on_death():
+  unit_drops.trigger_drop()
 
 
 func _process(delta):

@@ -30,10 +30,12 @@ func can_move():
 func take_damage(amount: int):
   health -= amount
   var floating_text = FloatingText.instance()
-  floating_text.text = "%d" % round(amount * -1)
   self.owner.add_child(floating_text)
+  floating_text.set_text("%d" % round(amount * -1))
   self.owner.health_bar.set_width_from_percent(health / max_health)
   if health <= 0:
+    if self.owner.has_method('on_death'):
+      self.owner.on_death()
     self.owner.queue_free()
 
 

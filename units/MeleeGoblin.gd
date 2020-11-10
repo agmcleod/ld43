@@ -3,6 +3,7 @@ extends KinematicBody2D
 const Constants = preload("res://Constants.gd")
 var EnemyTracker = preload("res://units/EnemyTracker.gd")
 var SpellReceiver = preload("res://units/SpellReceiver.gd")
+const UnitDrops = preload("res://units/UnitDrops.gd")
 
 onready var vision_area: Area2D = $Vision
 onready var nav_2d: Navigation2D = get_tree().get_current_scene().get_node("Navigation2D")
@@ -19,6 +20,7 @@ var attack_ticker := 0.0
 var spell_receiver
 var enemy_tracker
 var speed := 120
+var unit_drops: UnitDrops
 
 func _ready():
   attack_ticker = 0.0
@@ -26,6 +28,10 @@ func _ready():
   self.enemy_tracker = EnemyTracker.new(self, nav_2d, 600, vision_area)
   attack_zone.connect("body_entered", self, "_on_body_entered_attack_zone")
   attack_zone.connect("body_exited", self, "_on_body_exited_attack_zone")
+  unit_drops = UnitDrops.new({
+    Constants.INGREDIENT_TYPES.RED: 5,
+    Constants.INGREDIENT_TYPES.BLUE: 5
+  }, player)
 
 
 func _process(delta):
@@ -58,6 +64,10 @@ func _physics_process(delta):
 
 func take_damage(amount: int):
   self.spell_receiver.take_damage(amount)
+
+
+func on_death():
+  unit_drops.trigger_drop()
 
 
 func _on_body_entered_attack_zone(body):

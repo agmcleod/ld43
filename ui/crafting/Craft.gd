@@ -111,7 +111,7 @@ func _on_spell_binding_changed(spell_name: String, selected_node_index: int, num
     var spell = discovered_spells[spell_name]
     State.bound_spells[num] = BoundSpell.new(spell.spell_name, spell.spell_status_type, spell.spell_type_name)
 
-    var spell_bindings = get_tree().get_current_scene().get_spell_bindings_ui()
+    var spell_bindings = get_tree().get_current_scene().get_ui().get_spell_bindings()
     spell_bindings.set_images_for_bindings(State.bound_spells)
 
 

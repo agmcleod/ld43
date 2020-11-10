@@ -1,10 +1,8 @@
 extends CanvasLayer
 
+const Constants = preload("res://Constants.gd")
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
+var INGREDIENT_TYPES = Constants.INGREDIENT_TYPES
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,6 +15,10 @@ func get_craft():
 
 func get_ingredient_item_list():
   return $"Inventory/TabContainer/Discover/IngredientItemList"
+
+
+func get_spell_bindings():
+  return $"SpellBindings"
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -49,7 +49,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://types/EnvironmentalEffectData.gd"
 }, {
-"base": "Label",
+"base": "Node2D",
 "class": "FloatingText",
 "language": "GDScript",
 "path": "res://ui/FloatingText.gd"
@@ -88,6 +88,16 @@ _global_script_classes=[ {
 "class": "State",
 "language": "GDScript",
 "path": "res://state.gd"
+}, {
+"base": "Node",
+"class": "TestLevel",
+"language": "GDScript",
+"path": "res://TestLevel.gd"
+}, {
+"base": "Reference",
+"class": "UnitDrops",
+"language": "GDScript",
+"path": "res://units/UnitDrops.gd"
 } ]
 _global_script_class_icons={
 "Arrow": "",
@@ -105,7 +115,9 @@ _global_script_class_icons={
 "Spell": "",
 "SpellReceiver": "",
 "SpellRow": "",
-"State": ""
+"State": "",
+"TestLevel": "",
+"UnitDrops": ""
 }
 
 [application]
@@ -118,6 +130,7 @@ config/icon="res://icon.png"
 
 InventoryStorage="*res://InventoryStorage.gd"
 state="*res://state.gd"
+IngredientsData="*res://ui/IngredientsData.gd"
 
 [display]
 
@@ -193,9 +206,9 @@ escape={
 
 [rendering]
 
-quality/2d/gles2_use_nvidia_rect_flicker_workaround=true
 quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"
+quality/2d/gles2_use_nvidia_rect_flicker_workaround=true
 
 [tiled_importer]
 

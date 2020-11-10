@@ -4,6 +4,9 @@ extends KinematicBody2D
 
 var SpellReceiver = preload("res://units/SpellReceiver.gd")
 const Constants = preload("res://Constants.gd")
+onready var InventoryStorage = $"/root/InventoryStorage"
+onready var ingredient_item_list = get_tree().get_current_scene().get_ui().get_ingredient_item_list()
+const FloatingText = preload("res://ui/FloatingText.tscn")
 
 var player_left_walk_image = preload("res://images/player/playerleftwalk.png")
 var player_left_image = preload("res://images/player/playerleft.png")
@@ -163,9 +166,14 @@ func _get_sprite() -> Node:
   return self.get_node("Sprite")
 
 
-func add_resource(name, type_name):
-  assert(false)
-
-
 func set_status_text(status):
   $"./StatusType".set_status_text(status)
+
+
+func collect_ingredient(ingredient_type: int, amount: int):
+  InventoryStorage.inventory_data[ingredient_type] += amount
+  ingredient_item_list.update_resources()
+  var floating_text = FloatingText.instance()
+  self.add_child(floating_text)
+  floating_text.set_icon(ingredient_type)
+  floating_text.set_text("%d" % amount)

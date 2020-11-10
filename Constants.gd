@@ -1,5 +1,3 @@
-extends Node
-
 enum SPELL_STATUS_TYPE {
   NONE = 0,
   ARCANE = 1,
