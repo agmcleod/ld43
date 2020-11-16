@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://ui/FloatingText.gd"
 }, {
+"base": "Reference",
+"class": "FloatingTextService",
+"language": "GDScript",
+"path": "res://ui/FloatingTextService.gd"
+}, {
 "base": "ColorRect",
 "class": "HealthBar",
 "language": "GDScript",
@@ -109,6 +114,7 @@ _global_script_class_icons={
 "EnemyTracker": "",
 "EnvironmentalEffect": "",
 "FloatingText": "",
+"FloatingTextService": "",
 "HealthBar": "",
 "IngredientItemList": "",
 "Player": "",

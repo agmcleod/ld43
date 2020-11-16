@@ -5,8 +5,9 @@ extends KinematicBody2D
 var SpellReceiver = preload("res://units/SpellReceiver.gd")
 const Constants = preload("res://Constants.gd")
 onready var InventoryStorage = $"/root/InventoryStorage"
+const FloatingTextService = preload("res://ui/FloatingTextService.gd")
+
 onready var ingredient_item_list = get_tree().get_current_scene().get_ui().get_ingredient_item_list()
-const FloatingText = preload("res://ui/FloatingText.tscn")
 
 var player_left_walk_image = preload("res://images/player/playerleftwalk.png")
 var player_left_image = preload("res://images/player/playerleft.png")
@@ -22,6 +23,7 @@ var speed = 200
 var velocity = Vector2()
 var spell_receiver: SpellReceiver
 var frame_time = 0.0
+var floating_text_service: FloatingTextService
 
 var animation_details: Dictionary = {
   'right_move': {
@@ -62,6 +64,7 @@ var current_anim = null
 
 func _ready():
   spell_receiver = SpellReceiver.new(self, 50)
+  floating_text_service = FloatingTextService.new()
   add_to_group("player")
   _set_current_anim('right')
 
@@ -173,7 +176,5 @@ func set_status_text(status):
 func collect_ingredient(ingredient_type: int, amount: int):
   InventoryStorage.inventory_data[ingredient_type] += amount
   ingredient_item_list.update_resources()
-  var floating_text = FloatingText.instance()
-  self.add_child(floating_text)
-  floating_text.set_icon(ingredient_type)
-  floating_text.set_text("%d" % amount)
+  floating_text_service.initialize_ft(self, "%d" % amount, ingredient_type)
+

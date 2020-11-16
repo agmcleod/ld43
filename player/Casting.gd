@@ -22,6 +22,7 @@ var target_scene = null
 func _create_spell_type(spell_status_type, spell_base: String, direction: Vector2) -> Spell:
   # We default to arcane
   var spell_status_type_name = Game.get_asset_name_from_status_type(spell_status_type)
+  print("Creating spell: %s%s.tscn" % [spell_status_type_name, spell_base])
   var spell_scene = load("res://spells/%s%s.tscn" % [spell_status_type_name, spell_base]).instance()
   spell_scene.set_status_type(spell_status_type)
 
