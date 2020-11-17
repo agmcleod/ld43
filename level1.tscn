@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://images/outside.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ui/UI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://units/MeleeGoblin.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Game.gd" type="Script" id=5]
+[ext_resource path="res://units/RangedGoblin.tscn" type="PackedScene" id=6]
 
 [node name="game" type="Node2D"]
 script = ExtResource( 5 )
@@ -16,10 +17,41 @@ script = ExtResource( 5 )
 [node name="GroundLevel" type="Node" parent="."]
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 54.0355, 62.3852 )
 
 [node name="enemies" type="Node2D" parent="."]
 
 [node name="MeleeGoblin" parent="enemies" instance=ExtResource( 4 )]
 position = Vector2( 986.13, 425.123 )
+
+[node name="MeleeGoblin7" parent="enemies" instance=ExtResource( 4 )]
+position = Vector2( 975.535, 1216.54 )
+
+[node name="RangedGoblin" parent="enemies" instance=ExtResource( 6 )]
+position = Vector2( 351.331, 978.787 )
+
+[node name="RangedGoblin3" parent="enemies" instance=ExtResource( 6 )]
+position = Vector2( 1927.49, 662.547 )
+
+[node name="RangedGoblin4" parent="enemies" instance=ExtResource( 6 )]
+position = Vector2( 1933.77, 846.766 )
+
+[node name="RangedGoblin2" parent="enemies" instance=ExtResource( 6 )]
+position = Vector2( 983.277, 690.314 )
+
+[node name="MeleeGoblin2" parent="enemies" instance=ExtResource( 4 )]
+position = Vector2( 2421.15, 84.1846 )
+
+[node name="MeleeGoblin3" parent="enemies" instance=ExtResource( 4 )]
+position = Vector2( 2409.93, 573.578 )
+
+[node name="MeleeGoblin5" parent="enemies" instance=ExtResource( 4 )]
+position = Vector2( 2678.19, 345.718 )
+
+[node name="MeleeGoblin6" parent="enemies" instance=ExtResource( 4 )]
+position = Vector2( 2853.3, 664.497 )
+
+[node name="MeleeGoblin4" parent="enemies" instance=ExtResource( 4 )]
+position = Vector2( 2377.37, 288.473 )
 
 [node name="UI" parent="." instance=ExtResource( 2 )]
