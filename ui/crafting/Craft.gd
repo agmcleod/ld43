@@ -63,15 +63,12 @@ func discover(selected_ingredients: Array):
     spell_name.append("Arcane")
 
   if is_blast_spell:
-    spell_name.append("Blast")
     spell_type_name = "Blast"
   else:
     if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.TURTLE):
-      spell_name.append("Shield")
       spell_type_name = "Shield"
-    # Blast wave and shield can be together
+    # Wave and shield can be together
     if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD):
-      spell_name.append("Blast Wave")
       spell_type_name = "Wave"
 
   if spell_type_name == "":
