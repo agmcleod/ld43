@@ -84,6 +84,7 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
             # place above cahracter
             other_spell.position.y = -32
 
+          print("Put spell at ", other_spell.position)
           spells_to_spawn.append(other_spell)
       elif spell_base == "blast":
         for n in range(2):
@@ -118,6 +119,8 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
         spell.amplified = true
         spell.damage *= 1.25
 
+  var has_removed_old_shields = false
+
   for spell in spells_to_spawn:
     spell.set_owner(caster)
     # For when casting multiple types, duration lasts not as long
@@ -125,9 +128,11 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
       spell.duration /= 2
     if spell.spell_type == Constants.SPELL_TYPE.SHIELD:
       # check if caster as any shields already, if so, remove them
-      for child in caster.get_children():
-        if child.get_groups().has("shields"):
-          child.queue_free()
+      if !has_removed_old_shields:
+        for child in caster.get_children():
+          has_removed_old_shields = true
+          if child.get_groups().has("shields"):
+            child.queue_free()
       spell.add_to_group("shields")
       caster.add_child(spell)
     elif spell.spell_type == Constants.SPELL_TYPE.BLAST:

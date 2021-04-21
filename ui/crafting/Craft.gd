@@ -36,7 +36,7 @@ func discover(selected_ingredients: Array):
   ingredient_item_list.update_resources()
 
   var spell_name = []
-  var spell_type_name = ""
+  var spell_type_name = []
   var spell_status_type = Constants.SPELL_STATUS_TYPE.ARCANE
 
   var is_blast_spell = (
@@ -63,18 +63,18 @@ func discover(selected_ingredients: Array):
     spell_name.append("Arcane")
 
   if is_blast_spell:
-    spell_type_name = "Blast"
+    spell_type_name.append("Blast")
   else:
     if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.TURTLE):
-      spell_type_name = "Shield"
+      spell_type_name.append("Shield")
     # Wave and shield can be together
     if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD):
-      spell_type_name = "Wave"
+      spell_type_name.append("Wave")
 
-  if spell_type_name == "":
-    spell_type_name = "Ball"
+  if spell_type_name.size() == 0:
+    spell_type_name.append("Ball")
 
-  spell_name.append(spell_type_name)
+  spell_name.append(PoolStringArray(spell_type_name).join(" "))
   spell_name = PoolStringArray(spell_name).join(" ")
 
   if discovered_spells.has(spell_name):
