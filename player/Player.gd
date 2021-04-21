@@ -101,7 +101,8 @@ func _physics_process(delta: float):
       velocity.x = -1
       if current_anim['name'] != 'left_move':
         _set_current_anim('left_move')
-    elif Input.is_action_pressed('down'):
+
+    if Input.is_action_pressed('down'):
       velocity.y = 1
     elif Input.is_action_pressed('up'):
       velocity.y = -1

@@ -287,6 +287,11 @@
    <object id="1" x="0.25" y="0.25" width="32" height="32"/>
   </objectgroup>
  </tile>
+ <tile id="70">
+  <objectgroup draworder="index" id="2">
+   <object id="1" type="navigation" x="0" y="0" width="32" height="32"/>
+  </objectgroup>
+ </tile>
  <tile id="71">
   <objectgroup draworder="index" id="2">
    <object id="1" x="1" y="7" width="28.5" height="24.25"/>
@@ -337,6 +342,11 @@
    <object id="1" x="0.25" y="0.25" width="32" height="32"/>
   </objectgroup>
  </tile>
+ <tile id="84">
+  <objectgroup draworder="index" id="2">
+   <object id="1" type="navigation" x="0" y="0" width="32" height="32"/>
+  </objectgroup>
+ </tile>
  <tile id="85">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0.25" y="0.25" width="25.75" height="27.25"/>
@@ -345,6 +355,16 @@
  <tile id="86">
   <objectgroup draworder="index" id="2">
    <object id="1" x="6.25" y="0.5" width="25.25" height="25.5"/>
+  </objectgroup>
+ </tile>
+ <tile id="98">
+  <objectgroup draworder="index" id="2">
+   <object id="1" type="navigation" x="0" y="0" width="32" height="32"/>
+  </objectgroup>
+ </tile>
+ <tile id="99">
+  <objectgroup draworder="index" id="2">
+   <object id="1" type="navigation" x="0" y="0" width="32" height="32"/>
   </objectgroup>
  </tile>
 </tileset>
