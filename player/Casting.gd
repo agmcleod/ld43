@@ -84,7 +84,6 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
             # place above cahracter
             other_spell.position.y = -32
 
-          print("Put spell at ", other_spell.position)
           spells_to_spawn.append(other_spell)
       elif spell_base == "blast":
         for n in range(2):

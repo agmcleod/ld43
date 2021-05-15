@@ -20,5 +20,6 @@ enum SPELL_TYPE {
   BALL = 1,
   WAVE = 2,
   SHIELD = 3,
-  BLAST = 4
+  BLAST = 4,
+  WALL = 5
 }

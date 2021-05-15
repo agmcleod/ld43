@@ -45,7 +45,15 @@ func discover(selected_ingredients: Array):
     ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BIRD)
   )
 
-  if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.FROG):
+  var is_wall_spell = (
+    is_blast_spell && ingredient_dictionary.has(Constants.INGREDIENT_TYPES.FROG)
+  )
+
+  if is_wall_spell:
+    is_blast_spell = false
+
+  # Cant have multi wall or blast spells
+  if !is_wall_spell && !is_blast_spell && ingredient_dictionary.has(Constants.INGREDIENT_TYPES.FROG):
     spell_name.append("Multi")
   if !is_blast_spell && ingredient_dictionary.has(Constants.INGREDIENT_TYPES.SQUIRREL):
     spell_name.append("Amplified")
@@ -62,7 +70,9 @@ func discover(selected_ingredients: Array):
   else:
     spell_name.append("Arcane")
 
-  if is_blast_spell:
+  if is_wall_spell:
+    spell_type_name.append("Wall")
+  elif is_blast_spell:
     spell_type_name.append("Blast")
   else:
     if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.TURTLE):
@@ -74,13 +84,15 @@ func discover(selected_ingredients: Array):
   if spell_type_name.size() == 0:
     spell_type_name.append("Ball")
 
-  spell_name.append(PoolStringArray(spell_type_name).join(" "))
+  # flattent the type name, add to spell name
+  spell_type_name = PoolStringArray(spell_type_name).join(" ")
+  spell_name.append(spell_type_name)
+  # then flatten the full spell name
   spell_name = PoolStringArray(spell_name).join(" ")
 
   if discovered_spells.has(spell_name):
     discovered_spells[spell_name].crafted_count += 1
     set_spell_crafted_count(spell_name)
-
   else:
     discovered_spells[spell_name] = DiscoveredSpell.new(
       spell_name, ingredient_dictionary, 1, spell_status_type, spell_type_name
