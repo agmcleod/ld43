@@ -14,6 +14,7 @@ func _physics_process(_delta):
     var mouse_pos = get_global_mouse_position()
     # 4th param, the collision mask is hardcoded here. Based on wall layer having a value of 2
     var result = space_state.intersect_ray(target_owner.position, mouse_pos, [target_owner], 2)
+    # cap target position at collision with object
     if result.has('collider'):
       # print(result.normal, " ", result.position)
       position = result.position

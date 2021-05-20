@@ -18,7 +18,7 @@ var velocity = 0
 var time_alive: float = 0
 var spell_owner :Node = null
 var amplified = false
-var is_blast = false
+var is_environmental = false
 
 func _ready():
   self.connect("body_entered", self, "_on_body_entered")
@@ -64,9 +64,9 @@ func _on_body_entered(body: Node2D):
     if groups.has("spell_receiver"):
       # non shield logic
       if spell_type != Constants.SPELL_TYPE.SHIELD:
-        if !is_blast:
+        if !is_environmental:
           queue_free()
-        if amplified && !is_blast && (status_type == Constants.SPELL_STATUS_TYPE.FIRE || status_type == Constants.SPELL_STATUS_TYPE.WET):
+        if amplified && !is_environmental && (status_type == Constants.SPELL_STATUS_TYPE.FIRE || status_type == Constants.SPELL_STATUS_TYPE.WET):
           var env_effect = EnvironmentalEffectScene.instance()
           if status_type == Constants.SPELL_STATUS_TYPE.FIRE:
             env_effect.set_sprite_texture("fire")

@@ -26,7 +26,7 @@ func _create_spell_type(spell_status_type, spell_base: String, direction: Vector
   var spell_scene = load("res://spells/%s%s.tscn" % [spell_status_type_name, spell_base]).instance()
   spell_scene.set_status_type(spell_status_type)
 
-  if spell_base == "shield" || spell_base == "blast":
+  if spell_base == "shield" || spell_base == "blast" || spell_base == "wall":
     spell_scene.set_velocity(0)
   else:
     spell_scene.set_velocity(600)
@@ -45,7 +45,15 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
     spell.ingredients.has(Constants.INGREDIENT_TYPES.BIRD)
   )
 
-  # check for turtle (shield), and bird (wave)
+  var is_wall_spell = (
+    is_blast_spell && spell.ingredients.has(Constants.INGREDIENT_TYPES.FROG)
+  )
+
+  if is_wall_spell:
+    is_blast_spell = false
+
+  if is_wall_spell:
+    spell_base_types.append("wall")
   if is_blast_spell:
     spell_base_types.append("blast")
   else:
@@ -62,9 +70,9 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
   for spell_base in spell_base_types:
     var spell_scene: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
 
-    if is_blast_spell:
+    if is_blast_spell || is_wall_spell:
       spell_scene.position = target
-      spell_scene.is_blast = true
+      spell_scene.is_environmental = true
 
     spells_to_spawn.append(spell_scene)
 
@@ -89,7 +97,7 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
         for n in range(2):
           var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
           other_spell.position = spell_scene.position
-          other_spell.is_blast = true
+          other_spell.is_environmental = true
           var angle = -90
           if n == 1:
             angle = 90
@@ -99,7 +107,7 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
           other_spell.position.y += modified_pos.y
           other_spell.damage /= 2
           spells_to_spawn.append(other_spell)
-      else:
+      elif spell_base != "wall":
         spells_to_spawn[0].damage /= 2
         # create the adjacent spells
         for n in range(2):
@@ -113,7 +121,7 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
           other_spell.damage /= 2
           spells_to_spawn.append(other_spell)
 
-    if spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL) && !is_blast_spell:
+    if spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL) && !is_blast_spell && !is_wall_spell:
       for spell in spells_to_spawn:
         spell.amplified = true
         spell.damage *= 1.25
@@ -164,6 +172,7 @@ func _process(_delta: float):
 
 func handle_mouse_click(direction: Vector2, target: Vector2):
   if casting_state == CASTING_STATE.TARGETING:
+    # TODO: Add logic here for wall spell targeting
     var owner = target_scene.target_owner
     _fire_spell(owner, prepared_spell, direction, target)
     target_scene.queue_free()
