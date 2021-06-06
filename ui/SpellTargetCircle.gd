@@ -8,7 +8,7 @@ func set_owner(o: Node):
   position.y = target_owner.position.y
 
 
-func _physics_process(_delta):
+func _process(_delta: float):
   if target_owner != null:
     var space_state = get_world_2d().direct_space_state
     var mouse_pos = get_global_mouse_position()
@@ -25,7 +25,3 @@ func _physics_process(_delta):
 
       position.x = mouse_pos.x
       position.y = mouse_pos.y
-
-
-func _ready():
-  set_physics_process(true)

@@ -4,11 +4,13 @@ class_name Casting
 
 const Constants = preload("res://Constants.gd")
 const SpellTargetCircle = preload("res://ui/SpellTargetCircle.tscn")
+const WallSpellTarget = preload("res://ui/WallSpellTarget.tscn")
 
 enum CASTING_STATE {
   IDLE,
   CASTING,
-  TARGETING
+  TARGETING,
+  WALL_TARGET,
 }
 
 onready var State = $"/root/state"
@@ -39,15 +41,8 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
   var spell_base_types := []
   casting_state = CASTING_STATE.CASTING
 
-  var is_blast_spell = (
-    spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL) &&
-    spell.ingredients.has(Constants.INGREDIENT_TYPES.TURTLE) &&
-    spell.ingredients.has(Constants.INGREDIENT_TYPES.BIRD)
-  )
-
-  var is_wall_spell = (
-    is_blast_spell && spell.ingredients.has(Constants.INGREDIENT_TYPES.FROG)
-  )
+  var is_blast_spell = spell.is_blast()
+  var is_wall_spell = spell.is_wall()
 
   if is_wall_spell:
     is_blast_spell = false
@@ -94,19 +89,21 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
 
           spells_to_spawn.append(other_spell)
       elif spell_base == "blast":
-        for n in range(2):
-          var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
-          other_spell.position = spell_scene.position
-          other_spell.is_environmental = true
-          var angle = -90
-          if n == 1:
-            angle = 90
+        assert("Blast was split!")
+        # TODO: delete this code once i test it's not needed. Frog + blast = wall spell now
+      #   for n in range(2):
+      #     var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
+      #     other_spell.position = spell_scene.position
+      #     other_spell.is_environmental = true
+      #     var angle = -90
+      #     if n == 1:
+      #       angle = 90
 
-          var modified_pos = direction.rotated(deg2rad(angle)) * 64
-          other_spell.position.x += modified_pos.x
-          other_spell.position.y += modified_pos.y
-          other_spell.damage /= 2
-          spells_to_spawn.append(other_spell)
+      #     var modified_pos = direction.rotated(deg2rad(angle)) * 64
+      #     other_spell.position.x += modified_pos.x
+      #     other_spell.position.y += modified_pos.y
+      #     other_spell.damage /= 2
+      #     spells_to_spawn.append(other_spell)
       elif spell_base != "wall":
         spells_to_spawn[0].damage /= 2
         # create the adjacent spells
@@ -159,6 +156,14 @@ func _setup_spell_target(caster: Node):
   get_tree().get_root().add_child(target_scene)
 
 
+func _setup_wall_target(caster: Node, click_target: Vector2):
+  target_scene = WallSpellTarget.instance()
+  target_scene.set_owner(caster)
+  target_scene.click_target.x = click_target.x
+  target_scene.click_target.y = click_target.y
+  get_tree().get_root().add_child(target_scene)
+
+
 func _process(_delta: float):
   if casting_state == CASTING_STATE.TARGETING:
     if Input.is_action_just_pressed('escape'):
@@ -172,10 +177,18 @@ func _process(_delta: float):
 
 func handle_mouse_click(direction: Vector2, target: Vector2):
   if casting_state == CASTING_STATE.TARGETING:
-    # TODO: Add logic here for wall spell targeting
     var owner = target_scene.target_owner
-    _fire_spell(owner, prepared_spell, direction, target)
+    # create the wall target now
+    if prepared_spell.is_wall():
+      target_scene.queue_free()
+      _setup_wall_target(owner, target)
+      casting_state = CASTING_STATE.WALL_TARGET
+    else:
+      _fire_spell(owner, prepared_spell, direction, target)
+      target_scene.queue_free()
+  elif casting_state == CASTING_STATE.WALL_TARGET:
     target_scene.queue_free()
+    casting_state = CASTING_STATE.IDLE
 
 
 func cast_spell(caster: Node, spell_index: int, direction: Vector2):
@@ -186,13 +199,7 @@ func cast_spell(caster: Node, spell_index: int, direction: Vector2):
       spell.crafted_count -= 1
       craft.set_spell_crafted_count(spell_name)
 
-      var is_blast_spell = (
-        spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL) &&
-        spell.ingredients.has(Constants.INGREDIENT_TYPES.TURTLE) &&
-        spell.ingredients.has(Constants.INGREDIENT_TYPES.BIRD)
-      )
-
-      if is_blast_spell:
+      if spell.is_blast() || spell.is_wall():
         casting_state = CASTING_STATE.TARGETING
         prepared_spell = spell
         # This really only applies for player
