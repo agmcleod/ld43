@@ -55,7 +55,7 @@ func discover(selected_ingredients: Array):
   # Cant have multi wall or blast spells
   if !is_wall_spell && !is_blast_spell && ingredient_dictionary.has(Constants.INGREDIENT_TYPES.FROG):
     spell_name.append("Multi")
-  if !is_blast_spell && ingredient_dictionary.has(Constants.INGREDIENT_TYPES.SQUIRREL):
+  if !is_blast_spell && !is_wall_spell && ingredient_dictionary.has(Constants.INGREDIENT_TYPES.SQUIRREL):
     spell_name.append("Amplified")
 
   if ingredient_dictionary.has(Constants.INGREDIENT_TYPES.RED) && ingredient_dictionary.has(Constants.INGREDIENT_TYPES.BLUE):
