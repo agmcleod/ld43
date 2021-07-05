@@ -5,6 +5,7 @@ class_name Casting
 const Constants = preload("res://Constants.gd")
 const SpellTargetCircle = preload("res://ui/SpellTargetCircle.tscn")
 const WallSpellTarget = preload("res://ui/WallSpellTarget.tscn")
+const DiscoveredSpell = preload("res://types/DiscoveredSpell.gd")
 
 enum CASTING_STATE {
   IDLE,
@@ -20,6 +21,7 @@ onready var craft: Craft = get_tree().get_current_scene().get_node("UI").get_cra
 var casting_state = CASTING_STATE.IDLE
 var prepared_spell = null
 var target_scene = null
+var wall_target_scene = null
 
 func _create_spell_type(spell_status_type, spell_base: String, direction: Vector2) -> Spell:
   # We default to arcane
@@ -37,7 +39,7 @@ func _create_spell_type(spell_status_type, spell_base: String, direction: Vector
   return spell_scene
 
 
-func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
+func _fire_spell(caster: Node2D, spell: DiscoveredSpell, direction: Vector2, target: Vector2):
   var spell_base_types := []
   casting_state = CASTING_STATE.CASTING
 
@@ -49,7 +51,7 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
 
   if is_wall_spell:
     spell_base_types.append("wall")
-  if is_blast_spell:
+  elif is_blast_spell:
     spell_base_types.append("blast")
   else:
     if spell.ingredients.has(Constants.INGREDIENT_TYPES.BIRD):
@@ -74,49 +76,11 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
     # Frog causes spell to split
     if spell.ingredients.has(Constants.INGREDIENT_TYPES.FROG):
       if spell_base == "shield":
-        # place bottom left of caster
-        spell_scene.position.x = -32
-        spell_scene.position.y = 32
-        for n in range(2):
-          var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
-          if n == 0:
-            # place bottom right of character
-            other_spell.position.x = 32
-            other_spell.position.y = 32
-          else:
-            # place above cahracter
-            other_spell.position.y = -32
-
-          spells_to_spawn.append(other_spell)
+        _split_shield_spell(spells_to_spawn, spell_scene, spell, spell_base, direction)
       elif spell_base == "blast":
         assert("Blast was split!")
-        # TODO: delete this code once i test it's not needed. Frog + blast = wall spell now
-      #   for n in range(2):
-      #     var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
-      #     other_spell.position = spell_scene.position
-      #     other_spell.is_environmental = true
-      #     var angle = -90
-      #     if n == 1:
-      #       angle = 90
-
-      #     var modified_pos = direction.rotated(deg2rad(angle)) * 64
-      #     other_spell.position.x += modified_pos.x
-      #     other_spell.position.y += modified_pos.y
-      #     other_spell.damage /= 2
-      #     spells_to_spawn.append(other_spell)
       elif spell_base != "wall":
-        spells_to_spawn[0].damage /= 2
-        # create the adjacent spells
-        for n in range(2):
-          var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
-          var deg25 := 0.4363323
-          if n == 0:
-            other_spell.direction = other_spell.direction.rotated(-deg25)
-          else:
-            other_spell.direction = other_spell.direction.rotated(deg25)
-
-          other_spell.damage /= 2
-          spells_to_spawn.append(other_spell)
+        _split_other_spell_type(spells_to_spawn, spell_scene, spell, spell_base, direction)
 
     if spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL) && !is_blast_spell && !is_wall_spell:
       for spell in spells_to_spawn:
@@ -150,6 +114,38 @@ func _fire_spell(caster, spell, direction: Vector2, target: Vector2):
   prepared_spell = null
 
 
+func _split_shield_spell(spells_to_spawn: Array, spell_scene: Spell, spell: DiscoveredSpell, spell_base: String, direction: Vector2):
+  # place bottom left of caster
+  spell_scene.position.x = -32
+  spell_scene.position.y = 32
+  for n in range(2):
+    var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
+    if n == 0:
+      # place bottom right of character
+      other_spell.position.x = 32
+      other_spell.position.y = 32
+    else:
+      # place above cahracter
+      other_spell.position.y = -32
+
+    spells_to_spawn.append(other_spell)
+
+
+func _split_other_spell_type(spells_to_spawn: Array, spell_scene: Spell, spell: DiscoveredSpell, spell_base: String, direction: Vector2):
+  spells_to_spawn[0].damage /= 2
+  # create the adjacent spells
+  for n in range(2):
+    var other_spell: Spell = _create_spell_type(spell.spell_status_type, spell_base, direction)
+    var deg25 := 0.4363323
+    if n == 0:
+      other_spell.direction = other_spell.direction.rotated(-deg25)
+    else:
+      other_spell.direction = other_spell.direction.rotated(deg25)
+
+    other_spell.damage /= 2
+    spells_to_spawn.append(other_spell)
+
+
 func _setup_spell_target(caster: Node):
   target_scene = SpellTargetCircle.instance()
   target_scene.set_owner(caster)
@@ -157,18 +153,22 @@ func _setup_spell_target(caster: Node):
 
 
 func _setup_wall_target(caster: Node, click_target: Vector2):
-  target_scene = WallSpellTarget.instance()
-  target_scene.set_owner(caster)
-  target_scene.click_target.x = click_target.x
-  target_scene.click_target.y = click_target.y
-  get_tree().get_root().add_child(target_scene)
+  wall_target_scene = WallSpellTarget.instance()
+  wall_target_scene.set_owner(caster)
+  wall_target_scene.click_target.x = click_target.x
+  wall_target_scene.click_target.y = click_target.y
+  get_tree().get_root().add_child(wall_target_scene)
 
 
 func _process(_delta: float):
-  if casting_state == CASTING_STATE.TARGETING:
+  if casting_state == CASTING_STATE.TARGETING || casting_state == CASTING_STATE.WALL_TARGET:
     if Input.is_action_just_pressed('escape'):
       casting_state = CASTING_STATE.IDLE
-      target_scene.queue_free()
+      if target_scene != null:
+        target_scene.queue_free()
+      elif wall_target_scene != null:
+        wall_target_scene.queue_free()
+
       craft.discovered_spells[prepared_spell.spell_name].crafted_count += 1
       craft.set_spell_crafted_count(prepared_spell.spell_name)
 
@@ -187,7 +187,8 @@ func handle_mouse_click(direction: Vector2, target: Vector2):
       _fire_spell(owner, prepared_spell, direction, target)
       target_scene.queue_free()
   elif casting_state == CASTING_STATE.WALL_TARGET:
-    target_scene.queue_free()
+    wall_target_scene.queue_free()
+    _fire_spell(owner, prepared_spell, direction, target)
     casting_state = CASTING_STATE.IDLE
 
 
