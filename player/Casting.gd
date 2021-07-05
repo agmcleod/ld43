@@ -6,6 +6,7 @@ const Constants = preload("res://Constants.gd")
 const SpellTargetCircle = preload("res://ui/SpellTargetCircle.tscn")
 const WallSpellTarget = preload("res://ui/WallSpellTarget.tscn")
 const DiscoveredSpell = preload("res://types/DiscoveredSpell.gd")
+const WallSpellCreatorScene = preload("res://spells/WallSpellCreator.tscn")
 
 enum CASTING_STATE {
   IDLE,
@@ -20,8 +21,8 @@ onready var craft: Craft = get_tree().get_current_scene().get_node("UI").get_cra
 
 var casting_state = CASTING_STATE.IDLE
 var prepared_spell = null
-var target_scene = null
-var wall_target_scene = null
+var spell_target_node = null
+var wall_target_node = null
 
 func _create_spell_type(spell_status_type, spell_base: String, direction: Vector2) -> Spell:
   # We default to arcane
@@ -103,8 +104,11 @@ func _fire_spell(caster: Node2D, spell: DiscoveredSpell, direction: Vector2, tar
             child.queue_free()
       spell.add_to_group("shields")
       caster.add_child(spell)
-    elif spell.spell_type == Constants.SPELL_TYPE.BLAST:
+    elif spell.spell_type == Constants.SPELL_TYPE.BLAST || spell.spell_type == Constants.SPELL_TYPE.WALL:
       get_tree().get_root().add_child(spell)
+      var wall_spell_creator = WallSpellCreatorScene.instance()
+      get_tree().get_root().add_child(wall_spell_creator)
+      wall_spell_creator.build_spells(spell, wall_target_node.rotation)
     else:
       spell.position.x = caster.position.x
       spell.position.y = caster.position.y
@@ -147,27 +151,27 @@ func _split_other_spell_type(spells_to_spawn: Array, spell_scene: Spell, spell: 
 
 
 func _setup_spell_target(caster: Node):
-  target_scene = SpellTargetCircle.instance()
-  target_scene.set_owner(caster)
-  get_tree().get_root().add_child(target_scene)
+  spell_target_node = SpellTargetCircle.instance()
+  spell_target_node.set_owner(caster)
+  get_tree().get_root().add_child(spell_target_node)
 
 
 func _setup_wall_target(caster: Node, click_target: Vector2):
-  wall_target_scene = WallSpellTarget.instance()
-  wall_target_scene.set_owner(caster)
-  wall_target_scene.click_target.x = click_target.x
-  wall_target_scene.click_target.y = click_target.y
-  get_tree().get_root().add_child(wall_target_scene)
+  wall_target_node = WallSpellTarget.instance()
+  wall_target_node.set_owner(caster)
+  wall_target_node.click_target.x = click_target.x
+  wall_target_node.click_target.y = click_target.y
+  get_tree().get_root().add_child(wall_target_node)
 
 
 func _process(_delta: float):
   if casting_state == CASTING_STATE.TARGETING || casting_state == CASTING_STATE.WALL_TARGET:
     if Input.is_action_just_pressed('escape'):
       casting_state = CASTING_STATE.IDLE
-      if target_scene != null:
-        target_scene.queue_free()
-      elif wall_target_scene != null:
-        wall_target_scene.queue_free()
+      if spell_target_node != null:
+        spell_target_node.queue_free()
+      elif wall_target_node != null:
+        wall_target_node.queue_free()
 
       craft.discovered_spells[prepared_spell.spell_name].crafted_count += 1
       craft.set_spell_crafted_count(prepared_spell.spell_name)
@@ -177,17 +181,17 @@ func _process(_delta: float):
 
 func handle_mouse_click(direction: Vector2, target: Vector2):
   if casting_state == CASTING_STATE.TARGETING:
-    var owner = target_scene.target_owner
+    var owner = spell_target_node.target_owner
     # create the wall target now
     if prepared_spell.is_wall():
-      target_scene.queue_free()
+      spell_target_node.queue_free()
       _setup_wall_target(owner, target)
       casting_state = CASTING_STATE.WALL_TARGET
     else:
       _fire_spell(owner, prepared_spell, direction, target)
-      target_scene.queue_free()
+      spell_target_node.queue_free()
   elif casting_state == CASTING_STATE.WALL_TARGET:
-    wall_target_scene.queue_free()
+    wall_target_node.queue_free()
     _fire_spell(owner, prepared_spell, direction, target)
     casting_state = CASTING_STATE.IDLE
 

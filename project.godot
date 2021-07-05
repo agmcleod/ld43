@@ -103,6 +103,11 @@ _global_script_classes=[ {
 "class": "UnitDrops",
 "language": "GDScript",
 "path": "res://units/UnitDrops.gd"
+}, {
+"base": "Node2D",
+"class": "WallSpellCreator",
+"language": "GDScript",
+"path": "res://spells/WallSpellCreator.gd"
 } ]
 _global_script_class_icons={
 "Arrow": "",
@@ -123,7 +128,8 @@ _global_script_class_icons={
 "SpellRow": "",
 "State": "",
 "TestLevel": "",
-"UnitDrops": ""
+"UnitDrops": "",
+"WallSpellCreator": ""
 }
 
 [application]

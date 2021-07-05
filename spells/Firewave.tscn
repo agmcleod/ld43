@@ -4,7 +4,7 @@
 [ext_resource path="res://images/spells/FireWave.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10, 29.2996 )
+extents = Vector2( 10, 9.77551 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "default"
@@ -47,7 +47,6 @@ duration = 1.1
 scale = Vector2( 0.998165, 1 )
 texture = ExtResource( 2 )
 hframes = 6
-frame = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.847382, 0.770348 )

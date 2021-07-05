@@ -25,6 +25,9 @@ func _ready():
   if spell_type != Constants.SPELL_TYPE.SHIELD:
     add_to_group("projectiles")
   add_to_group("spell")
+  var anim: AnimationPlayer = self.get_animation_player()
+  if anim != null:
+    anim.play('default')
 
 
 func _process(delta):
@@ -54,6 +57,11 @@ func set_status_type(new_status_type):
 
 func set_velocity(vel: int):
   velocity = vel
+
+
+# Not all spells will have an animation player
+func get_animation_player():
+  return $"./AnimationPlayer"
 
 
 func _on_body_entered(body: Node2D):
