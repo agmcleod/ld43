@@ -38,9 +38,6 @@ func _process(delta):
   if time_alive >= duration && duration > 0:
     queue_free()
 
-  if amplified && spell_type == Constants.SPELL_TYPE.SHIELD:
-    duration *= 1.5
-
 
 func set_owner(node: Node):
   spell_owner = node

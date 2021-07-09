@@ -87,6 +87,8 @@ func _fire_spell(caster: Node2D, spell: DiscoveredSpell, direction: Vector2, tar
       for spell in spells_to_spawn:
         spell.amplified = true
         spell.damage *= 1.25
+        if spell_base == "shield":
+          spell.duration *= 1.5
 
   var has_removed_old_shields = false
 
@@ -104,8 +106,9 @@ func _fire_spell(caster: Node2D, spell: DiscoveredSpell, direction: Vector2, tar
             child.queue_free()
       spell.add_to_group("shields")
       caster.add_child(spell)
-    elif spell.spell_type == Constants.SPELL_TYPE.BLAST || spell.spell_type == Constants.SPELL_TYPE.WALL:
+    elif spell.spell_type == Constants.SPELL_TYPE.BLAST:
       get_tree().get_root().add_child(spell)
+    elif spell.spell_type == Constants.SPELL_TYPE.WALL:
       var wall_spell_creator = WallSpellCreatorScene.instance()
       get_tree().get_root().add_child(wall_spell_creator)
       wall_spell_creator.build_spells(spell, wall_target_node.rotation)
@@ -184,15 +187,17 @@ func handle_mouse_click(direction: Vector2, target: Vector2):
     var owner = spell_target_node.target_owner
     # create the wall target now
     if prepared_spell.is_wall():
-      spell_target_node.queue_free()
       _setup_wall_target(owner, target)
+      spell_target_node.queue_free()
       casting_state = CASTING_STATE.WALL_TARGET
     else:
       _fire_spell(owner, prepared_spell, direction, target)
       spell_target_node.queue_free()
   elif casting_state == CASTING_STATE.WALL_TARGET:
-    wall_target_node.queue_free()
+    var owner = wall_target_node.target_owner
+    print("handle_mouse owner: ", owner)
     _fire_spell(owner, prepared_spell, direction, target)
+    wall_target_node.queue_free()
     casting_state = CASTING_STATE.IDLE
 
 

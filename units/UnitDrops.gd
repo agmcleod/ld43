@@ -9,6 +9,5 @@ func _init(ingredients_to_drop, player: Node):
 
 
 func trigger_drop():
-  print("drop!")
   for ingredient in ingredients_to_drop:
     player.collect_ingredient(ingredient, ingredients_to_drop[ingredient])
