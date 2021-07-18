@@ -81,7 +81,7 @@ func _fire_spell(caster: Node2D, spell: DiscoveredSpell, direction: Vector2, tar
       elif spell_base == "blast":
         assert("Blast was split!")
       elif spell_base != "wall":
-        _split_other_spell_type(spells_to_spawn, spell_scene, spell, spell_base, direction)
+        _split_other_spell_type(spells_to_spawn, spell, spell_base, direction)
 
     if spell.ingredients.has(Constants.INGREDIENT_TYPES.SQUIRREL) && !is_blast_spell && !is_wall_spell:
       for spell in spells_to_spawn:
@@ -111,7 +111,7 @@ func _fire_spell(caster: Node2D, spell: DiscoveredSpell, direction: Vector2, tar
     elif spell.spell_type == Constants.SPELL_TYPE.WALL:
       var wall_spell_creator = WallSpellCreatorScene.instance()
       get_tree().get_root().add_child(wall_spell_creator)
-      wall_spell_creator.build_spells(spell, wall_target_node.rotation)
+      wall_spell_creator.build_spells(spell, wall_target_node)
     else:
       spell.position.x = caster.position.x
       spell.position.y = caster.position.y
@@ -138,7 +138,7 @@ func _split_shield_spell(spells_to_spawn: Array, spell_scene: Spell, spell: Disc
     spells_to_spawn.append(other_spell)
 
 
-func _split_other_spell_type(spells_to_spawn: Array, spell_scene: Spell, spell: DiscoveredSpell, spell_base: String, direction: Vector2):
+func _split_other_spell_type(spells_to_spawn: Array, spell: DiscoveredSpell, spell_base: String, direction: Vector2):
   spells_to_spawn[0].damage /= 2
   # create the adjacent spells
   for n in range(2):
@@ -195,7 +195,6 @@ func handle_mouse_click(direction: Vector2, target: Vector2):
       spell_target_node.queue_free()
   elif casting_state == CASTING_STATE.WALL_TARGET:
     var owner = wall_target_node.target_owner
-    print("handle_mouse owner: ", owner)
     _fire_spell(owner, prepared_spell, direction, target)
     wall_target_node.queue_free()
     casting_state = CASTING_STATE.IDLE

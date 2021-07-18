@@ -62,7 +62,7 @@ status_damage = 15
 duration = 20.0
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 15 )
+texture = ExtResource( 13 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Loop = SubResource( 1 )

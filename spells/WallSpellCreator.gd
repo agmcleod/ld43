@@ -1,12 +1,13 @@
 extends Node2D
 
+const Constants = preload("res://Constants.gd")
 const Spell = preload("res://spells/Spell.gd")
 
 class_name WallSpellCreator
 
 var tracked_spells = []
 
-func build_spells(base_scene: Spell, rotation: float):
+func build_spells(base_scene: Spell, wall_target: Sprite):
   var distance = 0
   tracked_spells.append(base_scene)
   get_tree().get_root().add_child(base_scene)
@@ -15,7 +16,7 @@ func build_spells(base_scene: Spell, rotation: float):
     var other = base_scene.duplicate()
     other.spell_owner = base_scene.spell_owner
     other.is_environmental = true
-    other.position += Vector2(cos(rotation), sin(rotation)) * distance
+    other.position += Vector2(cos(wall_target.rotation), sin(wall_target.rotation)) * distance
     tracked_spells.append(other)
     get_tree().get_root().add_child(other)
 
@@ -25,6 +26,15 @@ func build_spells(base_scene: Spell, rotation: float):
   tracked_spells[0].get_animation_player().connect('animation_finished', self, '_on_animation_finished')
   # Also assuming when one leaves, the rest do
   tracked_spells[0].connect('tree_exited', self, '_on_spells_removed')
+
+  if base_scene.spell_status_type == Constants.SPELL_STATUS_TYPE.FROST:
+    # Create collision rect
+    var w = wall_target.texture.get_width()
+    var h = wall_target.texture.get_height()
+
+    # StatitcBody2D.
+
+    pass
 
 
 func _on_animation_finished(anim_finished):
