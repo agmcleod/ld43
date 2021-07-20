@@ -9,9 +9,11 @@ var tracked_spells = []
 var extra_nodes = []
 
 func build_spells(base_scene: Spell, wall_target: Sprite):
-  var distance = 0
   tracked_spells.append(base_scene)
+  # adjust the base scene to be 1/2 width in, so it starts inset from the wall target
+  base_scene.position += Vector2(cos(wall_target.rotation), sin(wall_target.rotation)) * 32
   get_tree().get_root().add_child(base_scene)
+  var distance = 0
   for _n in range(3):
     distance += 64
     var other = base_scene.duplicate()

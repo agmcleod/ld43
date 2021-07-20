@@ -195,7 +195,7 @@ func handle_mouse_click(direction: Vector2, target: Vector2):
       spell_target_node.queue_free()
   elif casting_state == CASTING_STATE.WALL_TARGET:
     var owner = wall_target_node.target_owner
-    _fire_spell(owner, prepared_spell, direction, target)
+    _fire_spell(owner, prepared_spell, direction, wall_target_node.click_target)
     wall_target_node.queue_free()
     casting_state = CASTING_STATE.IDLE
 
