@@ -6,6 +6,7 @@ const Spell = preload("res://spells/Spell.gd")
 class_name WallSpellCreator
 
 var tracked_spells = []
+var extra_nodes = []
 
 func build_spells(base_scene: Spell, wall_target: Sprite):
   var distance = 0
@@ -27,12 +28,23 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
   # Also assuming when one leaves, the rest do
   tracked_spells[0].connect('tree_exited', self, '_on_spells_removed')
 
-  if base_scene.spell_status_type == Constants.SPELL_STATUS_TYPE.FROST:
+  if base_scene.status_type == Constants.SPELL_STATUS_TYPE.FROST:
     # Create collision rect
     var w = wall_target.texture.get_width()
     var h = wall_target.texture.get_height()
 
-    # StatitcBody2D.
+    var body = StaticBody2D.new()
+    var shape = CollisionShape2D.new()
+    var rect = RectangleShape2D.new()
+    rect.set_extents(Vector2(w / 2, h / 2))
+    shape.set_shape(rect)
+
+    body.add_child(shape)
+    body.position = wall_target.position
+    body.set_rotation(wall_target.rotation)
+    body.add_to_group("blocker")
+    get_tree().get_root().add_child(body)
+    extra_nodes.append(body)
 
     pass
 
@@ -46,4 +58,6 @@ func _on_animation_finished(anim_finished):
 
 
 func _on_spells_removed():
+  for n in extra_nodes:
+    n.queue_free()
   self.queue_free()
