@@ -7,6 +7,7 @@ class_name WallSpellCreator
 
 var tracked_spells = []
 var extra_nodes = []
+var created_nav_mesh_ids = []
 
 func build_spells(base_scene: Spell, wall_target: Sprite):
   tracked_spells.append(base_scene)
@@ -14,6 +15,7 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
   base_scene.position += Vector2(cos(wall_target.rotation), sin(wall_target.rotation)) * 32
   get_tree().get_root().add_child(base_scene)
   var distance = 0
+  var navigation2d: Navigation2D = $"/root/game/Navigation2D"
   for _n in range(3):
     distance += 64
     var other = base_scene.duplicate()
@@ -37,16 +39,33 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
 
     var body = StaticBody2D.new()
     var shape = CollisionShape2D.new()
-    var rect = RectangleShape2D.new()
-    rect.set_extents(Vector2(w / 2, h / 2))
-    shape.set_shape(rect)
+
+    # var rect = RectangleShape2D.new()
+    # rect.set_extents(Vector2(w / 2, h / 2))
+    # shape.set_shape(rect)
+
+    var polygon = ConvexPolygonShape2D.new()
+    polygon.set_points(PoolVector2Array([
+      Vector2(-w / 2, - h / 2).rotated(wall_target.rotation),
+      Vector2(w / 2, - h / 2).rotated(wall_target.rotation),
+      Vector2(w / 2, h / 2).rotated(wall_target.rotation),
+      Vector2(- w / 2, h / 2).rotated(wall_target.rotation),
+    ]))
+    shape.set_shape(polygon)
 
     body.add_child(shape)
     body.position = wall_target.position
-    body.set_rotation(wall_target.rotation)
+    # body.set_rotation(wall_target.rotation)
     body.add_to_group("blocker")
     get_tree().get_root().add_child(body)
     extra_nodes.append(body)
+
+    var mesh = NavigationPolygon.new()
+    mesh.add_outline(polygon.points)
+    mesh.make_polygons_from_outlines()
+
+    var id = navigation2d.navpoly_add(mesh, Transform2D().translated(wall_target.position))
+    created_nav_mesh_ids.append(id)
 
     pass
 
@@ -62,4 +81,10 @@ func _on_animation_finished(anim_finished):
 func _on_spells_removed():
   for n in extra_nodes:
     n.queue_free()
+
+  var navigation2d: Navigation2D = $"/root/game/Navigation2D"
+  if navigation2d:
+    for id in created_nav_mesh_ids:
+      navigation2d.navpoly_remove(id)
+
   self.queue_free()
