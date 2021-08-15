@@ -55,7 +55,6 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
 
     body.add_child(shape)
     body.position = wall_target.position
-    # body.set_rotation(wall_target.rotation)
     body.add_to_group("blocker")
     get_tree().get_root().add_child(body)
     extra_nodes.append(body)
@@ -64,8 +63,8 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
     mesh.add_outline(polygon.points)
     mesh.make_polygons_from_outlines()
 
-    var id = navigation2d.navpoly_add(mesh, Transform2D().translated(wall_target.position))
-    created_nav_mesh_ids.append(id)
+    # var id = navigation2d.navpoly_add(mesh, Transform2D().translated(wall_target.position))
+    # created_nav_mesh_ids.append(id)
 
     pass
 
