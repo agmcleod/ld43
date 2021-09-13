@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://TestLevel.gd" type="Script" id=1]
 [ext_resource path="res://TileSet.res" type="TileSet" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://units/RangedGoblin.tscn" type="PackedScene" id=5]
 [ext_resource path="res://units/PitTile.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ui/UI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://PathFinding.gdns" type="Script" id=8]
 
 [node name="game" type="Node"]
 script = ExtResource( 1 )
@@ -122,3 +123,6 @@ position = Vector2( 1928.35, 798.571 )
 position = Vector2( 2104.76, 802.317 )
 
 [node name="UI" parent="." instance=ExtResource( 7 )]
+
+[node name="PathFinding" type="Node" parent="."]
+script = ExtResource( 8 )
