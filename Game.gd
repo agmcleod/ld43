@@ -5,6 +5,12 @@ const Constants = preload("res://Constants.gd")
 func _ready():
   # fixes window appearing off screen on hidpi
   OS.center_window()
+
+  var pf = $"./PathFinding"
+  if pf:
+    print(pf.get_path(Vector2(30, 30), Vector2(100, 100)))
+  else:
+    print("No pf found")
   pass # Replace with function body.
 
 

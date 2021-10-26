@@ -6,7 +6,9 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-gdnative = { git = "https://github.com/godot-rust/godot-rust" }
+gdnative = { git = "https://github.com/godot-rust/godot-rust", rev = "cb2bda254de01042c30526d0b99060e3a4009add" }
+lyon_tessellation = "0.17.9"
+nav = { git = "https://github.com/Bromeon/nav-rs", rev = "f11e686" }
 
 [lib]
 crate-type = ["cdylib"]
