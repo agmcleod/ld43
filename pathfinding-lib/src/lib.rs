@@ -3,10 +3,13 @@ use std::collections::HashMap;
 use gdnative::{api::TileMap, prelude::*};
 use lyon_tessellation::math::{point, Point};
 use lyon_tessellation::path::Path;
+use lyon_tessellation::Orientation;
 use lyon_tessellation::{
     geometry_builder::simple_builder, FillOptions, FillTessellator, VertexBuffers,
 };
 use nav;
+
+mod panic;
 
 #[derive(NativeClass)]
 #[inherit(Node)]
@@ -38,16 +41,38 @@ impl PathFinding {
             .indices
             .chunks(3)
             .map(|chunk| {
-                nav::PolyData::new(
-                    chunk
-                        .iter()
-                        .map(|idx| {
-                            let vert = tessellate_output.vertices.get(*idx as usize).unwrap();
-                            nav::Point::new(vert.x, 0.0, vert.y)
-                        })
-                        .collect(),
-                )
-                .unwrap()
+                let mut points = chunk
+                    .iter()
+                    .map(|idx| {
+                        let vert = tessellate_output.vertices.get(*idx as usize).unwrap();
+                        nav::Point::new(vert.x, 0.0, vert.y)
+                    })
+                    .collect::<Vec<nav::Point>>();
+                let mut center = (0.0, 0.0);
+                for point in &points {
+                    center.0 += point.x;
+                    center.1 += point.z;
+                }
+                center.0 /= points.len() as f32;
+                center.1 /= points.len() as f32;
+                let mut angles = HashMap::<String, f32>::new();
+                for point in &points {
+                    angles.insert(
+                        format!("{},{}", point.x, point.z),
+                        (point.z - center.1).atan2(point.x - center.0),
+                    );
+                }
+                points.sort_by(|a, b| {
+                    // let cmp = a.x.partial_cmp(&b.x);
+                    // match cmp {
+                    //     Some(Ordering::Equal) => a.z.partial_cmp(&b.z).unwrap(),
+                    //     _ => cmp.unwrap(),
+                    // }
+                    let b = angles.get(&format!("{},{}", b.x, b.z)).unwrap();
+                    b.partial_cmp(angles.get(&format!("{},{}", a.x, a.z)).unwrap())
+                        .unwrap()
+                });
+                nav::PolyData::new(points).unwrap()
             })
             .collect();
 
@@ -86,20 +111,30 @@ impl PathFinding {
                 }
             }
 
-            godot_print!("Start tessellating");
             let mut tessellate_output: VertexBuffers<Point, u16> = VertexBuffers::new();
             let mut geometry_builder = simple_builder(&mut tessellate_output);
             let mut tessellator = FillTessellator::new();
 
             let mut path_builder = Path::builder();
 
-            godot_print!("loop da cells");
-
-            for vec in &tile_map.get_used_cells() {
+            let cells = tile_map.get_used_cells();
+            let cells_to_map = cells.iter().filter(|vec| {
+                let vec = vec.to_vector2();
+                let id = tile_map.get_cellv(vec);
+                tile_ids_with_polygon.get(&id).is_some()
+            });
+            let mut has_pathed = false;
+            let mut written_coords = Vec::new();
+            for vec in cells_to_map {
+                // if last loop had pathed, close it now
+                if has_pathed {
+                    path_builder.end(false);
+                }
+                has_pathed = false;
                 let vec = vec.to_vector2();
                 let id = tile_map.get_cellv(vec);
                 if let Some(polygon) = tile_ids_with_polygon.get(&id) {
-                    let mut has_pathed = false;
+                    let mut poly_coords = Vec::new();
                     for i in 0..polygon.len() {
                         let poly_vec = polygon.get(i);
                         if i == 0 {
@@ -107,31 +142,25 @@ impl PathFinding {
                         } else {
                             path_builder.line_to(point(poly_vec.x + vec.x, poly_vec.y + vec.y));
                         }
+                        poly_coords.push((poly_vec.x + vec.x, poly_vec.y + vec.y));
                         has_pathed = true;
                     }
-
-                    if has_pathed {
-                        path_builder.end(false);
-                    }
+                    written_coords.push(poly_coords);
                 }
             }
 
-            godot_print!("Pre close");
+            // godot_dbg!(written_coords);
 
             path_builder.close();
 
-            godot_print!("End tessellating");
-
             let path = path_builder.build();
 
-            godot_print!("build()");
-
-            let result =
-                tessellator.tessellate_path(&path, &FillOptions::default(), &mut geometry_builder);
-            godot_print!("Checking tessellation");
+            let result = tessellator.tessellate_path(
+                &path,
+                &FillOptions::default().with_sweep_orientation(Orientation::Horizontal),
+                &mut geometry_builder,
+            );
             assert!(result.is_ok());
-
-            godot_dbg!(&tessellate_output.vertices);
 
             self.create_mesh(&tessellate_output);
         }
@@ -166,6 +195,7 @@ impl PathFinding {
 
 fn init(handle: InitHandle) {
     handle.add_class::<PathFinding>();
+    panic::init_panic_hook();
 }
 
 godot_init!(init);

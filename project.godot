@@ -143,6 +143,7 @@ config/icon="res://icon.png"
 InventoryStorage="*res://InventoryStorage.gd"
 state="*res://state.gd"
 IngredientsData="*res://ui/IngredientsData.gd"
+RustPanicHook="*res://rust_panic_hook.gd"
 
 [display]
 
@@ -218,8 +219,9 @@ escape={
 
 [rendering]
 
-quality/2d/use_pixel_snap=true
+2d/snapping/use_gpu_pixel_snap=true
 environment/default_environment="res://default_env.tres"
+quality/2d/use_pixel_snap=true
 quality/2d/gles2_use_nvidia_rect_flicker_workaround=true
 
 [tiled_importer]

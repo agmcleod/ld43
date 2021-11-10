@@ -159,7 +159,7 @@ func _handle_spell_cast():
     spell_num = 3
   elif Input.is_action_just_pressed("cast_four"):
     spell_num = 4
-  elif Input.is_action_just_pressed("cast_fice"):
+  elif Input.is_action_just_pressed("cast_five"):
     spell_num = 5
 
   if spell_num != 0:
