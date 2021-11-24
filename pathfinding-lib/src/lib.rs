@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::cmp::Ordering;
 
 use gdnative::{api::TileMap, prelude::*};
 use lyon_tessellation::math::{point, Point};
@@ -9,6 +10,7 @@ use lyon_tessellation::{
 };
 use nav;
 
+mod point_math;
 mod panic;
 
 #[derive(NativeClass)]
@@ -48,30 +50,7 @@ impl PathFinding {
                         nav::Point::new(vert.x, 0.0, vert.y)
                     })
                     .collect::<Vec<nav::Point>>();
-                let mut center = (0.0, 0.0);
-                for point in &points {
-                    center.0 += point.x;
-                    center.1 += point.z;
-                }
-                center.0 /= points.len() as f32;
-                center.1 /= points.len() as f32;
-                let mut angles = HashMap::<String, f32>::new();
-                for point in &points {
-                    angles.insert(
-                        format!("{},{}", point.x, point.z),
-                        (point.z - center.1).atan2(point.x - center.0),
-                    );
-                }
-                points.sort_by(|a, b| {
-                    // let cmp = a.x.partial_cmp(&b.x);
-                    // match cmp {
-                    //     Some(Ordering::Equal) => a.z.partial_cmp(&b.z).unwrap(),
-                    //     _ => cmp.unwrap(),
-                    // }
-                    let b = angles.get(&format!("{},{}", b.x, b.z)).unwrap();
-                    b.partial_cmp(angles.get(&format!("{},{}", a.x, a.z)).unwrap())
-                        .unwrap()
-                });
+                points.sort_by(point_math::sort);
                 nav::PolyData::new(points).unwrap()
             })
             .collect();
