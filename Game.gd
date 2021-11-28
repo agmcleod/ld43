@@ -8,7 +8,7 @@ func _ready():
 
   var pf = $"./PathFinding"
   if pf:
-    print(pf.get_path(Vector2(30, 30), Vector2(100, 100)))
+    print(pf.get_path(Vector2(60, 60), Vector2(150, 150)))
   else:
     print("No pf found")
   pass # Replace with function body.
