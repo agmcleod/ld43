@@ -24,12 +24,12 @@ impl PathFinding {
         PathFinding { mesh: None }
     }
 
-    fn create_mesh(&mut self, polydata: Vec<nav::PolyData>) {
+    fn create_mesh(&mut self, tessellate_output: &VertexBuffers<Point, u16>) {
         let params = nav::MeshParams {
             agent_height: None,
             agent_max_climb: None,
             agent_radius: 1.0,
-            max_polys_per_region: 2000,
+            max_polys_per_region: 3000,
             mesh_origin: nav::Point::new(-32.0, 0.0, -32.0),
             voxel_length: 1.0,
             voxels_per_region: nav::Count3D::new(2500, 1, 2500),
@@ -38,9 +38,34 @@ impl PathFinding {
         let mut mesh =
             nav::NavMesh::new(&params).expect("Navigation mesh should be creatable from params");
 
+        let polygons: Vec<nav::PolyData> = tessellate_output
+            .indices
+            .chunks(3)
+            .map(|chunk| {
+                let mut points = chunk
+                    .iter()
+                    .map(|idx| {
+                        let vert = tessellate_output.vertices.get(*idx as usize).unwrap();
+                        nav::Point::new(vert.x, 0.0, vert.y)
+                    })
+                    .collect::<Vec<nav::Point>>();
+
+                let x = points.iter().fold(0.0, |sum, point| {
+                    sum + point.x
+                });
+                let z = points.iter().fold(0.0, |sum, point| {
+                    sum + point.z
+                });
+                points.sort_by(point_math::sort(nav::Point::new(x / 3.0, 0.0, z / 3.0)));
+                nav::PolyData::new(points).unwrap()
+            })
+            .collect();
+
+        godot_dbg!(polygons.len());
+
         let region = nav::Region {
             index_in_mesh: nav::Index3D::new(0, 0, 0),
-            polygons: polydata,
+            polygons,
         };
 
         mesh.put_region(&region).unwrap();
@@ -82,8 +107,6 @@ impl PathFinding {
                 tile_ids_with_polygon.get(&id).is_some()
             });
 
-            let mut nav_polygons = Vec::new();
-
             let mut tessellate_output: VertexBuffers<Point, u16> = VertexBuffers::new();
             let mut geometry_builder = simple_builder(&mut tessellate_output);
             let mut tessellator = FillTessellator::new();
@@ -102,45 +125,34 @@ impl PathFinding {
                 let id = tile_map.get_cellv(tile_vec_index);
                 let tile_pos = tile_map.map_to_world(tile_vec_index, false) + map_pos;
                 if let Some(polygon) = tile_ids_with_polygon.get(&id) {
-                    let mut poly_coords = Vec::new();
-
-                    let mut min_x = None;
-                    let mut max_x = None;
-                    let mut min_z = None;
-                    let mut max_z = None;
-
                     for i in 0..polygon.len() {
                         let poly_vec = polygon.get(i);
                         let x = poly_vec.x + tile_pos.x;
-                        let z = poly_vec.y + tile_pos.y;
-                        let point = nav::Point::new(x, 0.0, z);
+                        let y = poly_vec.y + tile_pos.y;
 
-                        if min_x.is_none() || x < min_x.unwrap() {
-                            min_x = Some(x);
+                        if i == 0 {
+                            path_builder.begin(point(x, y));
+                        } else {
+                            path_builder.line_to(point(x, y));
                         }
-                        if max_x.is_none() || x > max_x.unwrap() {
-                            max_x = Some(x);
-                        }
-                        if min_z.is_none() || z < min_z.unwrap() {
-                            min_z = Some(z);
-                        }
-                        if max_z.is_none() || z > max_z.unwrap() {
-                            max_z = Some(z);
-                        }
-
-                        poly_coords.push(point);
                     }
 
-                    let center = nav::Point::new((max_x.unwrap() - min_x.unwrap()) / 2.0 + min_x.unwrap(), 0.0, (max_z.unwrap() - min_z.unwrap()) / 2.0 + min_z.unwrap());
-
-                    poly_coords.sort_by(point_math::sort(center));
-
-                    nav_polygons.push(nav::PolyData::new(poly_coords).unwrap());
+                    has_pathed = true;
                 }
             }
 
-            self.write_data_file(&nav_polygons);
-            self.create_mesh(nav_polygons);
+            path_builder.close();
+
+            let path = path_builder.build();
+
+            let result = tessellator.tessellate_path(
+                &path,
+                &FillOptions::default().with_sweep_orientation(Orientation::Horizontal),
+                &mut geometry_builder,
+            );
+            assert!(result.is_ok());
+
+            self.create_mesh(&tessellate_output);
         }
     }
 
