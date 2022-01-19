@@ -15,7 +15,6 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
   base_scene.position += Vector2(cos(wall_target.rotation), sin(wall_target.rotation)) * 32
   get_tree().get_root().add_child(base_scene)
   var distance = 0
-  var navigation2d: Navigation2D = $"/root/game/Navigation2D"
   for _n in range(3):
     distance += 64
     var other = base_scene.duplicate()
@@ -25,7 +24,7 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
     tracked_spells.append(other)
     get_tree().get_root().add_child(other)
 
-  # When one finishes, we assume all of them finish.
+  # When the first spell in the array finishes, we assume all of them finish.
   # A signal per each one would be nice,
   # but we lose the context as to which animation player it was for
   tracked_spells[0].get_animation_player().connect('animation_finished', self, '_on_animation_finished')
@@ -45,12 +44,13 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
     # shape.set_shape(rect)
 
     var polygon = ConvexPolygonShape2D.new()
-    polygon.set_points(PoolVector2Array([
+    var points = PoolVector2Array([
       Vector2(-w / 2, - h / 2).rotated(wall_target.rotation),
       Vector2(w / 2, - h / 2).rotated(wall_target.rotation),
       Vector2(w / 2, h / 2).rotated(wall_target.rotation),
       Vector2(- w / 2, h / 2).rotated(wall_target.rotation),
-    ]))
+    ])
+    polygon.set_points(points)
     shape.set_shape(polygon)
 
     body.add_child(shape)
@@ -59,12 +59,11 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
     get_tree().get_root().add_child(body)
     extra_nodes.append(body)
 
-    var mesh = NavigationPolygon.new()
-    mesh.add_outline(polygon.points)
-    mesh.make_polygons_from_outlines()
+    var path_finding = $"/root/game/PathFinding"
+    for point in points:
+      point += wall_target.position
 
-    # var id = navigation2d.navpoly_add(mesh, Transform2D().translated(wall_target.position))
-    # created_nav_mesh_ids.append(id)
+    path_finding.add_wall_to_mesh(base_scene.get_instance_id(), points)
 
     pass
 

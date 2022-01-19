@@ -1,72 +1,96 @@
 use std::collections::HashMap;
 
 use gdnative::{api::TileMap, prelude::*};
-use nav;
 use lyon_tessellation::math::{point, Point};
 use lyon_tessellation::path::Path;
 use lyon_tessellation::Orientation;
 use lyon_tessellation::{
     geometry_builder::simple_builder, FillOptions, FillTessellator, VertexBuffers,
 };
+use nav;
 
-mod point_math;
 mod panic;
+mod point_math;
 
 #[derive(NativeClass)]
 #[inherit(Node)]
 struct PathFinding {
     mesh: Option<nav::NavMesh>,
+    walls: HashMap<i64, TypedArray<Vector2>>,
 }
 
 #[gdnative::methods]
 impl PathFinding {
     fn new(_owner: &Node) -> Self {
-        PathFinding { mesh: None }
+        PathFinding {
+            mesh: None,
+            walls: HashMap::new(),
+        }
     }
 
     fn create_mesh(&mut self, tessellate_output: &VertexBuffers<Point, u16>) {
-        let params = nav::MeshParams {
-            agent_height: None,
-            agent_max_climb: None,
-            agent_radius: 1.0,
-            max_polys_per_region: 3000,
-            mesh_origin: nav::Point::new(-32.0, 0.0, -32.0),
-            voxel_length: 1.0,
-            voxels_per_region: nav::Count3D::new(2500, 1, 2500),
-        };
+        let mut polygons: Vec<nav::PolyData> = Vec::new();
 
-        let mut mesh =
-            nav::NavMesh::new(&params).expect("Navigation mesh should be creatable from params");
+        let mut min_x = std::f32::MAX;
+        let mut min_z = std::f32::MAX;
+        let mut max_x = 0.0f32;
+        let mut max_z = 0.0f32;
 
-        let polygons: Vec<nav::PolyData> = tessellate_output
-            .indices
-            .chunks(3)
-            .map(|chunk| {
-                let mut points = chunk
-                    .iter()
-                    .map(|idx| {
-                        let vert = tessellate_output.vertices.get(*idx as usize).unwrap();
-                        nav::Point::new(vert.x, 0.0, vert.y)
+        for chunk in tessellate_output.indices.chunks(3) {
+            let mut points = chunk
+                .iter()
+                .map(|idx| {
+                    let vert = tessellate_output.vertices.get(*idx as usize).unwrap();
+                    min_x = min_x.min(vert.x);
+                    min_z = min_z.min(vert.y);
+                    max_x = max_x.max(vert.x);
+                    max_z = max_z.max(vert.y);
+                    nav::Point::new(vert.x, 0.0, vert.y)
+                })
+                .collect::<Vec<nav::Point>>();
+
+            // 0 area triangle, so skip it
+            if (points[0].x == points[1].x && points[1].x == points[2].x)
+                || (points[0].z == points[1].z && points[2].z == points[2].z)
+            {
+                continue;
+            }
+
+            let x = points.iter().fold(0.0, |sum, point| sum + point.x);
+            let z = points.iter().fold(0.0, |sum, point| sum + point.z);
+            points.sort_by(point_math::sort(nav::Point::new(x / 3.0, 0.0, z / 3.0)));
+            polygons.push(
+                nav::PolyData::new(points)
+                    .map_err(|err| {
+                        godot_dbg!(err);
                     })
-                    .collect::<Vec<nav::Point>>();
+                    .unwrap(),
+            );
+        }
 
-                let x = points.iter().fold(0.0, |sum, point| {
-                    sum + point.x
-                });
-                let z = points.iter().fold(0.0, |sum, point| {
-                    sum + point.z
-                });
-                points.sort_by(point_math::sort(nav::Point::new(x / 3.0, 0.0, z / 3.0)));
-                nav::PolyData::new(points).unwrap()
-            })
-            .collect();
-
-        godot_dbg!(polygons.len());
+        self.write_data_file(&polygons);
 
         let region = nav::Region {
             index_in_mesh: nav::Index3D::new(0, 0, 0),
             polygons,
         };
+
+        let params = nav::MeshParams {
+            agent_height: None,
+            agent_max_climb: None,
+            agent_radius: 1.0,
+            max_polys_per_region: 3000,
+            mesh_origin: nav::Point::new(min_x, 0.0, min_z),
+            voxel_length: 1.0,
+            voxels_per_region: nav::Count3D::new(
+                (max_x - min_x) as usize,
+                1,
+                (max_z - min_z) as usize,
+            ),
+        };
+
+        let mut mesh =
+            nav::NavMesh::new(&params).expect("Navigation mesh should be creatable from params");
 
         mesh.put_region(&region).unwrap();
 
@@ -141,7 +165,24 @@ impl PathFinding {
                 }
             }
 
-            path_builder.close();
+            if self.walls.is_empty() {
+                path_builder.close();
+            } else {
+                if has_pathed {
+                    path_builder.end(false);
+                }
+                for (i, (_id, poly)) in self.walls.iter().enumerate() {
+                    for i in 0..poly.len() {
+                        let poly_vec = poly.get(i);
+                        if i == 0 {
+                            path_builder.begin(point(poly_vec.x, poly_vec.y));
+                        } else {
+                            path_builder.line_to(point(poly_vec.x, poly_vec.y));
+                        }
+                    }
+                    path_builder.end(i == self.walls.len() - 1);
+                }
+            }
 
             let path = path_builder.build();
 
@@ -159,13 +200,31 @@ impl PathFinding {
     fn write_data_file(&self, nav_polygons: &Vec<nav::PolyData>) {
         use std::fs;
 
-        let data: Vec<String> = nav_polygons.iter().map(|poly| {
-            poly.vertices.iter().map(|point| {
-                format!("{},{}", point.x, point.z)
-            }).collect::<Vec<String>>().join(",")
-        }).collect();
+        let data: Vec<String> = nav_polygons
+            .iter()
+            .map(|poly| {
+                poly.vertices
+                    .iter()
+                    .map(|point| format!("{},{}", point.x, point.z))
+                    .collect::<Vec<String>>()
+                    .join(",")
+            })
+            .collect();
 
         fs::write("../coords-data.csv", data.join("\n"));
+    }
+
+    #[export]
+    fn add_wall_to_mesh(&mut self, owner: &Node, instance_id: i64, wall: TypedArray<Vector2>) {
+        godot_dbg!(format!("Adding {:?}", wall));
+        self.walls.insert(instance_id, wall);
+        self.create_tilemap_data(owner);
+    }
+
+    #[export]
+    fn remove_wall_from_mesh(&mut self, owner: &Node, instance_id: i64) {
+        self.walls.remove(&instance_id);
+        self.create_tilemap_data(owner);
     }
 
     #[export]
@@ -183,8 +242,6 @@ impl PathFinding {
                     .map(|coord| Vector2::new(coord.x, coord.z))
                     .collect::<Vec<Vector2>>();
                 return Vector2Array::from_vec(coords);
-            } else {
-                godot_print!("find_path returned None");
             }
         } else {
             godot_print!("no mesh");
