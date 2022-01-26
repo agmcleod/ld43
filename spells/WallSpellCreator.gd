@@ -39,10 +39,6 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
     var body = StaticBody2D.new()
     var shape = CollisionShape2D.new()
 
-    # var rect = RectangleShape2D.new()
-    # rect.set_extents(Vector2(w / 2, h / 2))
-    # shape.set_shape(rect)
-
     var polygon = ConvexPolygonShape2D.new()
     var points = PoolVector2Array([
       Vector2(-w / 2, - h / 2).rotated(wall_target.rotation),
@@ -60,10 +56,11 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
     extra_nodes.append(body)
 
     var path_finding = $"/root/game/PathFinding"
+    var new_points = PoolVector2Array([])
     for point in points:
-      point += wall_target.position
+      new_points.append(point + wall_target.position)
 
-    path_finding.add_wall_to_mesh(base_scene.get_instance_id(), points)
+    path_finding.add_wall_to_mesh(base_scene.get_instance_id(), new_points)
 
     pass
 

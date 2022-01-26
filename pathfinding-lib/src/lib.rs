@@ -31,21 +31,23 @@ impl PathFinding {
     fn create_mesh(&mut self, tessellate_output: &VertexBuffers<Point, u16>) {
         let mut polygons: Vec<nav::PolyData> = Vec::new();
 
-        let mut min_x = std::f32::MAX;
-        let mut min_z = std::f32::MAX;
-        let mut max_x = 0.0f32;
-        let mut max_z = 0.0f32;
+        let mut min_x = std::i32::MAX;
+        let mut min_z = std::i32::MAX;
+        let mut max_x = 0i32;
+        let mut max_z = 0i32;
 
         for chunk in tessellate_output.indices.chunks(3) {
             let mut points = chunk
                 .iter()
                 .map(|idx| {
                     let vert = tessellate_output.vertices.get(*idx as usize).unwrap();
-                    min_x = min_x.min(vert.x);
-                    min_z = min_z.min(vert.y);
-                    max_x = max_x.max(vert.x);
-                    max_z = max_z.max(vert.y);
-                    nav::Point::new(vert.x, 0.0, vert.y)
+                    let x = vert.x.floor();
+                    let z = vert.y.ceil();
+                    min_x = min_x.min(x as i32);
+                    min_z = min_z.min(z as i32);
+                    max_x = max_x.max(x as i32);
+                    max_z = max_z.max(z as i32);
+                    nav::Point::new(x, 0.0, z)
                 })
                 .collect::<Vec<nav::Point>>();
 
@@ -80,7 +82,7 @@ impl PathFinding {
             agent_max_climb: None,
             agent_radius: 1.0,
             max_polys_per_region: 3000,
-            mesh_origin: nav::Point::new(min_x, 0.0, min_z),
+            mesh_origin: nav::Point::new(min_x as f32, 0.0, min_z as f32),
             voxel_length: 1.0,
             voxels_per_region: nav::Count3D::new(
                 (max_x - min_x) as usize,
