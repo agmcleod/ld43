@@ -6,7 +6,7 @@ var SpellReceiver = preload("res://units/SpellReceiver.gd")
 const UnitDrops = preload("res://units/UnitDrops.gd")
 
 onready var vision_area: Area2D = $Vision
-onready var nav_2d: Navigation2D = get_tree().get_current_scene().get_node("Navigation2D")
+onready var pathfinding = get_tree().get_current_scene().get_node("PathFinding")
 onready var attack_zone: Area2D = $AttackZone
 onready var player: Player = get_tree().get_current_scene().get_node("Player")
 onready var health_bar = $"./Sprite/HealthBar"
@@ -25,7 +25,7 @@ var unit_drops: UnitDrops
 func _ready():
   attack_ticker = 0.0
   self.spell_receiver = SpellReceiver.new(self, 40)
-  self.enemy_tracker = EnemyTracker.new(self, nav_2d, 600, vision_area)
+  self.enemy_tracker = EnemyTracker.new(self, pathfinding, 600, vision_area)
   attack_zone.connect("body_entered", self, "_on_body_entered_attack_zone")
   attack_zone.connect("body_exited", self, "_on_body_exited_attack_zone")
   unit_drops = UnitDrops.new({

@@ -5,13 +5,13 @@ var last_tracked_position := Vector2(0, 0)
 # default to facing left
 var last_direction_vector := Vector2(-0.9, 0.9)
 var path := PoolVector2Array([])
-var nav_2d
+var pathfinding
 var chase_distance
 var vision_area
 var owner
 
-func _init(owner: Node, nav_2d: Navigation2D, chase_distance: float, vision_area: Area2D):
-  self.nav_2d = nav_2d
+func _init(owner: Node, pathfinding, chase_distance: float, vision_area: Area2D):
+  self.pathfinding = pathfinding
   self.chase_distance = chase_distance
   self.vision_area = vision_area
   last_tracked_position.x = owner.position.x
@@ -71,7 +71,7 @@ func _on_body_exited_vision(body):
 
 
 func _set_path_for_tracked_position(pos):
-  path = self.nav_2d.get_simple_path(self.owner.global_position, pos)
+  path = self.pathfinding.get_path(self.owner.global_position, pos)
 
 
 func handle_spell(spell: Spell):

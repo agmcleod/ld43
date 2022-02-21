@@ -6,11 +6,6 @@ func _ready():
   # fixes window appearing off screen on hidpi
   OS.center_window()
 
-  var pf = $"./PathFinding"
-  if pf:
-    print(pf.get_path(Vector2(0, 32), Vector2(1300, 80)))
-  else:
-    print("No pf found")
   pass # Replace with function body.
 
 
