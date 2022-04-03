@@ -7,7 +7,7 @@ const SpellReceiver = preload("res://units/SpellReceiver.gd")
 const UnitDrops = preload("res://units/UnitDrops.gd")
 
 onready var vision_area: Area2D = $Vision
-onready var pathfinding = get_tree().get_current_scene().get_node("PathFinding")
+onready var nav_2d: Navigation2D = get_tree().get_current_scene().get_node("Navigation2D")
 onready var health_bar = $"./Sprite/HealthBar"
 onready var player: Player = get_tree().get_current_scene().get_node("Player")
 
@@ -23,7 +23,7 @@ var unit_drops: UnitDrops
 func _ready():
   attack_ticker = 0.0
   spell_receiver = SpellReceiver.new(self, 30)
-  enemy_tracker = EnemyTracker.new(self, pathfinding, 400, vision_area)
+  enemy_tracker = EnemyTracker.new(self, nav_2d, 400, vision_area)
   unit_drops = UnitDrops.new({
     Constants.INGREDIENT_TYPES.RED: 5,
     Constants.INGREDIENT_TYPES.BLUE: 5

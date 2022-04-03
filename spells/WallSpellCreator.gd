@@ -55,13 +55,6 @@ func build_spells(base_scene: Spell, wall_target: Sprite):
     get_tree().get_root().add_child(body)
     extra_nodes.append(body)
 
-    var path_finding = $"/root/game/PathFinding"
-    var new_points = PoolVector2Array([])
-    for point in points:
-      new_points.append(point + wall_target.position)
-
-    path_finding.add_wall_to_mesh(base_scene.get_instance_id(), new_points)
-
     pass
 
 
@@ -76,10 +69,5 @@ func _on_animation_finished(anim_finished):
 func _on_spells_removed():
   for n in extra_nodes:
     n.queue_free()
-
-  var navigation2d: Navigation2D = $"/root/game/Navigation2D"
-  if navigation2d:
-    for id in created_nav_mesh_ids:
-      navigation2d.navpoly_remove(id)
 
   self.queue_free()
