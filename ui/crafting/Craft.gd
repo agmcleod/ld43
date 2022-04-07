@@ -128,5 +128,11 @@ func _on_spell_binding_changed(spell_name: String, selected_node_index: int, num
 func _on_spell_name_crafted(spell_name: String):
   # if the user is triggering this, they should have a spell
   if discovered_spells.has(spell_name):
-    discovered_spells[spell_name].crafted_count += 1
+    var discovered_spell = discovered_spells[spell_name]
+    discovered_spell.crafted_count += 1
     set_spell_crafted_count(spell_name)
+
+    for ingredient in discovered_spell.ingredients:
+      InventoryStorage.inventory_data[ingredient] -= 1
+
+    ingredient_item_list.update_resources()
