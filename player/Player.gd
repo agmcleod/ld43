@@ -25,7 +25,6 @@ var velocity = Vector2()
 var spell_receiver: SpellReceiver
 var frame_time = 0.0
 var floating_text_service: FloatingTextService
-var melee_range_enemies = []
 
 var animation_details: Dictionary = {
   'right_move': {
@@ -189,10 +188,9 @@ func collect_ingredient(ingredient_type: int, amount: int):
 # body is the root node of the enemy
 func _on_body_entered_attack_zone(body):
   if body.get_groups().has("enemies"):
-    melee_range_enemies.append(body.get_instance_id())
+    body.emit_signal("entered_range_of_player")
 
 
 func _on_body_exited_attack_zone(body):
   if body.get_groups().has("enemies"):
-    var idx = melee_range_enemies.find(body.get_instance_id())
-    melee_range_enemies.remove(idx)
+    body.emit_signal("exited_range_of_player")

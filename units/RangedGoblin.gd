@@ -18,6 +18,10 @@ var spell_receiver: SpellReceiver
 var enemy_tracker: EnemyTracker
 var speed := 120
 var unit_drops: UnitDrops
+var in_range_of_player = false
+
+signal entered_range_of_player
+signal extited_range_of_player
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

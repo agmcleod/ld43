@@ -4,12 +4,14 @@ const Constants = preload("res://Constants.gd")
 var EnemyTracker = preload("res://units/EnemyTracker.gd")
 var SpellReceiver = preload("res://units/SpellReceiver.gd")
 const UnitDrops = preload("res://units/UnitDrops.gd")
+const AuraShader = preload("res://shaders/aura.tres")
 
 onready var vision_area: Area2D = $Vision
 onready var nav_2d: Navigation2D = get_tree().get_current_scene().get_node("Navigation2D")
 onready var attack_zone: Area2D = $AttackZone
 onready var player: Player = get_tree().get_current_scene().get_node("Player")
 onready var health_bar = $"./Sprite/HealthBar"
+onready var sprite: Sprite = $"./Sprite"
 
 export (float) var attack_rate = 1.5
 
@@ -21,6 +23,11 @@ var spell_receiver
 var enemy_tracker
 var speed := 120
 var unit_drops: UnitDrops
+var in_range_of_player = false
+var mouse_entered = false
+
+signal entered_range_of_player
+signal exited_range_of_player
 
 func _ready():
   attack_ticker = 0.0
@@ -32,6 +39,12 @@ func _ready():
     Constants.INGREDIENT_TYPES.RED: 5,
     Constants.INGREDIENT_TYPES.BLUE: 5
   }, player)
+
+  self.connect("mouse_entered", self, "_on_mouse_entered")
+  self.connect("mouse_exited", self, "_on_mouse_exited")
+
+  self.connect("entered_range_of_player", self, "_on_entered_range_of_player")
+  self.connect("exited_range_of_player", self, "_on_exited_range_of_player")
 
 
 func _process(delta):
@@ -101,3 +114,36 @@ func set_animation(name: String):
   var anim_player: AnimationPlayer = $"./AnimationPlayer"
   if anim_player.current_animation != name:
     anim_player.play(name)
+
+
+func _on_mouse_entered():
+  mouse_entered = true
+  handle_in_range_focusin()
+
+
+
+func _on_mouse_exited():
+  handle_in_range_focusout()
+  mouse_entered = false
+
+
+func _on_entered_range_of_player():
+  in_range_of_player = true
+  handle_in_range_focusin()
+
+
+func _on_exited_range_of_player():
+  handle_in_range_focusout()
+  in_range_of_player = false
+
+
+func handle_in_range_focusin():
+  if in_range_of_player && mouse_entered:
+    sprite.set_material(AuraShader)
+    Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+
+
+func handle_in_range_focusout():
+  if in_range_of_player && mouse_entered:
+    sprite.set_material(null)
+    Input.set_default_cursor_shape(Input.CURSOR_ARROW)
