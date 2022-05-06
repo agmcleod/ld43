@@ -5,6 +5,7 @@ const Constants = preload("res://Constants.gd")
 const EnemyTracker = preload("res://units/EnemyTracker.gd")
 const SpellReceiver = preload("res://units/SpellReceiver.gd")
 const UnitDrops = preload("res://units/UnitDrops.gd")
+const Drainable = preload("res://units/Drainable.gd")
 
 onready var vision_area: Area2D = $Vision
 onready var nav_2d: Navigation2D = get_tree().get_current_scene().get_node("Navigation2D")
@@ -18,12 +19,11 @@ var spell_receiver: SpellReceiver
 var enemy_tracker: EnemyTracker
 var speed := 120
 var unit_drops: UnitDrops
-var in_range_of_player = false
+var drainable
 
 signal entered_range_of_player
 signal extited_range_of_player
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
   attack_ticker = 0.0
   spell_receiver = SpellReceiver.new(self, 30)
@@ -32,6 +32,7 @@ func _ready():
     Constants.INGREDIENT_TYPES.RED: 5,
     Constants.INGREDIENT_TYPES.BLUE: 5
   }, player)
+  self.drainable = Drainable.new(self, player)
 
 
 func take_damage(amount: int):

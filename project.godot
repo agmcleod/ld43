@@ -40,6 +40,11 @@ _global_script_classes=[ {
 "path": "res://types/DiscoveredSpell.gd"
 }, {
 "base": "Reference",
+"class": "Drainable",
+"language": "GDScript",
+"path": "res://units/Drainable.gd"
+}, {
+"base": "Reference",
 "class": "EnemyTracker",
 "language": "GDScript",
 "path": "res://units/EnemyTracker.gd"
@@ -116,6 +121,7 @@ _global_script_class_icons={
 "Casting": "",
 "Craft": "",
 "DiscoveredSpell": "",
+"Drainable": "",
 "EnemyTracker": "",
 "EnvironmentalEffect": "",
 "FloatingText": "",
