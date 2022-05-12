@@ -11,8 +11,10 @@ onready var ingredient_item_list = get_tree().get_current_scene().get_ui().get_i
 
 var player_left_walk_image = preload("res://images/player/playerleftwalk.png")
 var player_left_image = preload("res://images/player/playerleft.png")
+var player_left_drain_image = preload("res://images/player/playerleftdrain.png")
 var player_right_walk_image = preload("res://images/player/playerrightwalk.png")
 var player_right_image = preload("res://images/player/playerright.png")
+var player_right_drain_image = preload("res://images/player/playerrightdrain.png")
 
 class_name Player
 
@@ -20,11 +22,17 @@ onready var health_bar = $"./Sprite/HealthBar"
 onready var casting: Casting = $"./Casting"
 onready var attack_zone: Area2D = $AttackZone
 
+enum DIRECTION {
+  LEFT,
+  RIGHT
+}
+
 var speed = 200
 var velocity = Vector2()
 var spell_receiver: SpellReceiver
 var frame_time = 0.0
 var floating_text_service: FloatingTextService
+var current_direction = DIRECTION.RIGHT
 
 var animation_details: Dictionary = {
   'right_move': {
@@ -43,6 +51,14 @@ var animation_details: Dictionary = {
     'vframes': 1,
     'hframes': 4
   },
+  'right_drain': {
+    'name': 'right_drain',
+    'frames': 5,
+    'frame_time': 0.15,
+    'texture': player_right_drain_image,
+    'vframes': 1,
+    'hframes': 5
+  },
   'left': {
     'name': 'left',
     'frames': 4,
@@ -58,7 +74,15 @@ var animation_details: Dictionary = {
     'texture': player_left_walk_image,
     'vframes': 2,
     'hframes': 8
-  }
+  },
+  'left_drain': {
+    'name': 'right_drain',
+    'frames': 5,
+    'frame_time': 0.15,
+    'texture': player_left_drain_image,
+    'vframes': 1,
+    'hframes': 5
+  },
 }
 
 var current_anim = null
@@ -98,10 +122,12 @@ func _physics_process(delta: float):
   var sprite: Sprite = _get_sprite()
   if spell_receiver.can_move():
     if Input.is_action_pressed('right'):
+      current_direction = DIRECTION.RIGHT
       velocity.x = 1
       if current_anim['name'] != 'right_move':
         _set_current_anim('right_move')
     elif Input.is_action_pressed('left'):
+      current_direction = DIRECTION.LEFT
       velocity.x = -1
       if current_anim['name'] != 'left_move':
         _set_current_anim('left_move')
@@ -194,3 +220,17 @@ func _on_body_entered_attack_zone(body):
 func _on_body_exited_attack_zone(body):
   if body.get_groups().has("enemies"):
     body.emit_signal("exited_range_of_player")
+
+
+func start_drain():
+  if current_direction == DIRECTION.LEFT:
+    _set_current_anim('left_drain')
+  elif current_direction == DIRECTION.RIGHT:
+    _set_current_anim('right_drain')
+
+
+func stop_drain():
+  if current_direction == DIRECTION.LEFT:
+    _set_current_anim('left')
+  elif current_direction == DIRECTION.RIGHT:
+    _set_current_anim('right')

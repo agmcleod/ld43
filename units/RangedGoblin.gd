@@ -18,7 +18,6 @@ var attack_ticker := 0.0
 var spell_receiver: SpellReceiver
 var enemy_tracker: EnemyTracker
 var speed := 120
-var unit_drops: UnitDrops
 var drainable
 
 signal entered_range_of_player
@@ -28,19 +27,14 @@ func _ready():
   attack_ticker = 0.0
   spell_receiver = SpellReceiver.new(self, 30)
   enemy_tracker = EnemyTracker.new(self, nav_2d, 400, vision_area)
-  unit_drops = UnitDrops.new({
+  self.drainable = Drainable.new(self, player, UnitDrops.new({
     Constants.INGREDIENT_TYPES.RED: 5,
     Constants.INGREDIENT_TYPES.BLUE: 5
-  }, player)
-  self.drainable = Drainable.new(self, player)
+  }, player))
 
 
 func take_damage(amount: int):
   self.spell_receiver.take_damage(amount)
-
-
-func on_death():
-  unit_drops.trigger_drop()
 
 
 func _process(delta):
@@ -48,7 +42,9 @@ func _process(delta):
 
 
 func _physics_process(delta: float):
-  if self.spell_receiver.is_knockedback() || !spell_receiver.can_move():
+  if (self.spell_receiver.is_knockedback() ||
+    !spell_receiver.can_move() ||
+    self.drainable.draining):
     return
   if self.enemy_tracker.tracked_node != null:
     var tracked_node = self.enemy_tracker.tracked_node
@@ -85,3 +81,11 @@ func set_animation(name: String):
   var anim_player: AnimationPlayer = $"./AnimationPlayer"
   if anim_player.current_animation != name:
     anim_player.play(name)
+
+
+func _input(event):
+  if event is InputEventMouseButton && event.button_index == BUTTON_LEFT:
+    if event.pressed:
+      self.drainable.drain()
+    else:
+      self.drainable.stop()

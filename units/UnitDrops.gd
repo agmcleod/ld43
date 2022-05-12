@@ -8,6 +8,6 @@ func _init(ingredients_to_drop, player: Node):
   self.player = player
 
 
-func trigger_drop():
+func trigger_collection():
   for ingredient in ingredients_to_drop:
     player.collect_ingredient(ingredient, ingredients_to_drop[ingredient])

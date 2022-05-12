@@ -24,7 +24,6 @@ var spell_receiver
 var enemy_tracker
 var speed := 120
 var drainable
-var unit_drops: UnitDrops
 
 signal entered_range_of_player
 signal exited_range_of_player
@@ -35,13 +34,12 @@ func _ready():
     attack_rate = DEFAULT_AR
   self.spell_receiver = SpellReceiver.new(self, 40)
   self.enemy_tracker = EnemyTracker.new(self, nav_2d, 600, vision_area)
-  self.drainable = Drainable.new(self, player)
-  attack_zone.connect("body_entered", self, "_on_body_entered_attack_zone")
-  attack_zone.connect("body_exited", self, "_on_body_exited_attack_zone")
-  unit_drops = UnitDrops.new({
+  self.drainable = Drainable.new(self, player, UnitDrops.new({
     Constants.INGREDIENT_TYPES.RED: 5,
     Constants.INGREDIENT_TYPES.BLUE: 5
-  }, player)
+  }, player))
+  attack_zone.connect("body_entered", self, "_on_body_entered_attack_zone")
+  attack_zone.connect("body_exited", self, "_on_body_exited_attack_zone")
 
 
 func _process(delta):
@@ -56,7 +54,9 @@ func _process(delta):
 
 
 func _physics_process(delta):
-  if self.spell_receiver.is_knockedback() || !spell_receiver.can_move():
+  if (self.spell_receiver.is_knockedback() ||
+    !spell_receiver.can_move() ||
+    self.drainable.draining):
     return
 
   if !out_of_range:
@@ -74,10 +74,6 @@ func _physics_process(delta):
 
 func take_damage(amount: int):
   self.spell_receiver.take_damage(amount)
-
-
-func on_death():
-  unit_drops.trigger_drop()
 
 
 func _on_body_entered_attack_zone(body):
@@ -111,3 +107,11 @@ func set_animation(name: String):
   var anim_player: AnimationPlayer = $"./AnimationPlayer"
   if anim_player.current_animation != name:
     anim_player.play(name)
+
+
+func _input(event):
+  if event is InputEventMouseButton && event.button_index == BUTTON_LEFT:
+    if event.pressed:
+      self.drainable.drain()
+    else:
+      self.drainable.stop()
