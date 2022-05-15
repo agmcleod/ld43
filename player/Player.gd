@@ -207,7 +207,7 @@ func set_status_text(status):
 func collect_ingredient(ingredient_type: int, amount: int):
   InventoryStorage.inventory_data[ingredient_type] += amount
   ingredient_item_list.update_resources()
-  floating_text_service.initialize_ft(self, "%d" % amount, ingredient_type)
+  floating_text_service.initialize_ft(self, "%d" % amount, ingredient_type, 20)
 
 
 # This code here works with the assumption that the

@@ -11,8 +11,9 @@ var last_side_used = SIDE.RIGHT
 
 # Can expand on this to make it stagger by having an array of queued
 # items, then have fn to call on the owner's ready function
-func initialize_ft(owner: Node2D, text: String, icon: int):
+func initialize_ft(owner: Node2D, text: String, icon: int, y_offset = 0):
   var floating_text = FloatingText.instance()
+  floating_text.position.y += y_offset
   owner.add_child(floating_text)
   if icon != null:
     floating_text.set_icon(icon)

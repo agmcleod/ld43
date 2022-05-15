@@ -39,6 +39,7 @@ func take_damage(amount: int):
 
 func _process(delta):
   self.spell_receiver._process(delta)
+  self.drainable.take_drain_damage(delta)
 
 
 func _physics_process(delta: float):

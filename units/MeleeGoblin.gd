@@ -44,6 +44,7 @@ func _ready():
 
 func _process(delta):
   self.spell_receiver._process(delta)
+  self.drainable.take_drain_damage(delta)
   if self.spell_receiver.is_knockedback() || !spell_receiver.can_move():
     return
 

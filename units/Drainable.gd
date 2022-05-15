@@ -11,6 +11,9 @@ var mouse_entered := false
 var player
 var unit_drops: UnitDrops
 var draining = false
+var drain_tick = 0
+var drain_damage_tick_rate = 2
+var has_collected_resources = false
 
 func _init(owner: Node, player: Player, unit_drops: UnitDrops):
   self.owner = owner
@@ -60,9 +63,21 @@ func handle_in_range_focusout():
 func drain():
   if in_range_of_player && mouse_entered:
     draining = true
+    drain_tick = 0
     player.start_drain()
 
 
 func stop():
   draining = false
   player.stop_drain()
+
+
+func take_drain_damage(delta: float):
+  if draining:
+    drain_tick += delta
+    if drain_tick >= drain_damage_tick_rate:
+      drain_tick = 0
+      owner.take_damage(1)
+      if !has_collected_resources:
+        unit_drops.trigger_collection()
+        has_collected_resources = true
