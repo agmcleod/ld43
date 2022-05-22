@@ -80,6 +80,7 @@ func take_damage(amount: int):
 func _on_body_entered_attack_zone(body):
   if body.name == "Player":
     out_of_range = false
+    self.enemy_tracker.reset_to_attack_animation()
 
 
 func _on_body_exited_attack_zone(body):

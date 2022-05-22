@@ -22,11 +22,16 @@ func _init(owner: Node, nav_2d, chase_distance: float, vision_area: Area2D):
   self.vision_area.connect("body_exited", self, "_on_body_exited_vision")
 
 
+# Having this function to call owner with local code is weird, but does de-dupe for each enemy.
+# Some better refactor would be nice
+func reset_to_attack_animation():
+  self.owner.set_animation("%sStill" % self._get_animation_name_from_direction())
+
+
 func move_towards_target(delta: float):
   var start_point :Vector2 = self.owner.position
 
   if path.size() == 0:
-    self.owner.set_animation("%sStill" % self._get_animation_name_from_direction())
     return
 
   for _i in range(path.size()):
@@ -45,6 +50,7 @@ func move_towards_target(delta: float):
   self.owner.set_animation("%sMove" % [dir_name])
 
 
+# This could maybe be refactored out of here
 func _get_animation_name_from_direction() -> String:
   var angle = rad2deg(last_direction_vector.angle())
   if angle >= -45 && angle <= 45:
