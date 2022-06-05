@@ -21,7 +21,7 @@ var speed := 120
 var drainable
 
 signal entered_range_of_player
-signal extited_range_of_player
+signal exited_range_of_player
 
 func _ready():
   attack_ticker = 0.0

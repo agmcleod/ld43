@@ -15,9 +15,9 @@ enum CASTING_STATE {
   WALL_TARGET,
 }
 
+onready var ui = get_tree().get_current_scene().get_ui()
 onready var State = $"/root/state"
 onready var Game = get_tree().get_current_scene()
-onready var craft: Craft = get_tree().get_current_scene().get_node("UI").get_craft()
 
 var casting_state = CASTING_STATE.IDLE
 var prepared_spell = null
@@ -176,9 +176,6 @@ func _process(_delta: float):
       elif wall_target_node != null:
         wall_target_node.queue_free()
 
-      craft.discovered_spells[prepared_spell.spell_name].crafted_count += 1
-      craft.set_spell_crafted_count(prepared_spell.spell_name)
-
   pass
 
 
@@ -203,16 +200,24 @@ func handle_mouse_click(direction: Vector2, target: Vector2):
 func cast_spell(caster: Node, spell_index: int, direction: Vector2):
   if State.bound_spells.has(spell_index):
     var spell_name: String = State.bound_spells[spell_index].spell_name
-    var spell = craft.discovered_spells[spell_name]
-    if spell.crafted_count > 0:
-      spell.crafted_count -= 1
-      craft.set_spell_crafted_count(spell_name)
+    var discover_button = ui.get_discover_button()
+    var spell = discover_button.discovered_spells[spell_name]
+    # If an ingredient is spent, don't cast
+    for ingredient in spell.ingredients:
+      if InventoryStorage.inventory_data[ingredient] == 0:
+        return
 
-      if spell.is_blast() || spell.is_wall():
-        casting_state = CASTING_STATE.TARGETING
-        prepared_spell = spell
-        # This really only applies for player
-        _setup_spell_target(caster)
-      else:
-        _fire_spell(caster, spell, direction, Vector2.ZERO)
+    # Go through again to remove
+    for ingredient in spell.ingredients:
+      InventoryStorage.inventory_data[ingredient] -= 1
+
+    ui.get_ingredient_item_list().update_resources()
+
+    if spell.is_blast() || spell.is_wall():
+      casting_state = CASTING_STATE.TARGETING
+      prepared_spell = spell
+      # This really only applies for player
+      _setup_spell_target(caster)
+    else:
+      _fire_spell(caster, spell, direction, Vector2.ZERO)
 

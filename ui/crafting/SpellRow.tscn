@@ -11,35 +11,24 @@ margin_right = -819.0
 margin_bottom = -551.0
 rect_min_size = Vector2( 220, 25 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 220.0
 margin_bottom = 25.0
 
 [node name="OptionButton" type="OptionButton" parent="HBoxContainer"]
-margin_right = 41.0
+margin_right = 29.0
 margin_bottom = 25.0
 
 [node name="SpellName" type="Label" parent="HBoxContainer"]
-margin_left = 45.0
+margin_left = 33.0
 margin_top = 5.0
-margin_right = 156.0
+margin_right = 220.0
 margin_bottom = 19.0
 size_flags_horizontal = 3
 text = "Spell name"
 
-[node name="Count" type="Label" parent="HBoxContainer"]
-margin_left = 160.0
-margin_top = 5.0
-margin_right = 175.0
-margin_bottom = 19.0
-text = "x0"
-
-[node name="CraftButton" type="Button" parent="HBoxContainer"]
-margin_left = 179.0
-margin_right = 220.0
-margin_bottom = 25.0
-text = "Craft"
-
 [connection signal="item_selected" from="HBoxContainer/OptionButton" to="." method="_on_OptionButton_item_selected"]
-[connection signal="pressed" from="HBoxContainer/CraftButton" to="." method="_on_CraftButton_pressed"]

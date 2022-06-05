@@ -9,18 +9,17 @@ func _ready():
   pass # Replace with function body.
 
 
-func get_craft():
-  return $"Inventory/TabContainer/Craft"
+func get_bindings():
+  return $"Inventory/TabContainer/Bindings"
 
 
 func get_ingredient_item_list():
-  return $"Inventory/TabContainer/Discover/IngredientItemList"
+  return get_discover_button().get_node("IngredientItemList")
 
 
 func get_spell_bindings():
   return $"SpellBindings"
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#  pass
+func get_discover_button():
+  return $"Inventory/TabContainer/Discover"

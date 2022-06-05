@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://units/Arrow.gd"
 }, {
+"base": "Node",
+"class": "Bindings",
+"language": "GDScript",
+"path": "res://ui/crafting/Bindings.gd"
+}, {
 "base": "Sprite",
 "class": "BlastAnimation",
 "language": "GDScript",
@@ -28,11 +33,6 @@ _global_script_classes=[ {
 "class": "Casting",
 "language": "GDScript",
 "path": "res://player/Casting.gd"
-}, {
-"base": "Node",
-"class": "Craft",
-"language": "GDScript",
-"path": "res://ui/crafting/Craft.gd"
 }, {
 "base": "Reference",
 "class": "DiscoveredSpell",
@@ -116,10 +116,10 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Arrow": "",
+"Bindings": "",
 "BlastAnimation": "",
 "BoundSpell": "",
 "Casting": "",
-"Craft": "",
 "DiscoveredSpell": "",
 "Drainable": "",
 "EnemyTracker": "",

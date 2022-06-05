@@ -5,7 +5,6 @@ class_name SpellRow
 const DiscoveredSpell = preload("res://types/DiscoveredSpell.gd")
 
 signal item_selected
-signal spell_name_crafted
 
 var spell_name := ""
 
@@ -17,7 +16,7 @@ var spell_name := ""
 func _ready():
   var option_button: OptionButton = $"HBoxContainer/OptionButton"
   option_button.add_item("Unbound")
-  for n in range(5):  
+  for n in range(5):
     option_button.add_item(str(n + 1))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -27,15 +26,8 @@ func _ready():
 func set_values(spell: DiscoveredSpell):
   var label_node: Label = $"HBoxContainer/SpellName"
   label_node.text = spell.spell_name
-  
+
   spell_name = spell.spell_name
-  
-  self.set_count(spell.crafted_count)
-
-
-func set_count(count: int):
-  var count_node: Label = $"HBoxContainer/Count"
-  count_node.text = "x%d" % count
 
 
 func _on_OptionButton_item_selected(id: int):
@@ -44,8 +36,3 @@ func _on_OptionButton_item_selected(id: int):
 
 func get_option_button() -> Node:
   return $"HBoxContainer/OptionButton"
-  
-
-func _on_CraftButton_pressed():
-  emit_signal("spell_name_crafted", spell_name)
-  pass # Replace with function body.
