@@ -205,6 +205,7 @@ func cast_spell(caster: Node, spell_index: int, direction: Vector2):
     # If an ingredient is spent, don't cast
     for ingredient in spell.ingredients:
       if InventoryStorage.inventory_data[ingredient] == 0:
+        caster.floating_text_service.initialize_ft(caster, "Missing ingredients", null)
         return
 
     # Go through again to remove
