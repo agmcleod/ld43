@@ -12,7 +12,6 @@ pause_mode = 2
 script = ExtResource( 2 )
 
 [node name="Inventory" type="WindowDialog" parent="."]
-visible = true
 margin_left = 421.0
 margin_top = 192.0
 margin_right = 666.0

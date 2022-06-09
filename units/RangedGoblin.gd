@@ -25,7 +25,7 @@ signal exited_range_of_player
 
 func _ready():
   attack_ticker = 0.0
-  spell_receiver = SpellReceiver.new(self, 30)
+  spell_receiver = SpellReceiver.new(self, 90)
   enemy_tracker = EnemyTracker.new(self, nav_2d, 400, vision_area)
   self.drainable = Drainable.new(self, player, UnitDrops.new({
     Constants.INGREDIENT_TYPES.RED: 5,

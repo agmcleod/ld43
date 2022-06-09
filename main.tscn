@@ -35,6 +35,12 @@ position = Vector2( 829.484, 150.168 )
 [node name="RangedGoblin" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1138.04, 720.876 )
 
+[node name="RangedGoblin10" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 686, 228 )
+
+[node name="RangedGoblin11" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 687, 344 )
+
 [node name="MeleeGoblin3" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1304.09, 728.843 )
 
@@ -53,8 +59,14 @@ position = Vector2( 1775.36, 263.385 )
 [node name="RangedGoblin3" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1594.19, 111.126 )
 
+[node name="RangedGoblin12" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 1446, 398 )
+
 [node name="RangedGoblin4" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1772.23, 112.29 )
+
+[node name="RangedGoblin13" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 1740, 405 )
 
 [node name="RangedGoblin5" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1975.46, 700 )

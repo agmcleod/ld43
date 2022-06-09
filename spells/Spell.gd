@@ -90,7 +90,7 @@ func _on_body_entered(body: Node2D):
     elif groups.has("enemies") && groups.has("projectiles") && spell_type == Constants.SPELL_TYPE.SHIELD:
       # destroy incoming if it's a projectile hitting a shield
       body.queue_free()
-    elif !groups.has("enemies") && !groups.has("player") && !groups.has("blocker"):
+    elif spell_type != Constants.SPELL_TYPE.SHIELD && !groups.has("enemies") && !groups.has("player") && !groups.has("blocker"):
       # hit something in the environment, destroy the spell.rotation
       # "blocker" refers to a collision shape surrounding the spell, like a static body for wall spells
       queue_free()

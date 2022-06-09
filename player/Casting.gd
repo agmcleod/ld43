@@ -27,7 +27,7 @@ var wall_target_node = null
 func _create_spell_type(spell_status_type, spell_base: String, direction: Vector2) -> Spell:
   # We default to arcane
   var spell_status_type_name = Game.get_asset_name_from_status_type(spell_status_type)
-  print("Creating spell: %s%s.tscn" % [spell_status_type_name, spell_base])
+  # print("Creating spell: %s%s.tscn" % [spell_status_type_name, spell_base])
   var spell_scene = load("res://spells/%s%s.tscn" % [spell_status_type_name, spell_base]).instance()
   spell_scene.set_status_type(spell_status_type)
 
@@ -149,7 +149,7 @@ func _split_other_spell_type(spells_to_spawn: Array, spell: DiscoveredSpell, spe
     else:
       other_spell.direction = other_spell.direction.rotated(deg25)
 
-    other_spell.damage /= 2
+    other_spell.damage *= 0.8
     spells_to_spawn.append(other_spell)
 
 

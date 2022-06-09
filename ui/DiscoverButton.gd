@@ -109,3 +109,4 @@ func _on_Button_pressed():
   var ingredient_types = get_selected_items()
   discover(ingredient_types)
   item_list.unselect_all()
+  discover_button.disabled = true
