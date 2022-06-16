@@ -21,4 +21,4 @@ func _process(delta: float):
     if frame < total_frame_count - 1 || !stay_alive:
       frame += 1
     if frame >= total_frame_count - 1 && !stay_alive:
-      get_parent().queue_free()
+      get_parent().finish_spell()

@@ -93,7 +93,6 @@ func _fire_spell(caster: Node2D, spell: DiscoveredSpell, direction: Vector2, tar
   var has_removed_old_shields = false
 
   for spell in spells_to_spawn:
-    spell.set_owner(caster)
     # For when casting multiple types, duration lasts not as long
     if spells_to_spawn.size() > 1:
       spell.duration /= 2
@@ -101,9 +100,9 @@ func _fire_spell(caster: Node2D, spell: DiscoveredSpell, direction: Vector2, tar
       # check if caster as any shields already, if so, remove them
       if !has_removed_old_shields:
         for child in caster.get_children():
-          has_removed_old_shields = true
           if child.get_groups().has("shields"):
-            child.queue_free()
+            child.finish_spell()
+        has_removed_old_shields = true
       spell.add_to_group("shields")
       caster.add_child(spell)
     elif spell.spell_type == Constants.SPELL_TYPE.BLAST:
@@ -116,6 +115,8 @@ func _fire_spell(caster: Node2D, spell: DiscoveredSpell, direction: Vector2, tar
       spell.position.x = caster.position.x
       spell.position.y = caster.position.y
       get_tree().get_root().add_child(spell)
+
+    spell.set_owner(caster)
 
   casting_state = CASTING_STATE.IDLE
   prepared_spell = null

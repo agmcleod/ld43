@@ -24,6 +24,7 @@ func _ready():
   self.connect("body_entered", self, "_on_body_entered")
   if spell_type != Constants.SPELL_TYPE.SHIELD:
     add_to_group("projectiles")
+
   add_to_group("spell")
   var anim: AnimationPlayer = self.get_animation_player()
   if anim != null:
@@ -36,11 +37,13 @@ func _process(delta):
     self.position += direction.normalized() * velocity * delta
 
   if time_alive >= duration && duration > 0:
-    queue_free()
+    finish_spell()
 
 
 func set_owner(node: Node):
   spell_owner = node
+  if spell_type == Constants.SPELL_TYPE.SHIELD:
+    spell_owner.shielded = true
 
 
 func set_direction(dir: Vector2):
@@ -61,6 +64,12 @@ func get_animation_player():
   return $"./AnimationPlayer"
 
 
+func finish_spell():
+  if spell_type == Constants.SPELL_TYPE.SHIELD:
+    spell_owner.shielded = false
+  queue_free()
+
+
 func _on_body_entered(body: Node2D):
   if body != spell_owner:
     # tags of the body that collided with the spell
@@ -70,7 +79,7 @@ func _on_body_entered(body: Node2D):
       # non shield logic
       if spell_type != Constants.SPELL_TYPE.SHIELD:
         if !is_environmental:
-          queue_free()
+          finish_spell()
         if amplified && !is_environmental && (status_type == Constants.SPELL_STATUS_TYPE.FIRE || status_type == Constants.SPELL_STATUS_TYPE.WET):
           var env_effect = EnvironmentalEffectScene.instance()
           if status_type == Constants.SPELL_STATUS_TYPE.FIRE:
@@ -93,4 +102,4 @@ func _on_body_entered(body: Node2D):
     elif spell_type != Constants.SPELL_TYPE.SHIELD && !groups.has("enemies") && !groups.has("player") && !groups.has("blocker"):
       # hit something in the environment, destroy the spell.rotation
       # "blocker" refers to a collision shape surrounding the spell, like a static body for wall spells
-      queue_free()
+      finish_spell()

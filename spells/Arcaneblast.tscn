@@ -17,8 +17,8 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
-vframes = 4
 hframes = 5
+vframes = 4
 script = ExtResource( 3 )
 total_frame_count = 19
 frame_speed = 0.05

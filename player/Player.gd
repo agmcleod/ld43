@@ -33,6 +33,7 @@ var spell_receiver: SpellReceiver
 var frame_time = 0.0
 var floating_text_service: FloatingTextService
 var current_direction = DIRECTION.RIGHT
+var shielded = false
 
 var animation_details: Dictionary = {
   'right_move': {
@@ -98,9 +99,10 @@ func _ready():
 
 
 func take_damage(amount: int):
-  self.spell_receiver.take_damage(amount)
-  if spell_receiver.health <= 0:
-    get_tree().reload_current_scene()
+  if !shielded:
+    self.spell_receiver.take_damage(amount)
+    if spell_receiver.health <= 0:
+      get_tree().reload_current_scene()
 
 
 func _process(delta):
