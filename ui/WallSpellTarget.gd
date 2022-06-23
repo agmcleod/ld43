@@ -1,7 +1,7 @@
 extends Sprite
 
 var click_target: Vector2 = Vector2(0, 0)
-var default_direction = Vector2(1, 0)
+var default_direction := Vector2(1, 0)
 var target_owner: Node = null
 
 func set_owner(o: Node):

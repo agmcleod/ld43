@@ -7,7 +7,7 @@ const EnvironmentalEffectScene = preload("res://spells/environmental_effects/Env
 
 export (Constants.SPELL_TYPE) var spell_type
 var status_type = Constants.SPELL_STATUS_TYPE.ARCANE
-export (int) var damage;
+export (int) var damage
 export (int) var status_duration
 export (int) var status_damage
 export (float) var duration

@@ -12,7 +12,7 @@ onready var nav_2d: Navigation2D = get_tree().get_current_scene().get_node("Navi
 onready var health_bar = $"./Sprite/HealthBar"
 onready var player: Player = get_tree().get_current_scene().get_node("Player")
 
-export (float) var fire_rate = 1.5
+var fire_rate := 1.5
 
 var attack_ticker := 0.0
 var spell_receiver: SpellReceiver
@@ -47,10 +47,16 @@ func _physics_process(delta: float):
     !spell_receiver.can_move() ||
     self.drainable.draining):
     return
+
+  var has_slow_effect = self.spell_receiver.status == Constants.SPELL_STATUS_TYPE.FROST
   if self.enemy_tracker.tracked_node != null:
     var tracked_node = self.enemy_tracker.tracked_node
     attack_ticker += delta
-    if attack_ticker > fire_rate:
+    var target_fire_rate = fire_rate
+    # Slows down attack rate by 50% if they have cold status
+    if has_slow_effect:
+      target_fire_rate *= 1.5
+    if attack_ticker > target_fire_rate:
       attack_ticker = 0.0
       var arrow_scene = Arrow.instance()
       var direction :Vector2 = (tracked_node.position - self.position).normalized()
@@ -59,7 +65,7 @@ func _physics_process(delta: float):
       get_tree().get_current_scene().add_child(arrow_scene)
 
   var distance: float = self.speed * delta
-  if self.spell_receiver.status == Constants.SPELL_STATUS_TYPE.FROST:
+  if has_slow_effect:
     distance /= 2
   if self.enemy_tracker.tracked_node == null:
     self.enemy_tracker.move_towards_target(distance)

@@ -34,12 +34,15 @@ var frame_time = 0.0
 var floating_text_service: FloatingTextService
 var current_direction = DIRECTION.RIGHT
 var shielded = false
+var draining = false
+var draining_heal_tick = 0.0
+var draining_heal_rate = 0.5
 
 var animation_details: Dictionary = {
   'right_move': {
     'name': 'right_move',
     'frames': 12,
-    'frame_time': 0.10,
+    'frame_time': 0.08,
     'texture': player_right_walk_image,
     'vframes': 2,
     'hframes': 8
@@ -71,7 +74,7 @@ var animation_details: Dictionary = {
   'left_move': {
     'name': 'left_move',
     'frames': 14,
-    'frame_time': 0.10,
+    'frame_time': 0.08,
     'texture': player_left_walk_image,
     'vframes': 2,
     'hframes': 8
@@ -107,6 +110,12 @@ func take_damage(amount: int):
 
 func _process(delta):
   self.spell_receiver._process(delta)
+
+  if draining:
+    draining_heal_tick += delta
+    if draining_heal_tick >= draining_heal_tick:
+      draining_heal_tick = 0.0
+      take_damage(-5)
 
 
 func _physics_process(delta: float):
@@ -225,6 +234,7 @@ func _on_body_exited_attack_zone(body):
 
 
 func start_drain():
+  draining = true
   if current_direction == DIRECTION.LEFT:
     _set_current_anim('left_drain')
   elif current_direction == DIRECTION.RIGHT:
@@ -232,6 +242,7 @@ func start_drain():
 
 
 func stop_drain():
+  draining = false
   if current_direction == DIRECTION.LEFT:
     _set_current_anim('left')
   elif current_direction == DIRECTION.RIGHT:

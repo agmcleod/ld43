@@ -68,7 +68,7 @@ func _physics_process(delta):
 
   var distance: float = self.speed * delta
   if self.spell_receiver.status == Constants.SPELL_STATUS_TYPE.FROST:
-    distance /= 2
+    distance /= 3
   if out_of_range:
     self.enemy_tracker.move_towards_target(distance)
 

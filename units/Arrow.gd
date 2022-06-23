@@ -5,12 +5,13 @@ class_name Arrow
 var velocity := 4.5
 var direction := Vector2(0, 0)
 var damage := 5
+var default_direction := Vector2(1, 0)
 
 func _ready():
   add_to_group("enemies")
   add_to_group("projectiles")
   pass
-  
+
 
 func _physics_process(delta):
   var collision = move_and_collide(direction * velocity)
@@ -26,3 +27,4 @@ func _physics_process(delta):
 
 func set_direction(dir: Vector2):
   direction = dir
+  set_rotation(default_direction.angle_to(direction))
