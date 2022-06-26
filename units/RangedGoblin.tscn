@@ -190,7 +190,7 @@ shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -4.97548, -0.134265 )
-texture = ExtResource( 14 )
+texture = ExtResource( 16 )
 
 [node name="HealthBar" parent="Sprite" instance=ExtResource( 3 )]
 margin_left = -8.13368

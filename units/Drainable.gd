@@ -68,8 +68,9 @@ func drain():
 
 
 func stop():
-  draining = false
-  player.stop_drain()
+  if draining:
+    draining = false
+    player.stop_drain()
 
 
 func take_drain_damage(delta: float):

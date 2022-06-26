@@ -53,14 +53,17 @@ func move_towards_target(delta: float):
 # This could maybe be refactored out of here
 func _get_animation_name_from_direction() -> String:
   var angle = rad2deg(last_direction_vector.angle())
-  if angle >= -45 && angle <= 45:
+  # if angle >= -45 && angle <= 45:
+  #   return "Right"
+  # elif angle > 45 && angle <= 135:
+  #   return "Down"
+  # elif (angle > 135 && angle <= 180) || (angle >= -180 && angle <= -135):
+  #   return "Left"
+  # else:
+  #   return "Up"
+  if angle >= -90 && angle <= 90:
     return "Right"
-  elif angle > 45 && angle <= 135:
-    return "Down"
-  elif (angle > 135 && angle <= 180) || (angle >= -180 && angle <= -135):
-    return "Left"
-  else:
-    return "Up"
+  return "Left"
 
 
 func _on_body_entered_vision(body):

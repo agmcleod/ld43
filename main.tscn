@@ -31,99 +31,75 @@ position = Vector2( 166.427, 289.995 )
 
 [node name="MeleeGoblin" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 829.484, 150.168 )
-attack_rate = null
 
 [node name="RangedGoblin" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1138.04, 720.876 )
-fire_rate = null
 
 [node name="RangedGoblin10" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 686, 228 )
-fire_rate = null
 
 [node name="RangedGoblin11" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 687, 344 )
-fire_rate = null
 
 [node name="MeleeGoblin3" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1304.09, 728.843 )
-attack_rate = null
 
 [node name="RangedGoblin2" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1476.66, 726.694 )
-fire_rate = null
 
 [node name="MeleeGoblin4" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1380.89, 262.221 )
-attack_rate = null
 
 [node name="MeleeGoblin5" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1597.33, 259.894 )
-attack_rate = null
 
 [node name="MeleeGoblin6" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1775.36, 263.385 )
-attack_rate = null
 
 [node name="RangedGoblin3" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1594.19, 111.126 )
-fire_rate = null
 
 [node name="RangedGoblin12" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1446, 398 )
-fire_rate = null
 
 [node name="RangedGoblin4" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1772.23, 112.29 )
-fire_rate = null
 
 [node name="RangedGoblin13" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1740, 405 )
-fire_rate = null
 
 [node name="RangedGoblin5" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1975.46, 700 )
-fire_rate = null
 
 [node name="MeleeGoblin7" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1978.59, 760 )
-attack_rate = null
 
 [node name="MeleeGoblin8" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 2050.14, 760 )
-attack_rate = null
 
 [node name="RangedGoblin6" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 2051.44, 700 )
-fire_rate = null
 
 [node name="RangedGoblin7" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 2000, 1170 )
-fire_rate = null
 
 [node name="RangedGoblin8" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1810, 1180 )
-fire_rate = null
 
 [node name="RangedGoblin9" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1790, 1040 )
-fire_rate = null
 
 [node name="MeleeGoblin9" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 2010, 990 )
-attack_rate = null
 
 [node name="MeleeGoblin10" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1660, 980 )
-attack_rate = null
 
 [node name="MeleeGoblin11" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1660, 1130 )
-attack_rate = null
 
 [node name="MeleeGoblin2" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 831.507, 400.653 )
-attack_rate = null
 
 [node name="PitTiles" type="Node" parent="."]
 

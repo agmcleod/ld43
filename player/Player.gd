@@ -113,9 +113,9 @@ func _process(delta):
 
   if draining:
     draining_heal_tick += delta
-    if draining_heal_tick >= draining_heal_tick:
+    if draining_heal_tick >= draining_heal_rate:
       draining_heal_tick = 0.0
-      take_damage(-5)
+      self.spell_receiver.take_damage(-5)
 
 
 func _physics_process(delta: float):
@@ -247,3 +247,7 @@ func stop_drain():
     _set_current_anim('left')
   elif current_direction == DIRECTION.RIGHT:
     _set_current_anim('right')
+
+
+func handle_spell(spell):
+  spell_receiver.handle_spell(spell)

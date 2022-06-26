@@ -29,6 +29,8 @@ func can_move():
 
 func take_damage(amount: int):
   health -= amount
+  if health > max_health:
+    health = max_health
   var floating_text = FloatingText.instance()
   self.owner.add_child(floating_text)
   floating_text.set_text("%d" % round(amount * -1))
@@ -37,6 +39,7 @@ func take_damage(amount: int):
     if self.owner.has_method('on_death'):
       self.owner.on_death()
     self.owner.queue_free()
+
 
 
 func apply_knockback(vector: Vector2):
