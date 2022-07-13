@@ -25,7 +25,7 @@ func _init(owner: Node, nav_2d, chase_distance: float, vision_area: Area2D):
 # Having this function to call owner with local code is weird, but does de-dupe for each enemy.
 # Some better refactor would be nice
 func reset_to_attack_animation():
-  self.owner.set_animation("%sStill" % self._get_animation_name_from_direction())
+  self.owner.set_animation("%sAttack" % self._get_animation_name_from_direction())
 
 
 func move_towards_target(delta: float):

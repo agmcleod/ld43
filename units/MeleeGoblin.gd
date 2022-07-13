@@ -25,6 +25,7 @@ var enemy_tracker
 var speed := 120
 var drainable
 
+# For Drainable events
 signal entered_range_of_player
 signal exited_range_of_player
 
@@ -71,6 +72,11 @@ func _physics_process(delta):
     distance /= 3
   if out_of_range:
     self.enemy_tracker.move_towards_target(distance)
+
+
+func attack():
+  if !out_of_range:
+    player.take_damage(10)
 
 
 func take_damage(amount: int):

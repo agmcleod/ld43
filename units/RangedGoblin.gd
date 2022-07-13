@@ -14,23 +14,24 @@ onready var player: Player = get_tree().get_current_scene().get_node("Player")
 
 var fire_rate := 1.5
 
-var attack_ticker := 0.0
 var spell_receiver: SpellReceiver
 var enemy_tracker: EnemyTracker
 var speed := 120
 var drainable
 
+# For Drainable events
 signal entered_range_of_player
 signal exited_range_of_player
 
 func _ready():
-  attack_ticker = 0.0
   spell_receiver = SpellReceiver.new(self, 90)
   enemy_tracker = EnemyTracker.new(self, nav_2d, 400, vision_area)
   self.drainable = Drainable.new(self, player, UnitDrops.new({
     Constants.INGREDIENT_TYPES.RED: 5,
     Constants.INGREDIENT_TYPES.BLUE: 5
   }, player))
+  # we just track entering, since enemy tracker will reset move animation
+  vision_area.connect("body_entered", self, "_on_body_entered_attack_zone")
 
 
 func take_damage(amount: int):
@@ -49,26 +50,21 @@ func _physics_process(delta: float):
     return
 
   var has_slow_effect = self.spell_receiver.status == Constants.SPELL_STATUS_TYPE.FROST
-  if self.enemy_tracker.tracked_node != null:
-    var tracked_node = self.enemy_tracker.tracked_node
-    attack_ticker += delta
-    var target_fire_rate = fire_rate
-    # Slows down attack rate by 50% if they have cold status
-    if has_slow_effect:
-      target_fire_rate *= 1.5
-    if attack_ticker > target_fire_rate:
-      attack_ticker = 0.0
-      var arrow_scene = Arrow.instance()
-      var direction :Vector2 = (tracked_node.position - self.position).normalized()
-      arrow_scene.position = self.position + direction * 5
-      arrow_scene.set_direction(direction)
-      get_tree().get_current_scene().add_child(arrow_scene)
 
   var distance: float = self.speed * delta
   if has_slow_effect:
     distance /= 2
   if self.enemy_tracker.tracked_node == null:
     self.enemy_tracker.move_towards_target(distance)
+
+
+func attack():
+  if self.enemy_tracker.tracked_node != null:
+    var arrow_scene = Arrow.instance()
+    var direction: Vector2 = (self.enemy_tracker.tracked_node.position - self.position).normalized()
+    arrow_scene.position = self.position + direction * 5
+    arrow_scene.set_direction(direction)
+    get_tree().get_current_scene().add_child(arrow_scene)
 
 
 func handle_spell(spell):
@@ -96,3 +92,8 @@ func _input(event):
       self.drainable.drain()
     else:
       self.drainable.stop()
+
+
+func _on_body_entered_attack_zone(body):
+  if body.name == "Player":
+    self.enemy_tracker.reset_to_attack_animation()

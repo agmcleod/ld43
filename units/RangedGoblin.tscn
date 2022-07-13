@@ -1,20 +1,20 @@
 [gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://units/RangedGoblin.gd" type="Script" id=1]
-[ext_resource path="res://images/enemies/rangedgoblinupmove/MeleeGoblinUpMove 2.png" type="Texture" id=2]
+[ext_resource path="res://images/enemies/rangedgoblinleftattack/RangedGoblinLeftAttack 8.png" type="Texture" id=2]
 [ext_resource path="res://ui/HealthBar.tscn" type="PackedScene" id=3]
 [ext_resource path="res://ui/StatusType.tscn" type="PackedScene" id=4]
-[ext_resource path="res://images/enemies/rangedgoblinupmove/MeleeGoblinUpMove 1.png" type="Texture" id=5]
-[ext_resource path="res://images/enemies/rangedgoblinupmove/MeleeGoblinUpMove 3.png" type="Texture" id=6]
-[ext_resource path="res://images/enemies/rangedgoblinupmove/MeleeGoblinUpMove 4.png" type="Texture" id=7]
-[ext_resource path="res://images/enemies/rangedgoblindownmove/MeleeGoblinDownMove 1.png" type="Texture" id=8]
-[ext_resource path="res://images/enemies/rangedgoblindownmove/MeleeGoblinDownMove 2.png" type="Texture" id=9]
-[ext_resource path="res://images/enemies/rangedgoblindownmove/MeleeGoblinDownMove 4.png" type="Texture" id=10]
-[ext_resource path="res://images/enemies/rangedgoblindownmove/MeleeGoblinDownMove 3.png" type="Texture" id=11]
-[ext_resource path="res://images/enemies/rangedgoblindown/MeleeGoblinDown 1.png" type="Texture" id=12]
-[ext_resource path="res://images/enemies/rangedgoblindown/MeleeGoblinDown 2.png" type="Texture" id=13]
-[ext_resource path="res://images/enemies/rangedgoblinup/MeleeGoblinUp 1.png" type="Texture" id=14]
-[ext_resource path="res://images/enemies/rangedgoblinup/MeleeGoblinUp 2.png" type="Texture" id=15]
+[ext_resource path="res://images/enemies/rangedgoblinleftattack/RangedGoblinLeftAttack 6.png" type="Texture" id=5]
+[ext_resource path="res://images/enemies/rangedgoblinleftattack/RangedGoblinLeftAttack 5.png" type="Texture" id=6]
+[ext_resource path="res://images/enemies/rangedgoblinleftattack/RangedGoblinLeftAttack 7.png" type="Texture" id=7]
+[ext_resource path="res://images/enemies/rangedgoblinleftattack/RangedGoblinLeftAttack 1.png" type="Texture" id=8]
+[ext_resource path="res://images/enemies/rangedgoblinrightattack/RangedGoblinRightAttack 1.png" type="Texture" id=9]
+[ext_resource path="res://images/enemies/rangedgoblinleftattack/RangedGoblinLeftAttack 3.png" type="Texture" id=10]
+[ext_resource path="res://images/enemies/rangedgoblinrightattack/RangedGoblinRightAttack 4.png" type="Texture" id=11]
+[ext_resource path="res://images/enemies/rangedgoblinrightattack/RangedGoblinRightAttack 5.png" type="Texture" id=12]
+[ext_resource path="res://images/enemies/rangedgoblinrightattack/RangedGoblinRightAttack 7.png" type="Texture" id=13]
+[ext_resource path="res://images/enemies/rangedgoblinrightattack/RangedGoblinRightAttack 6.png" type="Texture" id=14]
+[ext_resource path="res://images/enemies/rangedgoblinrightattack/RangedGoblinRightAttack 3.png" type="Texture" id=15]
 [ext_resource path="res://images/enemies/rangedgoblinleft/MeleeGoblinleft 1.png" type="Texture" id=16]
 [ext_resource path="res://images/enemies/rangedgoblinleft/MeleeGoblinleft 2.png" type="Texture" id=17]
 [ext_resource path="res://images/enemies/rangedgoblinleftmove/MeleeGoblinleftmove 1.png" type="Texture" id=18]
@@ -33,6 +33,7 @@
 [ext_resource path="res://images/enemies/rangedgoblinrightmove/MeleeGoblinRightmove 2.png" type="Texture" id=31]
 [ext_resource path="res://images/enemies/rangedgoblinright/RangedGoblinRight 2.png" type="Texture" id=32]
 [ext_resource path="res://images/enemies/rangedgoblinright/RangedGoblinRight 1.png" type="Texture" id=33]
+[ext_resource path="res://images/enemies/rangedgoblinrightattack/RangedGoblinRightAttack 8.png" type="Texture" id=34]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 28.2758, 29.4348 )
@@ -40,9 +41,9 @@ extents = Vector2( 28.2758, 29.4348 )
 [sub_resource type="CircleShape2D" id=2]
 radius = 216.848
 
-[sub_resource type="Animation" id=3]
-resource_name = "DownMove"
-length = 0.4
+[sub_resource type="Animation" id=9]
+resource_name = "AttackLeft"
+length = 0.8
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -51,15 +52,29 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 10 ) ]
+"values": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 2 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack"
+} ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "DownStill"
-loop = true
+[sub_resource type="Animation" id=11]
+resource_name = "AttackRight"
+length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -67,10 +82,24 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 12 ), ExtResource( 13 ) ]
+"values": [ ExtResource( 9 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 13 ), ExtResource( 34 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack"
+} ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -106,6 +135,21 @@ tracks/0/keys = {
 "values": [ ExtResource( 16 ), ExtResource( 17 ) ]
 }
 
+[sub_resource type="Animation" id=10]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 8 ) ]
+}
+
 [sub_resource type="Animation" id=7]
 resource_name = "RightMove"
 length = 1.2
@@ -139,39 +183,6 @@ tracks/0/keys = {
 "values": [ ExtResource( 33 ), ExtResource( 32 ) ]
 }
 
-[sub_resource type="Animation" id=9]
-resource_name = "UpMove"
-length = 0.4
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 7 ) ]
-}
-
-[sub_resource type="Animation" id=10]
-resource_name = "UpStill"
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ ExtResource( 14 ), ExtResource( 15 ) ]
-}
-
 [node name="RangedGoblin" type="KinematicBody2D"]
 z_index = 2
 collision_mask = 3
@@ -190,7 +201,7 @@ shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( -4.97548, -0.134265 )
-texture = ExtResource( 16 )
+texture = ExtResource( 8 )
 
 [node name="HealthBar" parent="Sprite" instance=ExtResource( 3 )]
 margin_left = -8.13368
@@ -201,11 +212,10 @@ margin_bottom = -9.74866
 [node name="StatusType" parent="." instance=ExtResource( 4 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/DownMove = SubResource( 3 )
-anims/DownStill = SubResource( 4 )
+anims/AttackLeft = SubResource( 9 )
+anims/AttackRight = SubResource( 11 )
 anims/LeftMove = SubResource( 5 )
 anims/LeftStill = SubResource( 6 )
+anims/RESET = SubResource( 10 )
 anims/RightMove = SubResource( 7 )
 anims/RightStill = SubResource( 8 )
-anims/UpMove = SubResource( 9 )
-anims/UpStill = SubResource( 10 )
