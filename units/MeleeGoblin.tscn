@@ -40,7 +40,7 @@ radius = 132.907
 radius = 45.678
 
 [sub_resource type="Animation" id=10]
-resource_name = "AttackLeft"
+resource_name = "LeftAttack"
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -54,36 +54,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ ExtResource( 22 ), ExtResource( 25 ), ExtResource( 23 ), ExtResource( 24 ) ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.1 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "attack"
-} ]
-}
-
-[sub_resource type="Animation" id=12]
-resource_name = "AttackRight"
-length = 0.8
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 1,
-"values": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -146,6 +116,36 @@ tracks/0/keys = {
 "values": [ ExtResource( 22 ) ]
 }
 
+[sub_resource type="Animation" id=12]
+resource_name = "RightAttack"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack"
+} ]
+}
+
 [sub_resource type="Animation" id=8]
 length = 1.2
 loop = true
@@ -179,7 +179,8 @@ tracks/0/keys = {
 
 [node name="MeleeGoblin" type="KinematicBody2D"]
 z_index = 2
-collision_mask = 3
+collision_layer = 4
+collision_mask = 7
 input_pickable = true
 script = ExtResource( 1 )
 
@@ -211,10 +212,10 @@ margin_bottom = -31.2179
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "LeftStill"
-anims/AttackLeft = SubResource( 10 )
-anims/AttackRight = SubResource( 12 )
+anims/LeftAttack = SubResource( 10 )
 anims/LeftMove = SubResource( 6 )
 anims/LeftStill = SubResource( 7 )
 anims/RESET = SubResource( 11 )
+anims/RightAttack = SubResource( 12 )
 anims/RightMove = SubResource( 8 )
 anims/RightStill = SubResource( 9 )

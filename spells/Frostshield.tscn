@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 [node name="KinematicBody2D" type="Area2D"]
-collision_mask = 3
+collision_mask = 7
 script = ExtResource( 1 )
 spell_type = 3
 status_duration = 5

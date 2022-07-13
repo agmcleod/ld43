@@ -42,7 +42,7 @@ extents = Vector2( 28.2758, 29.4348 )
 radius = 216.848
 
 [sub_resource type="Animation" id=9]
-resource_name = "AttackLeft"
+resource_name = "LeftAttack"
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -56,36 +56,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 2 ) ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0.4 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "attack"
-} ]
-}
-
-[sub_resource type="Animation" id=11]
-resource_name = "AttackRight"
-length = 0.8
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ ExtResource( 9 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 13 ), ExtResource( 34 ) ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -150,6 +120,36 @@ tracks/0/keys = {
 "values": [ ExtResource( 8 ) ]
 }
 
+[sub_resource type="Animation" id=11]
+resource_name = "RightAttack"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 9 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 13 ), ExtResource( 34 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "attack"
+} ]
+}
+
 [sub_resource type="Animation" id=7]
 resource_name = "RightMove"
 length = 1.2
@@ -185,7 +185,8 @@ tracks/0/keys = {
 
 [node name="RangedGoblin" type="KinematicBody2D"]
 z_index = 2
-collision_mask = 3
+collision_layer = 4
+collision_mask = 7
 input_pickable = true
 script = ExtResource( 1 )
 
@@ -212,10 +213,10 @@ margin_bottom = -9.74866
 [node name="StatusType" parent="." instance=ExtResource( 4 )]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/AttackLeft = SubResource( 9 )
-anims/AttackRight = SubResource( 11 )
+anims/LeftAttack = SubResource( 9 )
 anims/LeftMove = SubResource( 5 )
 anims/LeftStill = SubResource( 6 )
 anims/RESET = SubResource( 10 )
+anims/RightAttack = SubResource( 11 )
 anims/RightMove = SubResource( 7 )
 anims/RightStill = SubResource( 8 )

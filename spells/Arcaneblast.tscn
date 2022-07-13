@@ -8,6 +8,7 @@
 extents = Vector2( 64, 64 )
 
 [node name="Area2D" type="Area2D"]
+collision_mask = 5
 script = ExtResource( 1 )
 spell_type = 4
 damage = 40

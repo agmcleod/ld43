@@ -8,7 +8,7 @@
 extents = Vector2( 64, 64 )
 
 [node name="Area2D" type="Area2D"]
-collision_mask = 3
+collision_mask = 7
 script = ExtResource( 1 )
 spell_type = 4
 damage = 35
@@ -20,8 +20,8 @@ shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
-vframes = 8
 hframes = 8
+vframes = 8
 script = ExtResource( 3 )
 total_frame_count = 64
 frame_speed = 0.017
