@@ -150,8 +150,8 @@ func _split_other_spell_type(spells_to_spawn: Array, spell: DiscoveredSpell, spe
     else:
       other_spell.direction = other_spell.direction.rotated(deg25)
 
-  other_spell.damage *= 0.8
-  spells_to_spawn.append(other_spell)
+    other_spell.damage *= 0.8
+    spells_to_spawn.append(other_spell)
 
 
 func _setup_spell_target(caster: Node):
