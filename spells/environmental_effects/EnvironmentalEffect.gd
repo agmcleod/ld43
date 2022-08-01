@@ -6,15 +6,21 @@ const EnvironmentalEffectData = preload("res://types/EnvironmentalEffectData.gd"
 var textures: Dictionary = {
   "fire": EnvironmentalEffectData.new(
     preload("res://images/environmental_effects/fire.png"),
-    Constants.SPELL_STATUS_TYPE.FIRE
+    Constants.SPELL_STATUS_TYPE.FIRE,
+    1,
+    2
   ),
   "frozen": EnvironmentalEffectData.new(
     preload("res://images/environmental_effects/frozen.png"),
-    Constants.SPELL_STATUS_TYPE.FROZEN
+    Constants.SPELL_STATUS_TYPE.FROZEN,
+    1,
+    1
   ),
   "wet": EnvironmentalEffectData.new(
     preload("res://images/environmental_effects/wet.png"),
-    Constants.SPELL_STATUS_TYPE.WET
+    Constants.SPELL_STATUS_TYPE.WET,
+    1,
+    1
   )
 }
 
@@ -78,7 +84,10 @@ func set_sprite_texture(texture_name: String) -> bool:
   if !textures.has(texture_name):
     return false
 
-  set_texture(textures[texture_name].texture)
+  var texture_data = textures[texture_name]
+  set_texture(texture_data.texture)
+  self.vframes = texture_data.vframes
+  self.hframes = texture_data.hframes
   spell_status_type = textures[texture_name].status_type
 
   return true
