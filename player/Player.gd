@@ -117,6 +117,16 @@ func _process(delta):
       draining_heal_tick = 0.0
       self.spell_receiver.take_damage(-5)
 
+  var sprite: Sprite = _get_sprite()
+  frame_time += delta
+  if frame_time >= current_anim.frame_time:
+    frame_time = 0.0
+    # If next frame is at limit, restart anim
+    if sprite.frame + 1 >= current_anim.frames:
+      sprite.frame = 0
+    else:
+      sprite.frame += 1
+
 
 func _physics_process(delta: float):
   if Input.is_action_just_pressed("ui_inventory"):
@@ -130,7 +140,6 @@ func _physics_process(delta: float):
 
   velocity.x = 0
   velocity.y = 0
-  var sprite: Sprite = _get_sprite()
   if spell_receiver.can_move():
     if Input.is_action_pressed('right'):
       current_direction = DIRECTION.RIGHT
@@ -159,13 +168,6 @@ func _physics_process(delta: float):
       _set_current_anim('right')
     elif current_anim['name'] == 'left_move':
       _set_current_anim('left')
-
-  frame_time += delta
-  if frame_time >= current_anim.frame_time:
-    sprite.frame += 1
-    frame_time = 0.0
-    if sprite.frame >= current_anim.frames - 1:
-      sprite.frame = 0
 
   self._handle_spell_cast()
 
@@ -221,15 +223,20 @@ func collect_ingredient(ingredient_type: int, amount: int):
   floating_text_service.initialize_ft(self, "%d" % amount, ingredient_type, 20)
 
 
+func _body_is_enemy_unit(body):
+  var groups = body.get_groups()
+  return groups.has("enemies") && !groups.has("projectiles")
+
+
 # This code here works with the assumption that the
 # body is the root node of the enemy
 func _on_body_entered_attack_zone(body):
-  if body.get_groups().has("enemies"):
+  if _body_is_enemy_unit(body):
     body.emit_signal("entered_range_of_player")
 
 
 func _on_body_exited_attack_zone(body):
-  if body.get_groups().has("enemies"):
+  if _body_is_enemy_unit(body):
     body.emit_signal("exited_range_of_player")
 
 

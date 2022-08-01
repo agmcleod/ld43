@@ -31,6 +31,9 @@ var status_damage = 0
 
 var time_alive := 30.0
 var entered_bodies: Dictionary = {}
+var frame_time = 0
+const ANIMATION_FRAME_RATE = 0.2
+var current_frames_count = 1
 
 func _ready():
   var area = _get_area2d()
@@ -49,6 +52,14 @@ func _process(delta: float):
         var spell_receiver = body.spell_receiver
         if spell_receiver.status == 0:
           spell_receiver.apply_status_effect(spell_status_type, status_duration, status_damage)
+
+    frame_time += delta
+    if frame_time >= ANIMATION_FRAME_RATE:
+      if self.frame + 1 >= current_frames_count:
+        set_frame(0)
+      else:
+        set_frame(self.frame + 1)
+      frame_time = 0.0
 
 
 func _get_area2d() -> Area2D:
@@ -85,9 +96,10 @@ func set_sprite_texture(texture_name: String) -> bool:
     return false
 
   var texture_data = textures[texture_name]
+  current_frames_count = texture_data.frame_count
   set_texture(texture_data.texture)
-  self.vframes = texture_data.vframes
-  self.hframes = texture_data.hframes
+  set_vframes(texture_data.vframes)
+  set_hframes(texture_data.hframes)
   spell_status_type = textures[texture_name].status_type
 
   return true
