@@ -21,6 +21,7 @@ func _on_spell_binding_changed(spell_name: String, selected_node_index: int, num
   if discover_button.discovered_spells.has(spell_name):
     for child in crafted_spells_vbox.get_children():
       var option_button: OptionButton = child.get_option_button()
+      # deselect an existing drop down if it has this option already
       if option_button.selected == num && child.get_index() != selected_node_index:
         option_button.select(0)
 

@@ -14,7 +14,7 @@ func _ready():
   InventoryStorage.inventory_data[INGREDIENT_TYPES.SQUIRREL] = 999
   InventoryStorage.inventory_data[INGREDIENT_TYPES.TURTLE] = 999
 
-  var ui = $"UI"
+  var ui = get_ui()
   var ingredient_item_list = ui.get_ingredient_item_list()
   ingredient_item_list.enable_ingredient_type(INGREDIENT_TYPES.BIRD)
   ingredient_item_list.enable_ingredient_type(INGREDIENT_TYPES.FROG)
