@@ -1,13 +1,14 @@
 extends Control
 
+class_name Discover
+
 const Constants = preload("res://Constants.gd")
 const SpellRowScene = preload("res://ui/crafting/SpellRow.tscn")
 const IngredientItemList = preload("res://ui/crafting/IngredientItemList.gd")
 onready var discover_button = $Button
 onready var item_list: IngredientItemList = $IngredientItemList
 onready var spell_bindings = $"../Bindings"
-
-var discovered_spells: Dictionary = {}
+onready var State = $"/root/state"
 
 func get_spell_details_for_ingredients(selected_ingredients: Array):
   for ingredient in selected_ingredients:
@@ -80,14 +81,14 @@ func get_spell_details_for_ingredients(selected_ingredients: Array):
 func discover(selected_ingredients: Array):
   var details = get_spell_details_for_ingredients(selected_ingredients)
   var spell_name = details.spell_name
-  if discovered_spells.has(spell_name):
+  if State.discovered_spells.has(spell_name):
     # Shouldn't rediscover existing spells
     return
   else:
-    discovered_spells[details.spell_name] = details
+    State.discovered_spells[details.spell_name] = details
 
     var row: SpellRow = SpellRowScene.instance()
-    row.set_values(discovered_spells[spell_name])
+    row.set_values(State.discovered_spells[spell_name])
     spell_bindings.add_spell_binding(row)
 
 
@@ -102,7 +103,7 @@ func get_selected_items():
 
 func _on_ItemList_multi_selected(item, selected):
   var selected_spell = get_spell_details_for_ingredients(get_selected_items())
-  discover_button.disabled = item_list.get_selected_items().size() == 0 || discovered_spells.has(selected_spell.spell_name)
+  discover_button.disabled = item_list.get_selected_items().size() == 0 || State.discovered_spells.has(selected_spell.spell_name)
 
 # discover the ingredients and create a new crafted spell
 func _on_Button_pressed():

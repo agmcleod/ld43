@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://player/Casting.gd"
 }, {
+"base": "Control",
+"class": "Discover",
+"language": "GDScript",
+"path": "res://ui/Discover.gd"
+}, {
 "base": "Reference",
 "class": "DiscoveredSpell",
 "language": "GDScript",
@@ -120,6 +125,7 @@ _global_script_class_icons={
 "BlastAnimation": "",
 "BoundSpell": "",
 "Casting": "",
+"Discover": "",
 "DiscoveredSpell": "",
 "Drainable": "",
 "EnemyTracker": "",

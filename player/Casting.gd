@@ -201,8 +201,7 @@ func handle_mouse_click(direction: Vector2, target: Vector2):
 func cast_spell(caster: Node, spell_index: int, direction: Vector2):
   if State.bound_spells.has(spell_index):
     var spell_name: String = State.bound_spells[spell_index].spell_name
-    var discover_button = ui.get_discover_button()
-    var spell = discover_button.discovered_spells[spell_name]
+    var spell = State.discovered_spells[spell_name]
     # If an ingredient is spent, don't cast
     for ingredient in spell.ingredients:
       if InventoryStorage.inventory_data[ingredient] == 0:

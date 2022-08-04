@@ -8,7 +8,6 @@ const BoundSpell = preload("res://types/BoundSpell.gd")
 
 onready var InventoryStorage = $"/root/InventoryStorage"
 onready var State = $"/root/state"
-onready var discover_button = $"../Discover"
 
 onready var crafted_spells_vbox = $"ScrollContainer/VBoxContainer"
 
@@ -18,7 +17,7 @@ func add_spell_binding(row):
 
 
 func _on_spell_binding_changed(spell_name: String, selected_node_index: int, num: int):
-  if discover_button.discovered_spells.has(spell_name):
+  if State.discovered_spells.has(spell_name):
     for child in crafted_spells_vbox.get_children():
       var option_button: OptionButton = child.get_option_button()
       # deselect an existing drop down if it has this option already
@@ -30,8 +29,8 @@ func _on_spell_binding_changed(spell_name: String, selected_node_index: int, num
       if State.bound_spells[num].spell_name == spell_name:
         State.bound_spells.erase(num)
 
-    var spell = discover_button.discovered_spells[spell_name]
+    var spell = State.discovered_spells[spell_name]
     State.bound_spells[num] = BoundSpell.new(spell.spell_name, spell.spell_status_type, spell.spell_type_name)
 
     var spell_bindings = get_tree().get_current_scene().get_ui().get_spell_bindings()
-    spell_bindings.set_images_for_bindings(State.bound_spells)
+    spell_bindings.set_images_for_bindings()

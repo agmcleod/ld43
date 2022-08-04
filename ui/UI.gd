@@ -14,12 +14,12 @@ func get_bindings():
 
 
 func get_ingredient_item_list():
-  return get_discover_button().get_node("IngredientItemList")
+  return get_discover().get_node("IngredientItemList")
 
 
 func get_spell_bindings():
   return $"SpellBindings"
 
 
-func get_discover_button():
+func get_discover():
   return $"Inventory/TabContainer/Discover"
